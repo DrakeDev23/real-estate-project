@@ -1,21 +1,21 @@
-/* GLOBAL STYLES */
+/* ===================
+   1. GLOBAL STYLES
+====================== */
 * {
-    box-sizing: border-box; /* Prevents padding from breaking width */
+    box-sizing: border-box;
 }
-html { scroll-behavior: smooth;}
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-}
+html { scroll-behavior: smooth; }
+body, html { margin: 0; padding: 0; font-family: sans-serif; }
 
-/* HERO WRAPPER - Landing Page Background */
+/* =========================
+   2. HERO WRAPPER
+========================= */
 .hero-wrapper {
     background-image: url("../asset/img/img1.jpg");
     background-size: cover;
     background-position: center;
     background-attachment: scroll;
-    min-height: 100vh; /* Covers the full first screen */
+    min-height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -23,161 +23,113 @@ body, html {
     position: relative;
     animation: bgZoom 6s ease forwards;
 }
+@keyframes bgZoom { from { background-size: 105%; } to { background-size: 100%; } }
 
-/* zoom animation for landing image */
-@keyframes bgZoom
-{
-    from { background-size: 105%; }
-    to { background-size: 100%; }
-}
-
-/* HEADER NAVIGATION */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 50px;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: margin 0.3s ease; 
-}
-
-/* LOGO - Base Glow Animation */
-.logo img {
-    width: 50px;
-    height: auto;
-    margin-left: 250px;
-    position: relative;
-    z-index: 1;
-    transition: all 0.3s ease;
-    animation: strongGlow 2s ease-in-out infinite alternate;
-}
-
-/* Glow Keyframes */
+/* =========================
+   3. HEADER & NAVIGATION
+========================= */
+header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; }
+.logo { display: flex; align-items: center; gap: 10px; transition: margin 0.3s ease; }
+.logo img { width: 50px; height: auto; margin-left: 250px; position: relative; z-index: 1; transition: all 0.3s ease; animation: strongGlow 2s ease-in-out infinite alternate; }
 @keyframes strongGlow {
-    0% {
-        filter: drop-shadow(0 0 0 rgba(255,255,255,0));
-    }
-    25% {
-        filter: drop-shadow(0 0 10px rgba(255,255,255,0.5))
-                drop-shadow(0 0 20px rgba(255,255,255,0.3));
-    }
-    50% {
-        filter: drop-shadow(0 0 15px rgba(255,255,255,0.7))
-                drop-shadow(0 0 25px rgba(255,255,255,0.4));
-    }
-    75% {
-        filter: drop-shadow(0 0 10px rgba(255,255,255,0.5))
-                drop-shadow(0 0 20px rgba(255,255,255,0.3));
-    }
-    100% {
-        filter: drop-shadow(0 0 0 rgba(255,255,255,0));
-    }
+    0% { filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
+    25% { filter: drop-shadow(0 0 10px rgba(255,255,255,0.5)) drop-shadow(0 0 20px rgba(255,255,255,0.3)); }
+    50% { filter: drop-shadow(0 0 15px rgba(255,255,255,0.7)) drop-shadow(0 0 25px rgba(255,255,255,0.4)); }
+    75% { filter: drop-shadow(0 0 10px rgba(255,255,255,0.5)) drop-shadow(0 0 20px rgba(255,255,255,0.3)); }
+    100% { filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
 }
-
-/* Hover Shine Effect */
 .logo img::after {
     content: "";
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(
-        120deg,
-        rgba(255,255,255,0) 0%,
-        rgba(255,255,255,0.5) 50%,
-        rgba(255,255,255,0) 100%
-    );
-    transform: skewX(-25deg);
-    transition: all 0.3s ease;
-    pointer-events: none;
+    top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-25deg); transition: all 0.3s ease; pointer-events: none;
 }
-
-.logo img:hover::after {
-    animation: shine 1.2s forwards;
-}
-
-/* Shine Animation Keyframes */
-@keyframes shine {
-    from { left: -100%; }
-    to { left: 100%; }
-}
-
+.logo img:hover::after { animation: shine 1.2s forwards; }
+@keyframes shine { from { left: -100%; } to { left: 100%; } }
 .logo a { text-decoration: none; color: white; font-weight: bold; }
+nav.header a { margin-left: 20px; text-decoration: none; color: white; transition: all 0.3s ease; padding: 5px 12px; border-radius: 6px; }
 
-nav.header a {
-    margin-left: 20px;
-    text-decoration: none;
-    color: white;             /* default text color */
-    transition: all 0.3s ease;
-    padding: 5px 12px;        /* adds clickable area */
-    border-radius: 6px;       /* soft pill shape */
+/* Animate nav as a whole from right */
+nav.header {
+    opacity: 0;                /* start invisible */
+    transform: translateX(50px); /* start slightly to the right */
+    animation: slideInNav 0.8s ease forwards 0.5s; /* adjust delay as needed */
 }
 
-/* Hover Effect - brand highlight */
+/* Keyframes for slide-in */
+@keyframes slideInNav {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Keep individual link hover/active effects */
 nav.header a:hover {
-    background-color: #000;   /* black background on hover */
-    color: white;             /* keep text white */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.25); /* subtle depth */
+    background-color: #000;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
 }
 
-/* Active / Click Effect */
 nav.header a:active {
-    background-color: #222;   /* slightly darker black for click */
-    transform: translateY(1px); /* tiny press down */
+    background-color: #222;
+    transform: translateY(1px);
 }
 
-/* HERO TEXT & BUTTONS */
-.hero-text {
-    text-align: center;
-    margin-top: 100px;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeUp 1s ease forwards 0.5s; /* delayed for nice sequencing */
-}
-@keyframes fadeUp
-{
-    to { opacity: 1; transform: translateY(0); }
-}
+nav.header a:hover { background-color: #000; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.25); }
+nav.header a:active { background-color: #222; transform: translateY(1px); }
 
+/* =====================
+   4. HERO TEXT
+===================== */
+.hero-text { text-align: center; margin-top: 100px; opacity: 0; transform: translateY(30px); animation: fadeUp 1s ease forwards 0.5s; }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+/* =====================
+   5. HERO BUTTONS
+===================== */
 .btns {
     display: flex;
     justify-content: center;
     gap: 10px;
     position: relative;
     margin-top: 30px;
-    opacity: 0;
-    transform: translateY(20px) translateX(-255px);
-    animation: fadeUpBtn 0.8s ease forwards 0.7s; /* delay after hero text */
+    transform: translateX(-255px); /* keeps horizontal position */
 }
 
-@keyframes fadeUpBtn {
+/* Wrapper handles the slide-up sequence */
+.btn-wrapper {
+    opacity: 0;
+    transform: translateY(20px); /* start slightly below */
+    animation: slideFadeUp 0.6s ease forwards;
+}
+
+.btn-wrapper.agent-wrapper { animation-delay: 1.3s; }
+.btn-wrapper.loc-wrapper   { animation-delay: 1.6s; }
+
+@keyframes slideFadeUp {
     to {
         opacity: 1;
-        transform: translateY(0) translateX(-255px);
+        transform: translateY(0);
     }
 }
 
-/* Style the ACTUAL buttons */
+/* Buttons inside wrapper handle hover only */
 .btns button {
     padding: 15px 28px;
     border: none;
     cursor: pointer;
     font-weight: bold;
     border-radius: 12px 12px 0 0;
-    transition: all 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
 }
 
- /* Hover effect and animation */
+/* Smooth hover effect */
 .btns button:hover {
-    transform: translateY(3px);
-    opacity: 0.95;
+    transform: translateY(5px); /* hover lift */
     box-shadow: 0 8px 20px rgba(0,0,0,0.25);
 }
 
@@ -185,147 +137,41 @@ nav.header a:active {
     transform: translateY(1px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
-/* Individual colors */
-.agent {
-    background-color: black;
-    color: white;
-}
 
-.loc {
-    background-color: white;
-    color: black;
-}
+/* Button colors */
+.agent { background-color: black; color: white; }
+.loc   { background-color: white; color: black; }
 
-/* SEARCH BAR SECTION - Centered & Wide */
-.search-container {
-    display: flex;
-    justify-content: center; /* Centers the search bar */
-    width: 100%;
-    margin-top: 50px;
-}
-
-#search-form {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    animation: entranceEffect 0.8s ease-out forwards;
-    opacity: 0;
-}
-
-.search-wrapper {
-    position: relative;
-    width: 800px; /* YOUR WIDE SEARCH BAR */
-    max-width: 90%;
-}
-
-.search-wrapper::before
-{
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 0 0 30px 30px;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.2), transparent);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-input[type="search"] {
-    width: 100%;
-    padding: 15px 55px 15px 25px;
-    border-radius: 0 0 30px 30px;
-    border: none;
-    font-size: 16px;
-    outline: none;
-    background: rgba(255, 255, 255, 0.95);
-    transition: box-shadow 0.3s ease;
-    padding-right: 80px;
-}
-
-/* glow when focus */
+/* =====================
+   6. SEARCH BAR
+===================== */
+#search-form { width: 100%; display: flex; justify-content: center; opacity: 0; animation: entranceEffect 0.8s ease-out forwards; }
+@keyframes entranceEffect { from { opacity:0; transform: translateY(20px);} to {opacity:1; transform: translateY(0);} }
+.search-wrapper { position: relative; width: 800px; max-width: 90%; }
+.search-wrapper::before { content: ""; position: absolute; inset:0; border-radius: 0 0 30px 30px; background: linear-gradient(to bottom, rgba(0,0,0,0.2), transparent); opacity:0; transition: opacity 0.3s ease; pointer-events:none; }
+input[type="search"] { width:100%; padding:15px 55px 15px 25px; border-radius:0 0 30px 30px; border:none; font-size:16px; outline:none; background: rgba(255,255,255,0.95); transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; padding-right:80px; }
 input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
- 
-.btns:hover + #search-form .search-wrapper::before { opacity: 1; }
+.btns:hover + #search-form .search-wrapper::before { opacity:1; }
+.search-icon-btn { position:absolute; right:15px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#333; font-size:22px; padding:5px; }
 
-.search-icon-btn {
-    position: absolute;
-    right: 15px; /* adjust to move slightly away from edge */
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    font-size: 22px; /* adjust icon size */
-    padding: 5px;    /* clickable area bigger */
-}
+/* Agent/Location modes */
+.search-wrapper.agent-mode input[type="search"] { background:black !important; color:white !important; }
+.search-wrapper.agent-mode #search-input::placeholder { color: rgba(255,255,255,1); opacity:1; }
+.search-wrapper.location-mode #search-input::placeholder { color: #666; opacity:1; }
+.search-wrapper.agent-mode .search-icon-btn { color:white; }
+.search-wrapper.agent-mode input[type="search"]:focus { box-shadow:0 0 15px rgba(255,255,255,0.25);}
+.search-wrapper.location-mode input[type="search"]:focus { box-shadow:0 0 15px rgba(0,0,0,0.2); }
 
-/* SECOND PAGE - Solid White */
-.second-page {
-    background-color: white;
-    color: black;
-}
+/* =====================
+   7. OTHER PAGES
+===================== */
+.second-page, .third-page, .fourth-page { min-height:100vh; padding:80px 50px; }
+.second-page { background-color:white; color:black; }
+.third-page { background-color:#f4f4f4; }
+.fourth-page { background-color:rgb(137,137,137); }
 
-.second-page, .third-page, .fourth-page {
-    min-height: 100vh;
-    padding: 80px 50px;
-}
-
-.second-page { background-color: white; color: black; }
-.third-page { background-color: #f4f4f4; }
-.fourth-page { background-color: rgb(137, 137, 137); }
-/* ANIMATION */
-@keyframes entranceEffect {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* --- 4. RESPONSIVE ADJUSTMENTS --- */
-
-/* Tablets */
-@media screen and (max-width: 1100px) {
-    .logo img { margin-left: 20px; }
-    .search-wrapper { width: 70%; }
-}
-
-/* Mobile Phones */
-@media screen and (max-width: 600px) {
-    header { flex-direction: column; gap: 20px; }
-    .logo img { margin-left: 0; }
-    .search-wrapper { width: 95%; }
-    .btns { flex-direction: column; align-items: center; }
-    .hero-wrapper{background-attachment: scroll; }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* =====================
+   8. RESPONSIVE
+===================== */
+@media screen and (max-width:1100px) { .logo img{ margin-left:20px; } .search-wrapper{ width:70%; } }
+@media screen and (max-width:600px) { header{ flex-direction:column; gap:20px; } .logo img{ margin-left:0; } .search-wrapper{ width:95%; } .btns{ flex-direction:column; align-items:center; } .hero-wrapper{ background-attachment:scroll; } }
