@@ -601,51 +601,58 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
 
 @media screen and (max-width: 760px) {
 
-    .logo img{
-        margin-left: -35px;
-    }
-    /* show hamburger */
-    .hamburger{
-        display:flex;
-        position:fixed;
-        top:25px;
-        right:20px;
-    }
-
-    /* slide menu */
-    nav.header{
-        position:fixed;
-        top:0;
-        right:-260px;
-        width:260px;
-        height:80vh;
-        flex-direction:column;
-        background:rgba(0,0,0, 1); /*rgba(255,140,40,0.95); */
-        border-radius:10px 0 0 10px;
-        padding:60px 25px;
-        box-shadow:-5px 0 20px rgba(0,0,0,0.3);
-        transition:right 0.25s ease;
-        z-index:2500;
+    .hamburger {
+        display: flex;
+        position: fixed;
+        top: 25px;
+        right: 20px;
+        z-index: 3000;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 22px;
+        cursor: pointer;
     }
 
-    /* open state */
-    nav.header.active{
-        right:0;
+    nav.header {
+        position: fixed;
+        top: 0;
+        right: -260px;
+        width: 260px;
+        height: 100vh;
+        background: black;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;  /* start links from top */
+        align-items: center;          /* center horizontally */
+        padding-top: 80px;            /* space from top */
+        transition: right 0.25s ease;
+        z-index: 2500;
     }
 
-    /* mobile links */
-    nav.header a{
-        display:flex;
-        align-items:center;
-        gap:12px;
-        padding:12px 0;
-        font-size:16px;
+    nav.header.active {
+        right: 0;
     }
+
+    nav.header a {
+        display: flex;                /* for icon + text alignment */
+        align-items: center;
+        gap: 12px;                    /* space between icon and text */
+        text-align: center;
+        font-size: 22px;
+        color: white;
+        text-decoration: none;
+        margin: 15px 0;               /* space between links */
+        width: 100%;                   /* optional: make links full width */
+        justify-content: center;       /* center text + icon horizontally */
+    }
+
 
     /* show icons on mobile */
     nav.header a ion-icon{
         display:inline-block;
-        font-size:20px;
+        font-size:25px;
     }
 
 
