@@ -88,7 +88,7 @@ body, html
 /* =========================
    3. HEADER & NAVIGATION
 ========================= */
-header {
+.hero-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -251,10 +251,10 @@ nav.header {
 
 /* Base button style */
 .btns input {
-    width: 120px;        /* uniform width */
+    width: 130px;        /* uniform width */
     height: 46px;        /* uniform height */
     padding: 0;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
     border-radius: 40px;
     cursor: pointer;
@@ -263,6 +263,7 @@ nav.header {
     box-sizing: border-box;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
     position: relative;
+    font-weight: 100;
 }
 
 /* ==============================
@@ -323,12 +324,12 @@ nav.header {
 .contact {
     background: transparent;
     border: 2px solid rgba(255,140,40,0.85);
-    color: white;
+    color: whitesmoke;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 .contact:hover {
-    background: rgba(255,255,255,0.08);
+    background: rgba(245,245,245,0.08);
     border-color: #ff8c28;
     transform: translateY(-3px);
 }
@@ -545,25 +546,121 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
 .explore
 {
 	background-color: #28282B; /* matt black */
+    color: white;
+}
+
+.explore .explore-header{ 
+    display: flex;
+    padding: 50px 10px;
+    justify-content: center;
+}
+
+.prop-types form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 100px;
+}
+
+/* input type */
+.prop-input{
+    border-radius: 50%;
+    width: 100px; height: 100px;
+    cursor: pointer;
+    border: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 60px 60px;
+}
+
+.prop-input:hover{
+    transform: scale(1.05);
+    background-color: rgb(230, 230, 230);
+}
+
+.prop-input.resident {
+    background-image: url('asset/residential.png');
+    background-size: cover;
+}
+.prop-input.commer {
+    background-image: url('asset/commercial.png');
+    background-size: cover;
+}
+.prop-input.indu {
+    background-image: url('asset/industrial.png'); 
+    background-size: cover;
+}
+
+.prop-input.land {
+    background-image: url('../asset/img/img10.jpg');
+    background-size: cover;
+}
+.prop-input.mix { background-image: url('asset/mixed.png'); }
+
+
+/* input type texts */
+.prop-item h6{
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/*
+.prop-item .land + h6{
+   margin-left: 20px;
 }
 
 /* =====================
    9. SHORT-TERM SECTION
 ===================== */
-.short { background-color:rgb(137,137,137); }
+.short {
+    background-color: white;
+}
 
+.short .short-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0;        /* distance between h3 and line */
+    padding-top: 70px;
+    padding-left: 200px; /* safer than margin-left */
+}
+
+.short .short-header h3 {
+    margin: 0;        /* remove default heading margin */
+}
+
+.short .custom-line {
+    width: 550px;
+    height: 1px;
+    background-color: black;
+    margin: -16px 0 70px -70px;
+}
 /* =====================
    10. 	INQUIRY SECTION
 ===================== */
 
+.inquiry{
+    background-image: url("../asset/img/img8.jpg");
+    background-size: cover;
+}
+.inquiry-header h1{
+    margin-left: 330px;
+    padding-top: 80px;
+    color: white;
+    font-size: 50px;
+}
 /* =====================
    11. FOOTER SECTION
 ===================== */
-
+.footer{
+    background-color: black;
+    color: white;
+}
 /* ===========================
    OTHER GLOBAL STYLE SECTION
 ============================== */
-.explore, .short, .inquiry, .footer { min-height:100vh; }
+/* .explore, */ .short, .inquiry, .footer { min-height:100vh; }
 
 /* =====================
    8. RESPONSIVE
