@@ -36,7 +36,8 @@ app.UseDefaultFiles();
 app.UseStaticFiles();
 
 AuthRoutes.MapRoutes(app);
-
 ChatRoutes.MapRoutes(app);
+RequestRoutes.MapRoutes(app);
+PropertyRoutes.MapRoutes(app);
 
 app.Run();
