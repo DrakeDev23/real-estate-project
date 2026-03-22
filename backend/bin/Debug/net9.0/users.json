@@ -6,9 +6,21 @@
     "Redirect": "buy.html"
   },
   {
-    "Username": "drake",
+    "Username": "santi",
+    "Email": "santi@gmail.com",
+    "Password": "santi123",
+    "Redirect": "buy.html"
+  },
+  {
+    "Username": "SDwyn",
+    "Email": "dwyn@gmail.com",
+    "Password": "dwyn123",
+    "Redirect": "buy.html"
+  },
+  {
+    "Username": "hi",
     "Email": "maccogoth@gmail.com",
-    "Password": "drake123",
+    "Password": "hi",
     "Redirect": "buy.html"
   }
 ]

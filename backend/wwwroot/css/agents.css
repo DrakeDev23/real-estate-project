@@ -12,11 +12,14 @@ body, html {
     font-family: sans-serif;
     height: 100vh;
 }
+
 body {
-    background: url("../images/bg.jpg");
+    background: radial-gradient(circle at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.6) 100%), url("../images/bg1.jpg");
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
 }
+
 .hero-wrapper {
     background-size: cover;
     background-position: center;
@@ -380,16 +383,17 @@ nav.header a:active {
 .cta-button {
     display: inline-block;
     padding: 12px 25px;
-    background: linear-gradient(180deg, rgb(70, 70, 233), skyblue);
+    background:#0056b3;
     color: white;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
     transition: background-color 0.3s ease;
+    box-shadow: 3px 4px 6px black;
 }
 
 .cta-button:hover {
-    background: linear-gradient(180deg, skyblue, rgb(70, 70, 233));
+    background: #2767aa;
 }
 
 .pagination {

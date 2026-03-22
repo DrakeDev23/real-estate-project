@@ -6,15 +6,27 @@
     "Redirect": "buy.html"
   },
   {
-    "Username": "drake",
-    "Email": "maccogoth@gmail.com",
-    "Password": "drake123",
-    "Redirect": "buy.html"
-  },
-  {
     "Username": "santi",
     "Email": "santi@gmail.com",
     "Password": "santi123",
+    "Redirect": "buy.html"
+  },
+  {
+    "Username": "SDwyn",
+    "Email": "dwyn@gmail.com",
+    "Password": "dwyn123",
+    "Redirect": "buy.html"
+  },
+  {
+    "Username": "hi",
+    "Email": "maccogoth@gmail.com",
+    "Password": "hi",
+    "Redirect": "buy.html"
+  },
+  {
+    "Username": "zach",
+    "Email": "zachary@gmail.com",
+    "Password": "zach123",
     "Redirect": "buy.html"
   }
 ]
