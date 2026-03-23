@@ -1,104 +1,144 @@
 document.addEventListener("DOMContentLoaded", function () {
-
     const messageInput = document.getElementById("message");
     const chat = document.getElementById("chat");
     const sendBtn = document.getElementById("send-btn");
+    const quickChoices = document.getElementById("quick-choices");
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.querySelector('.sidebar');
+    const closeBtn = document.getElementById('closeBtn');
 
-    messageInput.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            sendMessage();
+    const messageQueue = [];
+    let isSending = false;
+    let lastSentTimes = []; 
+    const SPAM_THRESHOLD = 3; 
+    const SPAM_INTERVAL = 1500; 
+    let warningVisible = false;
+
+    function appendMessage(text, type) {
+        const div = document.createElement("div");
+        div.classList.add("message", type);
+        if (type === "bot") {
+            div.innerHTML = `<img src="images/logo.png" alt="Agent" class="avatar"><div class="bubble">${text}</div>`;
+        } else {
+            div.innerHTML = `<div class="bubble">${text}</div>`;
         }
-    });
+        chat.appendChild(div);
+        chat.scrollTop = chat.scrollHeight;
+        return div;
+    }
 
-    sendBtn.addEventListener("click", sendMessage);
+    function appendTyping() {
+        const div = document.createElement("div");
+        div.classList.add("message", "bot");
+        div.innerHTML = `<img src="images/logo.png" alt="Agent" class="avatar"><div class="bubble typing">Typing</div>`;
+        chat.appendChild(div);
+        chat.scrollTop = chat.scrollHeight;
+        return div;
+    }
 
-    async function sendMessage() {
+    function disableQuickChoices(disable) {
+        quickChoices.querySelectorAll(".choice-btn").forEach(btn => btn.disabled = disable);
+    }
 
-        let message = messageInput.value.trim();
-        if (!message) return;
+    function showSpamWarning() {
+        if (warningVisible) return;
+        warningVisible = true;
 
-        message = message.charAt(0).toUpperCase() + message.slice(1).toLowerCase();
-
-        const userDiv = document.createElement("div");
-        userDiv.classList.add("message", "user");
-        userDiv.innerHTML = `<div class="bubble">${message}</div>`;
-        chat.appendChild(userDiv);
-
-        messageInput.value = "";
+        const warningDiv = document.createElement("div");
+        warningDiv.classList.add("message", "bot");
+        warningDiv.innerHTML = `<div class="bubble" style="background-color: #ffcc00; color: #333;">You're sending messages too quickly! Please wait a moment.</div>`;
+        chat.appendChild(warningDiv);
         chat.scrollTop = chat.scrollHeight;
 
+        setTimeout(() => {
+            warningDiv.remove();
+            warningVisible = false;
+        }, 3000);
+    }
+
+    function isSpamming() {
+        const now = Date.now();
+        lastSentTimes = lastSentTimes.filter(time => now - time < SPAM_INTERVAL);
+        lastSentTimes.push(now);
+        return lastSentTimes.length >= SPAM_THRESHOLD;
+    }
+
+    async function processQueue() {
+        if (isSending || messageQueue.length === 0) return;
+
+        if (isSpamming()) {
+            showSpamWarning();
+            return;
+        }
+
+        isSending = true;
+        disableQuickChoices(true);
         messageInput.disabled = true;
         sendBtn.disabled = true;
 
-        const typingDiv = document.createElement("div");
-        typingDiv.classList.add("message", "bot");
-        typingDiv.innerHTML = `
-            <img src="images/logo.png" alt="Agent" class="avatar">
-            <div class="bubble typing">Typing</div>
-        `;
-        chat.appendChild(typingDiv);
-        chat.scrollTop = chat.scrollHeight;
+        const message = messageQueue.shift();
+        const formattedMessage = message.charAt(0).toUpperCase() + message.slice(1).toLowerCase();
 
+        appendMessage(formattedMessage, "user");
+        messageInput.value = "";
+
+        const typingDiv = appendTyping();
         const startTime = Date.now();
 
         try {
-
             const response = await fetch("/api/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: message })
+                body: JSON.stringify({ message: formattedMessage })
             });
 
-            if (!response.ok) throw new Error("Network error");
+            if (!response.ok) throw new Error("Error connecting to server");
 
             const data = await response.json();
 
             const elapsed = Date.now() - startTime;
-            if (elapsed < 800) {
-                await new Promise(resolve => setTimeout(resolve, 800 - elapsed));
-            }
+            if (elapsed < 800) await new Promise(r => setTimeout(r, 800 - elapsed));
 
-            chat.removeChild(typingDiv);
+            typingDiv.remove();
+            appendMessage(data.reply, "bot");
 
-            const botDiv = document.createElement("div");
-            botDiv.classList.add("message", "bot");
-            botDiv.innerHTML = `
-                <img src="images/logo.png" alt="Agent" class="avatar">
-                <div class="bubble">${data.reply}</div>
-            `;
-            chat.appendChild(botDiv);
+        } catch (err) {
+            typingDiv.remove();
+            appendMessage(err.message || "Error connecting to server", "bot");
+            console.error(err);
+        } finally {
+            isSending = false;
+            disableQuickChoices(false);
+            messageInput.disabled = false;
+            sendBtn.disabled = false;
+            messageInput.focus();
 
-            chat.scrollTop = chat.scrollHeight;
-
-        } catch (error) {
-
-            chat.removeChild(typingDiv);
-
-            const errorDiv = document.createElement("div");
-            errorDiv.classList.add("message", "bot");
-            errorDiv.innerHTML = `
-                <div class="bubble">Error connecting to server</div>
-            `;
-            chat.appendChild(errorDiv);
-
-            console.error(error);
+            if (messageQueue.length > 0) processQueue();
         }
-
-        messageInput.disabled = false;
-        sendBtn.disabled = false;
-        messageInput.focus();
     }
-});
 
-const hamburger = document.getElementById('hamburger');
-const sidebar = document.querySelector('.sidebar');
-const closeBtn = document.getElementById('closeBtn');
+    function queueMessage(msg) {
+        messageQueue.push(msg);
+        processQueue();
+    }
 
-hamburger.addEventListener('click', () => {
-    sidebar.classList.add('active');
-});
+    messageInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            if (messageInput.value.trim()) queueMessage(messageInput.value.trim());
+        }
+    });
 
-closeBtn.addEventListener('click', () => {
-    sidebar.classList.remove('active');
+    sendBtn.addEventListener("click", function () {
+        if (messageInput.value.trim()) queueMessage(messageInput.value.trim());
+    });
+
+    quickChoices.addEventListener("click", function (event) {
+        if (event.target.classList.contains("choice-btn")) {
+            queueMessage(event.target.textContent.trim());
+        }
+    });
+
+    hamburger.addEventListener('click', () => sidebar.classList.add('active'));
+    closeBtn.addEventListener('click', () => sidebar.classList.remove('active'));
 });
