@@ -211,7 +211,6 @@ nav.header {
     align-items: center;
     gap: 10px;
     transition: margin 0.3s ease;
-    
     opacity: 0;                  /* start invisible */
     transform: translateX(-50px) scale(0.9); /* start slightly left & smaller */
     animation: logoEntrance 0.8s ease forwards 0.5s; /* delay matches nav */
@@ -384,43 +383,46 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
 .search-wrapper.login-mode input[type="search"]:focus { box-shadow:0 0 15px rgba(255,255,255,0.25);}
 .search-wrapper.contact-mode input[type="search"]:focus { box-shadow:0 0 15px rgba(0,0,0,0.2); }
 */
-/* ==========================================
-   7. DISCOVER SECTION – CLEAN LUXURY STYLE
-========================================== */
+/* ======================
+   7. DISCOVER SECTION 
+========================= */
 
 .discover {
-    background: linear-gradient(to bottom, #ffffff 70%, #f7f7f7 100%);
+    background: #f9f9f9;
     color: #111;
-    padding: 30px 0 10px 0; 
+    padding: 40px 0 30px 0; /* tightened so header + carousel fit on one screen */
     overflow: hidden;
     position: relative;
 }
 
-/* Header Layout */
 .discover header {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 24px; /* reduced from 40px */
 }
 
-.discover h2 {
-    font-size: 34px;
-    font-weight: 600;
-    margin-bottom: 10px;
+.discover h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #111;
+    margin-bottom: 0;
 }
 
 .horizontal-line {
-    width: 80px;
+    width: 48px;
     height: 3px;
     background: #ff7400;
-    margin: 10px 0;
+    border-radius: 2px;
+    margin: 12px 0 10px;
 }
 
 .discover h5 {
-    color: #666;
+    color: #888;
     font-weight: 400;
+    font-size: 15px;
 }
 
 /* ==========================================
@@ -428,26 +430,27 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
 ========================================== */
 
 .carousel {
-    overflow: visible; overflow-x: hidden;
-    margin-top: 20px; margin-bottom: 30px;
+    overflow: hidden;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    touch-action: pan-y; /* ← ignore horizontal swipes */
 }
 
 .cards-container {
     display: flex;
-	flex-wrap: nowrap;
-    gap: 40px;
+    flex-wrap: nowrap;
+    gap: 24px;
     width: max-content;
+    padding: 16px 0;
     animation: smoothScroll 35s linear infinite;
-	
+    touch-action: pan-y; /* ← also on the child to be safe */
 }
 
-/* Infinite Animation */
 @keyframes smoothScroll {
-    0% { transform: translateX(0); }
+    0%   { transform: translateX(0); }
     100% { transform: translateX(-50%); }
 }
 
-/* Pause on hover */
 .cards-container:hover {
     animation-play-state: paused;
 }
@@ -457,19 +460,19 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
 ========================================== */
 
 .property-card {
-    flex: 0 0 260px;
-    background: #ff7400;
-    border-radius: 20px; 
+    flex: 0 0 270px;
+    background: #fff;
+    border-radius: 16px;
     overflow: hidden;
-    transition: transform 0.5s ease;
-    filter: drop-shadow(10px 10px 8px rgba(0,0,0,0.5));
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    /* shadow on right and bottom only */
+    box-shadow: 6px 6px 18px rgba(0, 0, 0, 0.5);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
 .property-card:hover {
-    transform: translateY(-10px);
-    /* Extra thick "elevation" shadow */
-    box-shadow: 
-        15px 25px 50px 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(-8px);
+    box-shadow: 10px 18px 36px rgba(0, 0, 0, 0.4);
 }
 
 /* ==========================================
@@ -478,73 +481,99 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
 
 .image-wrapper {
     position: relative;
-    background: white;
+    overflow: hidden;
 }
 
 .property-card img {
     width: 100%;
-    height: 190px;
+    height: 195px;
     object-fit: cover;
     object-position: center;
     display: block;
-    transition: transform 0.6s ease;
+    transition: transform 0.55s ease;
 }
 
 .property-card:hover img {
-    transform: scale(1.08);
+    transform: scale(1.06);
+}
+
+.image-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.35) 100%);
+    pointer-events: none;
 }
 
 /* Price Tag */
 .price-tag {
     position: absolute;
-    bottom: 20px;
-    left: 20px;
+    bottom: 14px;
+    left: 14px;
     background: #ff7400;
-    color: white;
-    padding: 8px 18px;
-    border-radius: 25px;
-    font-weight: 600;
-    font-size: 14px;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.2px;
+    z-index: 1;
 }
 
 /* ==========================================
-   PROPERTY INFO (ORANGE SECTION)
+   PROPERTY INFO
 ========================================== */
 
 .property-info {
-   
-    color: white;
-    padding: 14px;
+    background: #ff7400;
+    color: #fff;
+    padding: 16px 18px 18px;
 }
 
 .property-info h3 {
-    margin-bottom: 6px;
-}
-
-.property-info p {
-    opacity: 0.9;
-    margin-bottom: 10px;
-}
-
-.property-details {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    line-height: 1.3; 
 }
 
 .property-info .location {
     display: flex;
     align-items: center;
-    gap: 6px; /* space between icon and text */
-    margin-bottom: 10px;
+    gap: 5px;
+    margin-bottom: 12px;
 }
 
 .property-info .location p {
-    margin: 0; /* remove default paragraph margin */
-    font-size: 14px;
-    opacity: 0.9;
+    margin: 0;
+    font-size: 13px;
+    opacity: 0.85;
 }
 
+.property-info .location ion-icon {
+    font-size: 14px;
+    opacity: 0.85;
+    flex-shrink: 0;
+}
+
+.property-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    opacity: 0.9;
+    padding-top: 10px;
+    /*border-top: 1px solid rgba(255, 255, 255, 0.25); */
+}
+
+.property-details span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.property-details ion-icon {
+    font-size: 14px;
+}
 /* =====================
    8. EXPLORE SECTION
 ===================== */
@@ -621,6 +650,7 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
 ===================== */
 .short {
     background-color: white;
+    min-height: 100vh;
 }
 
 .short .short-header {
@@ -645,52 +675,269 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
    10. 	INQUIRY SECTION
 ===================== */
 
-.inquiry{
-    background-image: url("../asset/img/img25.jpg");
+.inquiry {
+    background-image: url("../asset/img/img27.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-}
-/* Inquiry Header */
-.inquiry-header h1{
-    margin-left: 330px;
-    padding-top: 40px;
-    color: white;
-    font-size: 50px;
-}
-
-.inquiry-header h2{
-    margin-left: 500px;
-    color: black;
-    font-size: 30px;
-    font-weight: 700;
-}
-
-.inquiry-parag{
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-left: 330px;
-    margin-top: 30px;
+    align-items: center;
+    padding: 60px; 
+    gap: 60px;
+    min-height: 100vh;
 }
 
-.inquiry-parag .p1{
-    font-size: 24px;
-    color: orangered;
+.inquiry-left { flex: 1; }
+
+.inquiry-header h1
+{
+     color: white; 
+     font-size: 42px; 
+     margin-top: -230px;
+     margin-left: 150px;
+}
+.inquiry-header h2 /* in haven */
+{ 
+    color: black; 
+    font-size: 25px; 
+    font-weight: 700; 
+    margin-top: -25px;
+    margin-bottom: 65px; 
+    margin-left: 270px;
+}
+
+.inquiry-parag .p1  /* were here */
+{
+    font-size: 24px; 
+    color: #ff7400; 
+    font-weight: 600; 
+    margin-bottom: 35px; 
+    margin-left: 250px;
+}
+.inquiry-parag .p2, .inquiry-parag .cp2, .inquiry-parag .p3
+{ 
+    color: white; 
+    font-size: 18px; 
+    font-weight: 700; 
+    line-height: 1.5; 
+}
+.inquiry-parag .p2, .inquiry-parag .cp2
+{ 
+    margin-left: 150px;
+}
+.inquiry-parag .cp2
+{
+    margin-top: -17px;
+}
+.inquiry-parag .p3 { margin-top: 30px; margin-left: 180px;}
+
+.inquiry-right { flex: 1; }
+
+.inquiry-form-container {
+    background-color: rgba(255, 255, 255, 1);
+    padding: 25px 45px;
+    border-radius: 6px;
+}
+
+.form-row { display: flex; gap: 16px; margin-bottom: 18px; }
+.form-row .form-group { flex: 1; margin-bottom: 0; }
+.form-group { margin-bottom: 18px; }
+
+.form-title
+{
+    font-size: 28px;
+    font-weight: 700;   
+    margin-top: -4px;
+}
+.form-sub{
+    font-size: 12px;
+    margin-top: -30px;
+    margin-left: 50px;
+}
+/* Line style — Subject, First/Last Name, Email, Contact Number */
+.input-line {
+    width: 100%;
+    border: none;
+    border-bottom: 1.5px solid #aaa;
+    padding: 6px 0;
+    font-size: 14px;
+    background: transparent;
+    outline: none;
+}
+.input-line:focus { border-bottom-color: #ff7400; }
+
+/* Box style — Address, Message */
+.input-box {
+    width: 100%;
+    border: 1.5px solid #ccc;
+    padding: 10px 8px;
+    font-size: 14px;
+    border-radius: 15px;
+    outline: none;
+}
+.input-box:focus { border-color: #ff7400; }
+textarea.input-box { resize: vertical; min-height: 100px; }
+
+.submit-btn {
+    width: 50%;
+    margin-left: 26%;
+    background: #ff7400;
+    color: #fff;
+    border: none;
+    padding: 11px;
+    font-size: 15px;
     font-weight: 600;
+    border-radius: 20px;
+    cursor: pointer;
 }
 /* =====================
    11. FOOTER SECTION
 ===================== */
-.footer{
-    background-color: black;
-    color: white;
+footer {
+  width: 100%;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  flex-direction: column;
 }
-/* ===========================
-   OTHER GLOBAL STYLE SECTION
-============================== */
-/* .explore, */ .short, .inquiry, .footer { min-height:100vh; }
+/* =====================
+   CONTAINER FOR ALL FOOTER CONTENT
+===================== */
+.foot-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 60px;
+  padding-top: 60px;
+}
+/* =====================
+   GROUPED BRANDING
+===================== */
+.brand-group {
+  margin-left: -20px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
+.brand img {
+  width: 40px;
+}
+
+.brand p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 24px;
+}
+/* =====================
+  SOCIALS
+===================== */
+.socials {
+  margin-top: 110px;
+  text-align: center;
+}
+
+.social-icons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: -10px;
+}
+.social-icons a {
+  color: white;
+  font-size: 16px;
+  text-decoration: none;
+}
+/* =====================
+  FIND US
+===================== */
+.find-us {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: -25px;
+  margin-left: 40px;
+}
+.underline {
+  width: 90px;
+  height: 1px;
+  background: white;
+  border-radius: 2px;
+  margin-top:-26px;
+  margin-bottom: 10px;
+  margin-left: -10px;
+}
+.find-us a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: white;
+}
+/* =====================
+   COMPANY LOCATION 
+===================== */
+.company-loc img {
+  width: 250px;
+  height: 200px;
+  border: 5px solid #ff7400; /* optional highlight like your image */
+  margin-top: 50px;
+}
+/* =====================
+   LEGAL
+===================== */
+.legal {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 125px;
+}
+.legal h4{
+    margin-left: 20px;
+    margin-bottom: -6px;
+}
+.legal-underline{
+    width: 90px;
+    height: 1px;
+    background: white;
+    margin-bottom: 5px;
+}
+.legal a{
+    text-decoration: none;
+    color: white;
+    font-size: 12px;
+    margin-top: -5px;
+    text-align: center;
+}
+/* =====================
+   FOOTER BOTTOM
+===================== */
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 50px 20px;
+    width: 100%;
+}
+.copyright {
+    font-size: 13px;
+    color: #8c8884;
+    margin-left: 50px;
+}
+
+.footer-divider {
+    width: 90%;
+    border: none;
+    border-top: 1px solid rgba(255,255,255,1    );
+    margin-bottom: -5px;
+    margin-top: 50px;
+    height: 5px;
+}
 /* =====================
    8. RESPONSIVE
 ===================== */
@@ -815,5 +1062,13 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
     .short-header .custom-line{
         width: 300px;
         margin: 1px 0 0 7px;
+    }
+    /* =======================
+      FOOTER SECTION
+    ======================== */
+    .foot-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
     }
 }
