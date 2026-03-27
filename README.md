@@ -5,9 +5,12 @@ The **Registration Page** of Haven allows new users to create an account by prov
 <img width="1346" height="634" alt="image" src="https://github.com/user-attachments/assets/3050d065-abbf-4505-89f4-3991a542df64" />
 The **Find Agent Page** of Haven allows users to search and connect with professional real estate agents based on their preferences. It provides an easy-to-use interface that helps users find the right agent for their needs and communicate with them efficiently.
 <img width="1335" height="632" alt="image" src="https://github.com/user-attachments/assets/7e645a21-579a-4309-b0f5-325220aa3a50" />
-<img width="1345" height="628" alt="image" src="https://github.com/user-attachments/assets/ef4622e8-4bb3-4c79-b234-91180c37fcbe" />
+<img width="1348" height="637" alt="image" src="https://github.com/user-attachments/assets/c7c359e5-0be8-4f6b-8d9c-8f54d65563af" />
 <img width="1352" height="634" alt="image" src="https://github.com/user-attachments/assets/1e58ae1a-3f6e-4a16-bc9f-dd52a7d6b81a" />
 The **AI Agent Page** of Haven provides users with an intelligent assistant that helps answer inquiries and guide them through the platform. It offers quick responses, property suggestions, and support to improve the overall user experience.
 <img width="1358" height="630" alt="image" src="https://github.com/user-attachments/assets/849fecfd-95a1-4af1-8471-6015c077c250" />
+The admin dashboard allows administrators to efficiently manage the entire real estate platform, including monitoring user requests and activity. It provides tools to add, edit, and delete property listings, as well as manage user accounts and agent profiles. With its centralized control panel, admins can ensure smooth system operation and keep all data accurate and up to date.
+<img width="1347" height="634" alt="image" src="https://github.com/user-attachments/assets/be439467-090d-4f0f-b9cd-22da7919d1d3" />
+
 
 These are the existing pages currently included in my files for the Haven capstone project. Other core features such as Home, Buy, Sell, and Rent are being developed by my groupmates as part of our collaborative work. The system is still a work in progress, and some functionalities are not yet fully implemented. This project is currently under development and will continue to be improved and expanded over time.
