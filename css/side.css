@@ -1,0 +1,18 @@
+.div
+{
+	margin: 6rem 12rem;
+	height: 20rem; width: 36rem;
+	background-size: 100% 100%;
+	box-shadow: 20px 20px 10px gray;
+	animation: slider 10s linear infinite;
+}
+
+@keyframes slider
+{
+	0%(background-image: rl(img3.jpg);
+	25background-image:url(img3.jpg);
+	50%(background-image: url(img4.jpg);
+	75%(background-image: url(img5.jpg);
+	100%(background-image: url(img6.jpg);
+
+}

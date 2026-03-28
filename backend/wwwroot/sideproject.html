@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Haven</title>
+        
+        <link rel="stylesheet" href="css/style.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+    <body>
+        <section class="hero-wrapper">
+            <header>
+                <div class="logo">
+                    <img src="asset/logo/publika4.png" alt="publika4">
+                    <a href="index.html" class="haven">HAVEN</a>
+                </div>
+                <nav class="header">  
+		    <a href="index.html">Home</a>              
+                    <a href="buy.html">Buy</a>
+                    <a href="rent.html">Rent</a>
+                    <a href="sell.html">Sell</a>
+		    <a href="ai-agent.html">AI Agent</a>
+                    <a href="findagent.html">Find Agent</a>
+                </nav>
+            </header>
+
+            <section class="hero-text">
+                <h2>Your Next Home Awaits</h2>
+            </section>
+
+            <div class="btns">
+                <button class="agent">For Agent</button>
+                <button class="loc">Location</button>
+            </div>
+
+            <form role="search" id="search-form">
+                <div class="search-wrapper">
+                    <input type="search" id="search-input" name="q" placeholder="City, Address, Zip Code">
+                    <button type="submit" class="search-icon-btn">
+                        <span class="material-icons">search</span>
+                    </button>
+                </div>
+            </form>
+        </section>
+    
+    <section class="second-page">
+        <header>
+            <h3>Discover our Latest Properties</h3>
+        </header>
+    </section>
+
+    <section class="third-page">
+         <header>
+            <h3>Discover our Latest Properties</h3>
+         </header>
+    </section>
+
+    <section class="fourth-page">
+         <header>
+            <h3>Discover our Latest Properties</h3>
+         </header>
+    </section>
+
+	<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const agentBtn = document.querySelector(".agent");
+    const locBtn = document.querySelector(".loc");
+    const searchInput = document.getElementById("search-input");
+    const searchWrapper = document.querySelector(".search-wrapper");
+
+    // Default mode (Location)
+    searchWrapper.classList.add("location-mode");
+    locBtn.classList.add("active-mode");
+
+    // LOCATION CLICK
+    locBtn.addEventListener("click", function () {
+
+        // Change placeholder
+        searchInput.placeholder = "City, Address, Zip Code";
+        searchInput.value = "";
+
+        // Switch search mode
+        searchWrapper.classList.remove("agent-mode");
+        searchWrapper.classList.add("location-mode");
+
+        // Switch active button
+        locBtn.classList.add("active-mode");
+        agentBtn.classList.remove("active-mode");
+    });
+
+    // AGENT CLICK
+    agentBtn.addEventListener("click", function () {
+
+        // Change placeholder
+        searchInput.placeholder = "Agent Name, Agency, License ID";
+        searchInput.value = "";
+
+        // Switch search mode
+        searchWrapper.classList.remove("location-mode");
+        searchWrapper.classList.add("agent-mode");
+
+        // Switch active button
+        agentBtn.classList.add("active-mode");
+        locBtn.classList.remove("active-mode");
+    });
+
+});
+</script>
+
+</body>
+</html>
+
+
+

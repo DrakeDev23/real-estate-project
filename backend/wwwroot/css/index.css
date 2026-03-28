@@ -1,0 +1,1078 @@
+/* ===================
+   1. GLOBAL STYLES
+====================== */
+* {
+    box-sizing: border-box;
+}
+html 
+{ 
+	scroll-behavior: smooth; 
+}
+body, html
+{
+	margin: 0; padding: 0; font-family: sans-serif; 
+    overflow-x: hidden;
+}
+/*
+body{
+     background: url("../asset/img/img1.jpg");
+    
+}
+/* =====================
+   HAMBURGER – GLOBAL STYLES
+====================== */
+.hamburger {
+    display: none; /* hidden on desktop */
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 22px;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.hamburger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.25s ease;
+    transform-origin: center;
+}
+
+/* Hamburger -> X animation */
+.hamburger.open span:nth-child(1) {
+    transform: rotate(58deg) translate(5px,5px);
+}
+
+.hamburger.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+    transform: rotate(-58deg) translate(5px,-5px);
+}
+ nav.header a ion-icon {
+    display: none;
+}
+/* =========================
+   2. HERO WRAPPER
+========================= */
+.hero-wrapper{
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.1)), url("../asset/img/img24.jpeg");
+    background-size: cover;
+
+}
+
+.hero-wrapper::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("../asset/img/img1.jpg") center/cover no-repeat;
+    transform: scale(1.05);
+    animation: bgZoom 6s ease forwards;
+    z-index: -1;
+}
+
+@keyframes bgZoom{
+    from{ transform: scale(1.08); }
+    to{ transform: scale(1); }
+}
+
+/* =========================
+   3. HEADER & NAVIGATION
+========================= */
+.hero-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    position: relative; /* allow hamburger absolute positioning */
+    z-index: 1;         /* make sure logo/nav are below hamburger */
+}
+
+.hero-text h1 {
+    font-size: 50px;
+    font-weight: 600;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: margin 0.3s ease;
+}
+
+.logo img {
+    width: 50px;
+    height: auto;
+    /*margin-left: 200px;*/
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+@keyframes strongGlow {
+    0% { filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
+    25% { filter: drop-shadow(0 0 10px rgba(255,255,255,0.5)) drop-shadow(0 0 20px rgba(255,255,255,0.3)); }
+    50% { filter: drop-shadow(0 0 15px rgba(255,255,255,0.7)) drop-shadow(0 0 25px rgba(255,255,255,0.4)); }
+    75% { filter: drop-shadow(0 0 10px rgba(255,255,255,0.5)) drop-shadow(0 0 20px rgba(255,255,255,0.3)); }
+    100% { filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
+}
+
+.logo img::after {
+    content: "";
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-25deg);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.logo img:hover::after {
+    animation: shine 1.2s forwards;
+}
+
+@keyframes shine {
+    from { left: -100%; }
+    to { left: 100%; }
+}
+
+.logo a { text-decoration: none; color: white; font-weight: bold; }
+
+/* =====================
+   NAVIGATION LINKS CLEAN HOVER
+===================== */
+nav.header a {
+    position: relative;       /* needed for pseudo-element */
+    padding: 5px 12px;
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    background: none;         /* remove any background on hover */
+}
+
+/* Underline effect from center */
+nav.header a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;                /* start at center */
+    height: 2px;
+    width: 100%;
+    background-color: white;
+    transform: translateX(-50%) scaleX(0); /* hide at start */
+    transform-origin: center;
+    transition: transform 0.3s ease;
+}
+
+/* Hover: expand underline smoothly */
+nav.header a:hover::after {
+    transform: translateX(-50%) scaleX(1); 
+}
+
+/* Active link: keep underline visible */
+nav.header a:active::after {
+    transform: translateX(-50%) scaleX(1);
+    background-color: #fff;
+}
+
+/* Optional: subtle color change on hover */
+nav.header a:hover {
+    color: #fff;  /* keeps text white, no background */
+}
+
+/* NAV ANIMATION */
+nav.header {
+    display: flex;
+    gap: 20px;
+}
+
+@keyframes slideInNav {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+/* =========================
+   NAV LOGO ENTRANCE ANIMATION
+========================= */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: margin 0.3s ease;
+    opacity: 0;                  /* start invisible */
+    transform: translateX(-50px) scale(0.9); /* start slightly left & smaller */
+    animation: logoEntrance 0.8s ease forwards 0.5s; /* delay matches nav */
+}
+
+@keyframes logoEntrance {
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1); /* slide to normal position & scale */
+    }
+}
+
+/* Optional: subtle hover lift */
+.logo img:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+/* =====================
+   HERO TEXT
+===================== */
+.hero-text {
+    text-align: center;
+    margin-top: 100px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 1s ease forwards 0.5s;
+}
+@keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =====================
+   HERO BUTTONS
+===================== */
+.btns {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 30px;
+    flex-wrap: wrap; /* wrap on small screens */
+}
+
+/* Base button style */
+.btns input {
+    width: 130px;        /* uniform width */
+    height: 46px;        /* uniform height */
+    padding: 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 40px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    text-align: center;
+    box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    position: relative;
+    font-weight: 100;
+}
+
+/* ==============================
+   LOGIN BUTTON WITH GLASS SHINE
+================================= */
+.login {
+    border: none;
+    color: white;
+    border-radius: 40px;
+    cursor: pointer;
+    background: linear-gradient(145deg,#f08a1a,#c66c0c);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.4),
+        inset 0 -2px 4px rgba(0,0,0,0.25),
+        0 8px 20px rgba(0,0,0,0.35);
+    overflow: hidden;
+}
+
+.login::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.7), transparent);
+    transform: skewX(-25deg);
+    pointer-events: none;
+}
+
+.login:hover::before {
+    animation: glassShine 0.8s forwards;
+}
+
+@keyframes glassShine {
+    from { left: -75%; }
+    to { left: 125%; }
+}
+
+.login:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.5),
+        inset 0 -2px 6px rgba(0,0,0,0.3),
+        0 15px 35px rgba(0,0,0,0.45);
+}
+
+.login:active {
+    transform: translateY(2px);
+    box-shadow:
+        inset 0 3px 6px rgba(0,0,0,0.35),
+        0 5px 10px rgba(0,0,0,0.3);
+}
+
+/* =====================
+   CONTACT BUTTON
+===================== */
+.contact {
+    background: transparent;
+    border: 2px solid rgba(255,140,40,0.85);
+    color: whitesmoke;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.contact:hover {
+    background: rgba(245,245,245,0.08);
+    border-color: #ff8c28;
+    transform: translateY(-3px);
+}
+
+.contact:active {
+    transform: translateY(2px);
+}
+
+
+/* =====================
+   6. SEARCH BAR
+===================== */
+
+/*
+#search-form { width: 100%; display: flex; justify-content: center; opacity: 0; animation: entranceEffect 0.8s ease-out forwards; }
+@keyframes entranceEffect
+{ 
+	from
+	{
+		opacity:0; transform: translateY(20px);
+	}
+	to 
+	{
+		opacity:1; transform: translateY(0);
+	}       
+}
+.search-wrapper { position: relative; width: 800px; max-width: 90%; }
+
+.search-wrapper::before { content: ""; position: absolute; inset:0; border-radius: 0 0 30px 30px; background: linear-gradient(to bottom, rgba(0,0,0,0.2), transparent); opacity:0; transition: opacity 0.3s ease; pointer-events:none; }
+
+input[type="search"] { width:100%; padding:15px 55px 15px 25px; border-radius:0 0 30px 30px; border:none; font-size:16px; outline:none; background: rgba(255,255,255,0.95); transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; padding-right:80px; }
+
+input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
+
+.btns:hover + #search-form .search-wrapper::before { opacity:1; }
+
+.search-icon-btn { position:absolute; right:15px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#333; font-size:22px; padding:5px; }
+*/
+
+/* Agent/Location modes */
+/*
+.search-wrapper.login-mode input[type="search"] { background:black !important; color:white !important; }
+.search-wrapper.login-mode #search-input::placeholder { color: rgba(255,255,255,1); opacity:1; }
+.search-wrapper.contact-mode #search-input::placeholder { color: #666; opacity:1; }
+.search-wrapper.login-mode .search-icon-btn { color:white; }
+.search-wrapper.login-mode input[type="search"]:focus { box-shadow:0 0 15px rgba(255,255,255,0.25);}
+.search-wrapper.contact-mode input[type="search"]:focus { box-shadow:0 0 15px rgba(0,0,0,0.2); }
+*/
+/* ======================
+   7. DISCOVER SECTION 
+========================= */
+
+.discover {
+    background: #f9f9f9;
+    color: #111;
+    padding: 40px 0 30px 0; /* tightened so header + carousel fit on one screen */
+    overflow: hidden;
+    position: relative;
+}
+
+.discover header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 24px; /* reduced from 40px */
+}
+
+.discover h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #111;
+    margin-bottom: 0;
+}
+
+.horizontal-line {
+    width: 48px;
+    height: 3px;
+    background: #ff7400;
+    border-radius: 2px;
+    margin: 12px 0 10px;
+}
+
+.discover h5 {
+    color: #888;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+/* ==========================================
+   CAROUSEL
+========================================== */
+
+.carousel {
+    overflow: hidden;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    touch-action: pan-y; /* ← ignore horizontal swipes */
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 24px;
+    width: max-content;
+    padding: 16px 0;
+    animation: smoothScroll 35s linear infinite;
+    touch-action: pan-y; /* ← also on the child to be safe */
+}
+
+@keyframes smoothScroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.cards-container:hover {
+    animation-play-state: paused;
+}
+
+/* ==========================================
+   PROPERTY CARD
+========================================== */
+
+.property-card {
+    flex: 0 0 270px;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    /* shadow on right and bottom only */
+    box-shadow: 6px 6px 18px rgba(0, 0, 0, 0.5);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.property-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 10px 18px 36px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================
+   IMAGE
+========================================== */
+
+.image-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.property-card img {
+    width: 100%;
+    height: 195px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.55s ease;
+}
+
+.property-card:hover img {
+    transform: scale(1.06);
+}
+
+.image-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.35) 100%);
+    pointer-events: none;
+}
+
+/* Price Tag */
+.price-tag {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    background: #ff7400;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.2px;
+    z-index: 1;
+}
+
+/* ==========================================
+   PROPERTY INFO
+========================================== */
+
+.property-info {
+    background: #ff7400;
+    color: #fff;
+    padding: 16px 18px 18px;
+}
+
+.property-info h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    line-height: 1.3; 
+}
+
+.property-info .location {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 12px;
+}
+
+.property-info .location p {
+    margin: 0;
+    font-size: 13px;
+    opacity: 0.85;
+}
+
+.property-info .location ion-icon {
+    font-size: 14px;
+    opacity: 0.85;
+    flex-shrink: 0;
+}
+
+.property-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    opacity: 0.9;
+    padding-top: 10px;
+    /*border-top: 1px solid rgba(255, 255, 255, 0.25); */
+}
+
+.property-details span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.property-details ion-icon {
+    font-size: 14px;
+}
+/* =====================
+   8. EXPLORE SECTION
+===================== */
+
+.explore
+{
+	background-color: #28282B; /* matt black */
+    color: white;
+}
+
+.explore .explore-header{ 
+    display: flex;
+    padding: 50px 10px;
+    justify-content: center;
+}
+
+.prop-types form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 100px;
+}
+
+/* input type */
+.prop-input{
+    border-radius: 50%;
+    width: 100px; height: 100px;
+    cursor: pointer;
+    border: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 60px 60px;
+}
+
+.prop-input:hover{
+    transition: 0.5s ease-in-out;
+    transform: scale(1.05);
+    background-color: rgb(230, 230, 230);
+}
+
+.prop-input.resident {
+    background-image: url("../asset/img/img13.jpg");
+    background-size: cover;
+}
+.prop-input.commer {
+    background-image: url('../asset/img/img9.jpg');
+    background-size: cover;
+}
+.prop-input.indus {
+    background-image: url('../asset/img/img14.jpg'); 
+    background-size: cover;
+}
+
+.prop-input.land {
+    background-image: url('../asset/img/img10.jpg');
+    background-size: cover;
+}
+
+/* input type texts */
+.prop-item h6{
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/*
+.prop-item .land + h6{
+   margin-left: 20px;
+}
+
+/* =====================
+   9. SHORT-TERM SECTION
+===================== */
+.short {
+    background-color: white;
+    min-height: 100vh;
+}
+
+.short .short-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0;        /* distance between h3 and line */
+    padding-top: 70px;
+    padding-left: 200px; /* safer than margin-left */
+}
+
+.short .short-header h3 {
+    margin: 0;        /* remove default heading margin */
+}
+
+.short .custom-line {
+    width: 550px;
+    height: 1px;
+    background-color: black;
+    margin: -16px 0 70px -70px;
+}
+/* =====================
+   10. 	INQUIRY SECTION
+===================== */
+
+.inquiry {
+    background-image: url("../asset/img/img27.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    padding: 60px; 
+    gap: 60px;
+    min-height: 100vh;
+}
+
+.inquiry-left { flex: 1; }
+
+.inquiry-header h1
+{
+     color: white; 
+     font-size: 42px; 
+     margin-top: -230px;
+     margin-left: 150px;
+}
+.inquiry-header h2 /* in haven */
+{ 
+    color: black; 
+    font-size: 25px; 
+    font-weight: 700; 
+    margin-top: -25px;
+    margin-bottom: 65px; 
+    margin-left: 270px;
+}
+
+.inquiry-parag .p1  /* were here */
+{
+    font-size: 24px; 
+    color: #ff7400; 
+    font-weight: 600; 
+    margin-bottom: 35px; 
+    margin-left: 250px;
+}
+.inquiry-parag .p2, .inquiry-parag .cp2, .inquiry-parag .p3
+{ 
+    color: white; 
+    font-size: 18px; 
+    font-weight: 700; 
+    line-height: 1.5; 
+}
+.inquiry-parag .p2, .inquiry-parag .cp2
+{ 
+    margin-left: 150px;
+}
+.inquiry-parag .cp2
+{
+    margin-top: -17px;
+}
+.inquiry-parag .p3 { margin-top: 30px; margin-left: 180px;}
+
+.inquiry-right { flex: 1; }
+
+.inquiry-form-container {
+    background-color: rgba(255, 255, 255, 1);
+    padding: 25px 45px;
+    border-radius: 6px;
+}
+
+.form-row { display: flex; gap: 16px; margin-bottom: 18px; }
+.form-row .form-group { flex: 1; margin-bottom: 0; }
+.form-group { margin-bottom: 18px; }
+
+.form-title
+{
+    font-size: 28px;
+    font-weight: 700;   
+    margin-top: -4px;
+}
+.form-sub{
+    font-size: 12px;
+    margin-top: -30px;
+    margin-left: 50px;
+}
+/* Line style — Subject, First/Last Name, Email, Contact Number */
+.input-line {
+    width: 100%;
+    border: none;
+    border-bottom: 1.5px solid #aaa;
+    padding: 6px 0;
+    font-size: 14px;
+    background: transparent;
+    outline: none;
+}
+.input-line:focus { border-bottom-color: #ff7400; }
+
+/* Box style — Address, Message */
+.input-box {
+    width: 100%;
+    border: 1.5px solid #ccc;
+    padding: 10px 8px;
+    font-size: 14px;
+    border-radius: 15px;
+    outline: none;
+}
+.input-box:focus { border-color: #ff7400; }
+textarea.input-box { resize: vertical; min-height: 100px; }
+
+.submit-btn {
+    width: 50%;
+    margin-left: 26%;
+    background: #ff7400;
+    color: #fff;
+    border: none;
+    padding: 11px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 20px;
+    cursor: pointer;
+}
+/* =====================
+   11. FOOTER SECTION
+===================== */
+footer {
+  width: 100%;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  flex-direction: column;
+}
+/* =====================
+   CONTAINER FOR ALL FOOTER CONTENT
+===================== */
+.foot-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 60px;
+  padding-top: 60px;
+}
+/* =====================
+   GROUPED BRANDING
+===================== */
+.brand-group {
+  margin-left: -20px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand img {
+  width: 40px;
+}
+
+.brand p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 24px;
+}
+/* =====================
+  SOCIALS
+===================== */
+.socials {
+  margin-top: 110px;
+  text-align: center;
+}
+
+.social-icons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: -10px;
+}
+.social-icons a {
+  color: white;
+  font-size: 16px;
+  text-decoration: none;
+}
+/* =====================
+  FIND US
+===================== */
+.find-us {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: -25px;
+  margin-left: 40px;
+}
+.underline {
+  width: 90px;
+  height: 1px;
+  background: white;
+  border-radius: 2px;
+  margin-top:-26px;
+  margin-bottom: 10px;
+  margin-left: -10px;
+}
+.find-us a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: white;
+}
+/* =====================
+   COMPANY LOCATION 
+===================== */
+.company-loc img {
+  width: 250px;
+  height: 200px;
+  margin-top: 50px;
+  border-radius: 10px;
+  box-shadow: 1px 3px 5px gray;
+}
+/* =====================
+   LEGAL
+===================== */
+.legal {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 125px;
+}
+.legal h4{
+    margin-left: 20px;
+    margin-bottom: -6px;
+}
+.legal-underline{
+    width: 90px;
+    height: 1px;
+    background: white;
+    margin-bottom: 5px;
+}
+.legal a{
+    text-decoration: none;
+    color: white;
+    font-size: 12px;
+    margin-top: -5px;
+    text-align: center;
+}
+/* =====================
+   FOOTER BOTTOM
+===================== */
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 50px 20px;
+    width: 100%;
+}
+.copyright {
+    font-size: 13px;
+    color: #8c8884;
+    margin-left: 50px;
+}
+
+.footer-divider {
+    width: 90%;
+    border: none;
+    border-top: 1px solid rgba(255,255,255,1    );
+    margin-bottom: -5px;
+    margin-top: 50px;
+    height: 5px;
+}
+/* =====================
+   8. RESPONSIVE
+===================== */
+
+/* Desktop animation only */
+@media screen and (min-width: 761px) {
+
+    nav.header {
+        opacity: 0;
+        transform: translateX(50px);
+        animation: slideInNav 0.8s ease forwards 0.5s;
+    }
+
+}
+
+/* =======================
+ LAPTOPS
+======================== */
+@media screen and (min-width: 1025px) and (max-width: 1440px)
+{ 
+    nav.header {
+        opacity: 0;
+        transform: translateX(50px);
+        animation: slideInNav 0.8s ease forwards 0.5s;
+    }
+
+	.logo img { margin-left:20px; } .search-wrapper{ width:70%; } 
+
+}
+
+/* =======================
+  LARGE DESKTOPS 
+======================== */
+@media screen and (min-width:1441px) 
+{ 
+    nav.header {
+        opacity: 0;
+        transform: translateX(50px);
+        animation: slideInNav 0.8s ease forwards 0.5s;
+    }
+
+	.logo img { margin-left:20px; } .search-wrapper{ width:70%; } 
+
+}
+
+/* =======================
+   MOBILE 
+======================== */
+
+@media screen and (max-width: 768px) {
+
+    /* =======================
+    HAMBURGER
+    ======================== */
+    .hamburger {
+        display: flex;
+        position: fixed;
+        top: 25px;
+        right: 20px;
+        z-index: 3000;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 22px;
+        cursor: pointer;
+    }
+
+    nav.header {
+        position: fixed;
+        top: 0;
+        right: -260px;
+        width: 260px;
+        height: 100vh;
+        background: black;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;  /* start links from top */
+        align-items: center;          /* center horizontally */
+        padding-top: 80px;            /* space from top */
+        transition: right 0.25s ease;
+        z-index: 2500;
+    }
+
+    nav.header.active {
+        right: 0;
+    }
+
+    nav.header a {
+        display: flex;                /* for icon + text alignment */
+        align-items: center;
+        gap: 12px;                    /* space between icon and text */
+        text-align: center;
+        font-size: 22px;
+        color: white;
+        text-decoration: none;
+        margin: 15px 0;               /* space between links */
+        width: 100%;                   /* optional: make links full width */
+        justify-content: center;       /* center text + icon horizontally */
+    }
+
+
+    /* show icons on mobile */
+    nav.header a ion-icon{
+        display:inline-block;
+        font-size:25px;
+    }
+    
+    .hero-wrapper{
+        background-size: auto 100%; /* scale height to fit container */
+        background-position: top center; /* adjust focus */
+    }
+    /* =======================
+      SHORT TERM SECTION
+    ======================== */
+
+    .short-header {
+        margin-left: -150px;
+        font-size: 12px;
+    }
+    
+    .short-header .custom-line{
+        width: 300px;
+        margin: 1px 0 0 7px;
+    }
+    /* =======================
+      FOOTER SECTION
+    ======================== */
+    .foot-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+}
+.maps:hover {
+    transform: scale(1.1);
+}

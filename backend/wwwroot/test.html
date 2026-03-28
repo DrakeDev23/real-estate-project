@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<title>Haven</title>
+			<link rel="stylesheet" href="css/test.css">
+			<link rel="icon" href="asset/logo/publika4.png" sizes="16x16" type ="image/png">
+			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+			<link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+			<!--
+			<link href="https://fonts.googleapis.com/icon?family/css/ionicons.min.css" rel="stylesheet">
+			-->
+		</head>
+		<body>
+			
+			<section class="hero-wrapper">
+				<header class="hero-header">
+					<div class="logo">
+						<img src="asset/logo/publika4.png" alt="publika4">
+						<h2>HAVEN</h2>
+					</div>
+
+					<!-- Hamburger Button -->
+					<div class="hamburger">
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+					
+					<nav class="header">
+						<a href="index.html"><ion-icon name="home-outline"></ion-icon>Home</a>
+						<a href="about.html"><ion-icon name="information-circle-outline"></ion-icon> About</a>
+						<a href="buy.html"><ion-icon name="cart-outline"></ion-icon> Buy</a>
+						<a href="sell.html"><ion-icon name="cash-outline"></ion-icon> Sell</a>
+						<a href="findagent.html"><ion-icon name="person-outline"></ion-icon> Find Agent</a>
+						<a href="ai-agent.html"><ion-icon name="logo-reddit"></ion-icon>AI Agent</a>
+
+						<!-- <div class="close-btn">✕</div> -->
+    					
+					</nav>
+					
+				</header>
+
+				<div class="hero-text">
+					<h1>The #1 site Filipino real<br>estate professionals trust</h1>
+				</div>
+
+				<div class="btns">
+					<form action=" " method="post">
+						<input type="submit" value="Login" class="login"/>
+					</form>
+					<form action=" " method="post">
+						<input type="submit" value="Contact" class="contact"/>
+					</form>
+				</div>
+				<!--
+				<form role="search" id="search-form">
+				<div class="search-wrapper">
+						<input type="search" id="search-input" name="q" placeholder="City, Address, Zip Code" maxlength="100">
+						<button type="submit" class="search-icon-btn">
+							<span class="material-icons">search</span>
+						</button>
+					</div>
+				</form>
+				-->
+			</section>
+			
+				
+
+			<section class="discover">
+
+				<header class="discover-header">
+					<h1>Discover Our Latest Properties</h1>
+					<div class="horizontal-line"></div>
+					<h5>The most viewed and favorite homes in the day.</h5>
+				</header>
+
+				<div class="carousel">
+					<div class="cards-container">
+
+						<!-- CARD 1 -->
+						<div class="property-card">
+							<div class="image-wrapper">
+								<img src="asset/img/img11.jpg" alt="Palm Jumeirah Villa">
+								<div class="price-tag">₱ 45,900,000</div>
+							</div>
+							<div class="property-info">
+								<h3>Modern Minimalist House</h3>
+								<div class="location">
+									<ion-icon name="location-outline"></ion-icon>
+									<p>Cebu City, Philippines</p>
+								</div>
+								<div class="property-details">
+									<span><ion-icon name="bed-outline"></ion-icon>4 Beds</span>
+									<span>3 Baths</span>
+									<span><ion-icon name="home-outline"></ion-icon>v350 sqm</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- CARD 2 -->
+						<div class="property-card">
+							<div class="image-wrapper">
+								<img src="asset/img/img12.jpg" alt="Skyline Penthouse">
+								<div class="price-tag">₱ 38,700,000</div>
+							</div>
+							<div class="property-info">
+								<h3>Skyline Glass Penthouse</h3>
+								<div class="location">
+									<ion-icon name="location-outline"></ion-icon>
+									<p>IT Park, Cebu</p>
+								</div>
+								<div class="property-details">
+									<span><ion-icon name="bed-outline"></ion-icon>3 Beds</span>
+									<span>2 Baths</span>
+									<span><ion-icon name="home-outline"></ion-icon>220 sqm</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- CARD 3 -->
+						<div class="property-card">
+							<div class="image-wrapper">
+								<img src="asset/img/img7.jpg" alt="Oceanfront Estate">
+								<div class="price-tag">₱ 62,300,000</div>
+							</div>
+							<div class="property-info">
+								<h3>Oceanfront Private Estate</h3>
+								<div class="location">
+									<ion-icon name="location-outline"></ion-icon>
+									<p>Lapu-Lapu City</p>
+								</div>
+								<div class="property-details">
+									<span><ion-icon name="bed-outline"></ion-icon>5 Beds</span>
+									<span>4 Baths</span>
+									<span><ion-icon name="home-outline"></ion-icon>480 sqm</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- DUPLICATES FOR INFINITE LOOP -->
+						<!-- Copy the 3 cards again -->
+						
+						<!-- CARD 1 -->
+						<div class="property-card">
+							<div class="image-wrapper">
+								<img src="asset/img/img11.jpg" alt="Palm Jumeirah Villa">
+								<div class="price-tag">₱ 45,900,000</div>
+							</div>
+							<div class="property-info">
+								<h3>Modern Minimalist House</h3>
+								<div class="location">
+									<ion-icon name="location-outline"></ion-icon>
+									<p>Cebu City, Philippines</p>
+								</div>
+								<div class="property-details">
+									<span><ion-icon name="bed-outline"></ion-icon>4 Beds</span>
+									<span>3 Baths</span>
+									<span><ion-icon name="home-outline"></ion-icon>350 sqm</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- CARD 2 -->
+						<div class="property-card">
+							<div class="image-wrapper">
+								<img src="asset/img/img12.jpg" alt="Skyline Penthouse">
+								<div class="price-tag">₱ 38,700,000</div>
+							</div>
+							<div class="property-info">
+								<h3>Skyline Glass Penthouse</h3>
+								<div class="location">
+									<ion-icon name="location-outline"></ion-icon>
+									<p>IT Park, Cebu</p>
+								</div>
+								<div class="property-details">
+									<span><ion-icon name="bed-outline"></ion-icon>3 Beds</span>
+									<span>2 Baths</span>
+									<span><ion-icon name="home-outline"></ion-icon>220 sqm</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- CARD 3 -->
+						<div class="property-card">
+							<div class="image-wrapper">
+								<img src="asset/img/img7.jpg" alt="Oceanfront Estate">
+								<div class="price-tag">₱ 62,300,000</div>
+							</div>
+							<div class="property-info">
+								<h3>Oceanfront Private Estate</h3>
+								<div class="location">
+									<ion-icon name="location-outline"></ion-icon>
+									<p>Lapu-Lapu City</p>
+								</div>
+								<div class="property-details">
+									<span><ion-icon name="bed-outline"></ion-icon>5 Beds</span>
+									<span>4 Baths</span>
+									<span><ion-icon name="home-outline"></ion-icon>480 sqm</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="explore">
+				<header class="explore-header">
+					<h1>Explore Property Types</h1>
+				</header>
+				<div class="prop-types">
+					<form action="" method="post">
+						<div class="prop-item">
+							<input type="submit" class="prop-input resident" value="">
+							<h6>Residential</h6>
+						</div>
+						<div class="prop-item">
+							<input type="submit" class="prop-input commer" value="">
+							<h6>Commercial</h6>
+						</div>
+						<div class="prop-item">
+							<input type="submit" class="prop-input indus" value="">
+							<h6>Industrial</h6>
+						</div>
+						<div class="prop-item">
+							<input type="submit" class="prop-input land" value="">
+							<h6>Land</h6>
+						</div>
+					</form>
+				</div>
+			</section>
+
+			<section class="short">
+				<header class="short-header">
+					<h1>Short-Term Rent Properties</h1>
+					<div class="custom-line"></div>
+				</header>
+
+					<div class="carousel">
+						<div class="cards-container">
+
+							<!-- CARD 1 -->
+							<div class="property-card">
+								<div class="image-wrapper">
+									<img src="asset/img/img11.jpg" alt="Palm Jumeirah Villa">
+									<div class="price-tag">₱ 45,900,000</div>
+								</div>
+								<div class="property-info">
+									<h3>Modern Minimalist House</h3>
+									<div class="location">
+										<ion-icon name="location-outline"></ion-icon>
+										<p>Cebu City, Philippines</p>
+									</div>
+									<div class="property-details">
+										<span><ion-icon name="bed-outline"></ion-icon>4 Beds</span>
+										<span>3 Baths</span>
+										<span><ion-icon name="home-outline"></ion-icon>v350 sqm</span>
+									</div>
+								</div>
+							</div>
+
+							<!-- CARD 2 -->
+							<div class="property-card">
+								<div class="image-wrapper">
+									<img src="asset/img/img12.jpg" alt="Skyline Penthouse">
+									<div class="price-tag">₱ 38,700,000</div>
+								</div>
+								<div class="property-info">
+									<h3>Skyline Glass Penthouse</h3>
+									<div class="location">
+										<ion-icon name="location-outline"></ion-icon>
+										<p>IT Park, Cebu</p>
+									</div>
+									<div class="property-details">
+										<span><ion-icon name="bed-outline"></ion-icon>3 Beds</span>
+										<span>2 Baths</span>
+										<span><ion-icon name="home-outline"></ion-icon>220 sqm</span>
+									</div>
+								</div>
+							</div>
+
+							<!-- CARD 3 -->
+							<div class="property-card">
+								<div class="image-wrapper">
+									<img src="asset/img/img7.jpg" alt="Oceanfront Estate">
+									<div class="price-tag">₱ 62,300,000</div>
+								</div>
+								<div class="property-info">
+									<h3>Oceanfront Private Estate</h3>
+									<div class="location">
+										<ion-icon name="location-outline"></ion-icon>
+										<p>Lapu-Lapu City</p>
+									</div>
+									<div class="property-details">
+										<span><ion-icon name="bed-outline"></ion-icon>5 Beds</span>
+										<span>4 Baths</span>
+										<span><ion-icon name="home-outline"></ion-icon>480 sqm</span>
+									</div>
+								</div>
+							</div>
+
+							<!-- DUPLICATES FOR INFINITE LOOP -->
+							<!-- Copy the 3 cards again -->
+							
+							<!-- CARD 1 -->
+							<div class="property-card">
+								<div class="image-wrapper">
+									<img src="asset/img/img11.jpg" alt="Palm Jumeirah Villa">
+									<div class="price-tag">₱ 45,900,000</div>
+								</div>
+								<div class="property-info">
+									<h3>Modern Minimalist House</h3>
+									<div class="location">
+										<ion-icon name="location-outline"></ion-icon>
+										<p>Cebu City, Philippines</p>
+									</div>
+									<div class="property-details">
+										<span><ion-icon name="bed-outline"></ion-icon>4 Beds</span>
+										<span>3 Baths</span>
+										<span><ion-icon name="home-outline"></ion-icon>350 sqm</span>
+									</div>
+								</div>
+							</div>
+
+							<!-- CARD 2 -->
+							<div class="property-card">
+								<div class="image-wrapper">
+									<img src="asset/img/img12.jpg" alt="Skyline Penthouse">
+									<div class="price-tag">₱ 38,700,000</div>
+								</div>
+								<div class="property-info">
+									<h3>Skyline Glass Penthouse</h3>
+									<div class="location">
+										<ion-icon name="location-outline"></ion-icon>
+										<p>IT Park, Cebu</p>
+									</div>
+									<div class="property-details">
+										<span><ion-icon name="bed-outline"></ion-icon>3 Beds</span>
+										<span>2 Baths</span>
+										<span><ion-icon name="home-outline"></ion-icon>220 sqm</span>
+									</div>
+								</div>
+							</div>
+
+							<!-- CARD 3 -->
+							<div class="property-card">
+								<div class="image-wrapper">
+									<img src="asset/img/img7.jpg" alt="Oceanfront Estate">
+									<div class="price-tag">₱ 62,300,000</div>
+								</div>
+								<div class="property-info">
+									<h3>Oceanfront Private Estate</h3>
+									<div class="location">
+										<ion-icon name="location-outline"></ion-icon>
+										<p>Lapu-Lapu City</p>
+									</div>
+									<div class="property-details">
+										<span><ion-icon name="bed-outline"></ion-icon>5 Beds</span>
+										<span>4 Baths</span>
+										<span><ion-icon name="home-outline"></ion-icon>480 sqm</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</section>
+
+			<section class="inquiry">
+				<div class="inquiry-left">
+					<div class="inquiry-header">
+					<h1>Inquire Us</h1>
+					<h2>In HAVEN</h2>
+					</div>
+					<div class="inquiry-parag">
+					<p class="p1">We're Here to Help</p>
+					<p class="p2">Have questions about buying, selling, or</p>
+					<p class="cp2">renting?</p>
+					<p class="p3">Our team at HAVEN is ready to assist you<br>every step of the way.</p>
+					</div>
+				</div>
+
+				<div class="inquiry-right">
+					<div class="inquiry-form-container">
+						<p class="form-title">Property Inquiry Form</p>
+						<p class="form-sub">As the complexity of buildings to increase</p>
+
+						<div class="form-group">
+							<label for="subject">Subject:</label>
+							<input class="input-box" type="text" name="subject"  maxlength="200" required>
+						</div>
+						
+						<div class="form-group">
+							<input class="input-line" type="text" name="address" placeholder="Address" required>
+						</div>
+
+						<div class="form-row">
+							<div class="form-group">
+							<input class="input-line" type="text" name="firstname" placeholder="First Name" required>
+							</div>
+
+							<div class="form-group">
+							<input class="input-line" type="text" name="lastname" placeholder="Last Name" required>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<input class="input-line" type="email" name="email" placeholder="Email Address" required>
+						</div>
+
+						<div class="form-group">
+							<input class="input-line" type="tel" name="phone" placeholder="Contact Number" required>
+						</div>
+						
+						<div class="form-group">
+							<textarea class="input-box" name="message" placeholder="Your Message" maxlength="1000"></textarea>
+						</div>
+
+						<div class="form-group">
+							<input type="submit" value="Submit" class="submit-btn">
+						</div>
+
+					</div>
+				</div>
+			</section>
+
+			<footer>
+				<div class="foot-container">
+					<div class="brand-group">
+						 <div class="footer-logo">
+							<div class="brand">
+								<img src="asset/logo/publika4.png" alt="Logo">
+								<p>HAVEN</p>
+							</div>
+						</div>
+						<div class="socials">
+							<h4>Follow Us</h4>
+							<div class="social-icons">
+								<a href="https://facebook.com/YourPage" target="_blank">
+									<i class="fa-brands fa-facebook"></i>
+								</a>
+								<a href="https://twitter.com/YourHandle" target="_blank">
+									<i class="fa-brands fa-x-twitter"></i>
+								</a>
+								<a href="https://instagram.com/YourHandle" target="_blank">
+									<i class="fa-brands fa-instagram"></i>
+								</a>
+								<a href="https://www.tiktok.com/@YourHandle" target="_blank">
+									<i class="fa-brands fa-tiktok"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="find-us">
+						<h4>Find Us</h4>
+						<div class="underline"></div>
+						<a href="#">Ma. GoChan St., Cebu City, 6000 Cebu</a>
+						<a href="#" style="text-decoration-line: underline;"><ion-icon name="map"></ion-icon>View on Map</a>
+						<a href="#"><ion-icon name="call"></ion-icon> (000) 111-2222</a>
+						<a href="#"><ion-icon name="mail"></ion-icon> haven.publika@gmail.com</a>
+					</div>
+					
+					<div class="company-loc">
+						<img src="asset/img/hq.jpg" alt="Company Location" width="300px" height="auto">
+					</div>
+
+					<div class="legal">
+						<h4>Legal</h4>
+							<div class="legal-underline"></div>
+							<a href="#">Privacy Notice</a>
+							<a href="#">Terms of Service</a>
+					</div>
+				</div>
+				<hr class="footer-divider" />
+ 
+				<div class="footer-bottom">
+					<p class="copyright">© HAVEN Copyright. 2026. All rights reserved.</p>
+		 		</div>
+			</footer>
+			
+			<script src="js/landing.js"></script>
+			<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+			<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+		</body>
+	</html>

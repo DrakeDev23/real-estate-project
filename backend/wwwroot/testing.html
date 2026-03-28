@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+			<title></title>
+			<style>
+				.carousel-container {
+				  /* Acts as a viewport, hides anything outside its bounds */
+				  width: 100%;
+				  overflow: hidden;
+				}
+
+				.carousel-wrapper {
+				  /* Uses flexbox to place items horizontally */
+				  display: flex;
+				  /* Set total width based on number of items * 2 (original + duplicate) */
+				  width: 200%; /* For 3 items duplicated, you would adjust this as needed */
+				  animation: scroll 15s linear infinite; /* Apply the animation */
+				}
+
+				.carousel-item {
+				  /* Each item takes up an equal width, flex-shrink: 0 prevents shrinking */
+				  width: 100%; /* Adjust width to show desired number of items at once */
+				  flex-shrink: 0;
+				}
+
+				@keyframes scroll {
+				  0% {
+					/* Start position */
+					transform: translateX(0);
+				  }
+				  100% {
+					/* End position: translate by the width of one set of items */
+					transform: translateX(-100%);
+				  }
+				}
+
+				/* Optional: Pause animation on hover */
+				.carousel-container:hover .carousel-wrapper {
+				  animation-play-state: paused;
+				}
+			</style>
+		</head>
+		
+		<body>
+			<div class="carousel-container">
+			  <div class="carousel-wrapper">
+				<!-- Original set of items -->
+				<div class="carousel-item">Item 1</div>
+				<div class="carousel-item">Item 2</div>
+				<div class="carousel-item">Item 3</div>
+				<!-- Duplicated set of items (necessary for an infinite loop) -->
+				<div class="carousel-item">Item 1</div>
+				<div class="carousel-item">Item 2</div>
+				<div class="carousel-item">Item 3</div>
+			  </div>
+			</div>
+
+		</body>
+	</html>
