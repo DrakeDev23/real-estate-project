@@ -54,9 +54,9 @@ C:\Users\VladCodes\Desktop\buyPage\capstones\obj\Debug\net9.0\capstones.genrunti
 C:\Users\VladCodes\Desktop\buyPage\capstones\obj\Debug\net9.0\ref\capstones.dll
 C:\Users\VladCodes\Desktop\buyPage\capstones\bin\Debug\net9.0\Data\products.json
 C:\Users\VladCodes\Desktop\buyPage\capstones\obj\Debug\net9.0\compressed\v6j173iuzo-746erhilvx.gz
-C:\Users\VladCodes\Desktop\buyPage\capstones\obj\Debug\net9.0\compressed\s2gtzqngex-qurpewd4h2.gz
-C:\Users\VladCodes\Desktop\buyPage\capstones\obj\Debug\net9.0\compressed\rsdfwyvrjn-c3xum4hbpl.gz
 C:\Users\VladCodes\Desktop\buyPage\capstones\obj\Debug\net9.0\compressed\x55k3g2cyj-luwnsgi1ei.gz
 C:\Users\VladCodes\Desktop\buyPage\capstones\obj\Debug\net9.0\compressed\1g9z8zg4nu-ckbw60dtgy.gz
 C:\Users\VladCodes\Desktop\buyPage\capstones\obj\Debug\net9.0\compressed\ovasc272dp-tavb2t5c1v.gz
-C:\Users\VladCodes\Desktop\buyPage\capstones\obj\Debug\net9.0\compressed\h3og0ifk2h-ot99b46db5.gz
+C:\Users\VladCodes\Desktop\buyPage\capstones\obj\Debug\net9.0\compressed\s2gtzqngex-rh14h7l3ki.gz
+C:\Users\VladCodes\Desktop\buyPage\capstones\obj\Debug\net9.0\compressed\rsdfwyvrjn-0ebjsyii9p.gz
+C:\Users\VladCodes\Desktop\buyPage\capstones\obj\Debug\net9.0\compressed\h3og0ifk2h-ep9zuzgi5y.gz

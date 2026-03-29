@@ -12,7 +12,7 @@ const listingPagination = document.getElementById("listingPagination");
 const ordersPagination = document.getElementById("ordersPagination");
 
 const sellModal = document.getElementById("sellModal");
-const sellModalTitle = document.getElementById("sellModalTitle");
+const sellModalTitleDisplay = document.getElementById("sellModalTitleDisplay");
 const sellForm = document.getElementById("sellForm");
 const sellToast = document.getElementById("sellToast");
 
@@ -88,6 +88,11 @@ function getFallbackImage() {
 
 function updateCounter(input, output) {
   output.textContent = String(input.value.length);
+}
+
+function updateModalTitleFromInput() {
+  const value = titleInput.value.trim();
+  sellModalTitleDisplay.textContent = value !== "" ? value : "New Listing";
 }
 
 function wireCounters() {
@@ -457,8 +462,8 @@ async function loadOrders() {
 function openSellModalForCreate() {
   isEditMode = false;
   currentEditId = null;
-  sellModalTitle.textContent = "New Product";
   sellForm.reset();
+  sellModalTitleDisplay.textContent = "New Listing";
   productIdInput.disabled = false;
   sellerNameDisplay.value = "User";
   resetImageItems();
@@ -466,6 +471,7 @@ function openSellModalForCreate() {
   renderAmenityChips();
   hideAmenityInput();
   wireCounters();
+  updateModalTitleFromInput();
   sellModal.classList.remove("hidden");
 }
 
@@ -478,7 +484,6 @@ async function editListing(productId) {
 
     isEditMode = true;
     currentEditId = productId;
-    sellModalTitle.textContent = `Product ${productId}`;
 
     productIdInput.value = product.productId ?? "";
     productIdInput.disabled = true;
@@ -516,6 +521,7 @@ async function editListing(productId) {
 
     renderImagePreviews();
     wireCounters();
+    updateModalTitleFromInput();
     sellModal.classList.remove("hidden");
   } catch (error) {
     console.error(error);
@@ -626,6 +632,8 @@ amenityInput.addEventListener("keydown", (event) => {
   }
 });
 
+titleInput.addEventListener("input", updateModalTitleFromInput);
+
 addListingBtn.addEventListener("click", openSellModalForCreate);
 
 sortToggleBtn.addEventListener("click", () => {
@@ -684,6 +692,7 @@ function escapeHtml(text) {
 }
 
 wireCounters();
+updateModalTitleFromInput();
 loadListings();
 loadOrders();
 

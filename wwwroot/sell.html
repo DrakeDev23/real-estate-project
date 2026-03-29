@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>Haven - Sell</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/sell.css?v=4" />
+    <link rel="stylesheet" href="css/sell.css?v=6" />
     <link rel="icon" href="images/logo.png" />
   </head>
   <body>
@@ -96,7 +96,9 @@
 
         <div class="sell-modal-scroll">
           <div class="sell-modal-header">
-            <h2 id="sellModalTitle">Product</h2>
+            <h2 class="sell-modal-title-display" id="sellModalTitleDisplay">
+              New Listing
+            </h2>
           </div>
 
           <div class="sell-modal-content">
@@ -125,12 +127,20 @@
               <form id="sellForm">
                 <div class="form-grid">
                   <div class="form-group">
-                    <label for="productIdInput">Product ID</label>
+                    <label for="productIdInput" class="required-label"
+                      >Product ID</label
+                    >
                     <input type="number" id="productIdInput" required />
                   </div>
 
                   <div class="form-group">
-                    <label for="titleInput">Name</label>
+                    <label
+                      for="titleInput"
+                      class="required-label name-label-with-icon"
+                    >
+                      <span>Name</span>
+                      <span class="name-edit-icon" aria-hidden="true">✎</span>
+                    </label>
                     <input
                       type="text"
                       id="titleInput"
@@ -143,7 +153,9 @@
                   </div>
 
                   <div class="form-group full">
-                    <label for="addressInput">Address</label>
+                    <label for="addressInput" class="required-label"
+                      >Address</label
+                    >
                     <input
                       type="text"
                       id="addressInput"
@@ -156,7 +168,7 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="priceInput">Price</label>
+                    <label for="priceInput" class="required-label">Price</label>
                     <input type="number" id="priceInput" min="0" required />
                   </div>
 
@@ -175,7 +187,9 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="categoryInput">Category</label>
+                    <label for="categoryInput" class="required-label"
+                      >Category</label
+                    >
                     <select id="categoryInput" required>
                       <option value="sale">Sale</option>
                       <option value="rent">Rent</option>
@@ -304,6 +318,6 @@
 
     <div class="toast hidden" id="sellToast">Saved successfully</div>
 
-    <script src="javascript/sell.js?v=4"></script>
+    <script src="javascript/sell.js?v=6"></script>
   </body>
 </html>
