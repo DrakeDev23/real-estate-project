@@ -1,46 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const carousel = document.getElementById("carousel");
-    const dotsContainer = document.getElementById("dots");
+    const carousel  = document.querySelector('.discover .carousel');
+    const btnLeft   = document.querySelector('.arrow.left');
+    const btnRight  = document.querySelector('.arrow.right');
+    const cardWidth = carousel.querySelector('.property-card').offsetWidth
+                    + parseFloat(getComputedStyle(carousel).gap);
 
-    const cards = carousel.querySelectorAll(".property-card");
-    const visibleCards = 3;
-    const totalSlides = Math.ceil(cards.length / visibleCards);
-
-    let currentIndex = 0;
-
-    // CREATE DOTS
-    for (let i = 0; i < totalSlides; i++) {
-        const dot = document.createElement("span");
-        if (i === 0) dot.classList.add("active");
-
-        dot.addEventListener("click", () => {
-            currentIndex = i;
-            updateCarousel();
-        });
-
-        dotsContainer.appendChild(dot);
+    function updateButtons() {
+        btnLeft.disabled  = carousel.scrollLeft <= 0;
+        btnRight.disabled = carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 1;
     }
 
-    function updateCarousel() {
-        const cardWidth = cards[0].offsetWidth + 20;
-        carousel.scrollTo({
-            left: cardWidth * visibleCards * currentIndex,
-            behavior: "smooth"
-        });
+    btnRight.addEventListener('click', () => {
+        carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+    });
 
-        document.querySelectorAll(".carousel-dots span")
-            .forEach((dot, i) => {
-                dot.classList.toggle("active", i === currentIndex);
-            });
-    }
+    btnLeft.addEventListener('click', () => {
+        carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+    });
 
-    // BUTTON CONTROL
-    function scrollCarousel(direction) {
-        currentIndex += direction;
-
-        if (currentIndex < 0) currentIndex = 0;
-        if (currentIndex >= totalSlides) currentIndex = totalSlides - 1;
-
-        updateCarousel();
-    }
+    carousel.addEventListener('scroll', updateButtons);
+    updateButtons();
 });
