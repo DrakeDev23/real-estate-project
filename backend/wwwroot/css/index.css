@@ -594,6 +594,7 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
 .image-wrapper {
     position: relative;
     overflow: hidden;
+     flex-shrink: 0;   /* prevents image area from compressing */
 }
 
 .property-card img {
@@ -636,12 +637,14 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
 /* ==========================================
    PROPERTY INFO
 ========================================== */
-
+/* flex: 1 0 auto allows the info section to grow and fill the card, while still letting the image 
+maintain its fixed height. This prevents the card from shrinking too much when hovered and keeps 
+the shadow intact. */
 .property-info {
     background: #ff7400;
     color: #fff;
     padding: 16px 18px 18px;
-      flex: 1;
+    flex: 1 0 auto;   /* ← change from just flex: 1 to flex: 1 0 auto */
 }
 
 .property-info h3 {
