@@ -465,9 +465,9 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    scroll-marker-group: after;   /* keeps this */
-    padding-bottom: 10px;
+    padding-bottom: 10px;           /* ← removed scroll-marker-group: after */
 }
+
 
 
 /* hide ugly scrollbar */
@@ -537,24 +537,28 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
 /* ==========================================
    SCROLL MARKER GROUP — blend with white bg
 ========================================== */
-.carousel::scroll-marker-group {
+/* ── Dot indicators ── */
+.scroll-dot-group {
     display: flex;
     justify-content: center;
-    align-items: center;
     gap: 8px;
-    padding: 10px 0 6px;
-    /* sits OUTSIDE the scroll overflow — no clipping issue */
+    padding: 12px 0 8px;
+    max-width: calc(3 * 20em + 2 * 1em);
+    margin: 0 auto;
 }
-.property-card::scroll-marker {
-    content: "";
+.scroll-dot {
     width: 9px;
     height: 9px;
     border-radius: 50%;
+    border: none;
     background: #aaa;
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.3s ease;
+    padding: 0;
+    flex-shrink: 0;
+    transition: background 0.3s, transform 0.3s;
 }
-.property-card::scroll-marker:target-current {
+
+.scroll-dot.active {
     background: #ff7400;
     transform: scale(1.35);
 }
