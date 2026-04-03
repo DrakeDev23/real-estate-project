@@ -407,7 +407,7 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
 .discover {
     background: #f9f9f9;
     color: #111;
-     padding: 40px 80px 30px 80px;  /* ← gives arrows breathing room */
+     padding: 40px 40px 30px 40px;  /* ← gives arrows breathing room */
     /* overflow: hidden;
     position: relative; */
 }
@@ -452,6 +452,7 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
     position: relative;
     max-width: calc(3 * 20em + 2 * 1em);   /* ← 3 cards + 2 gaps */
     margin: 0 auto;
+    
 }
 /* ==========================================
    CAROUSEL — padding-bottom so shadow
@@ -575,7 +576,7 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
     border-radius: 16px;
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.07);
-    box-shadow: 6px 6px 18px rgba(0, 0, 0, 0.5);
+    
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     margin-bottom: 4px;             /* ← reserves space so lift doesn't gap */
 }
