@@ -785,7 +785,7 @@ maintain its fixed height. This prevents the card from shrinking too much when h
     margin: 0;        /* remove default heading margin */
 }
 
-.short .custom-line {
+.custom-line {
     width: 550px;
     height: 1px;
     background-color: black;
@@ -1118,7 +1118,7 @@ footer {
    MOBILE 
 ======================== */
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 600px) {
 
     /* =======================
     HAMBURGER
@@ -1197,24 +1197,48 @@ footer {
     .short {
         min-height: unset;    /* allow content to determine height */
         padding-bottom: 40px; /* add some breathing room at the bottom */
+        padding-left: 40px; /* add horizontal padding for better readability */
+        padding-right: 40px;
     }
 
     .short-header {
-        margin-left: -150px;
-        font-size: 12px;
+        margin-left: -180px; /* shift left to compensate for padding */
+        font-size: 11px;
+        
     }
     
-    .short-header .custom-line{
-        width: 300px;
-        margin: 1px 0 0 7px;
+    .custom-line {
+        width: 60%;
+        margin: -16px 0 40px 0;
     }
+   
+     /* =======================
+            CAROUSEL
+    ======================== */
     .carousel-wrapper {
         max-width: 100%;      /*  prevent wrapper from overflowing on small screens */
-        padding: 0 40px;      /* matches the section padding so arrows aren't cut off */
+        padding: 0;      /* matches the section padding so arrows aren't cut off */
+    }
+    .property-card img {
+        height: auto;
+        aspect-ratio: 5 / 3;
+    }
+    .arrow {
+        top: auto;              /* cancel the inherited 45% */
+        bottom: calc(50% + 20px); /* sits in the image zone regardless of card height */
+        transform: translateY(50%);
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+        opacity: 0.85;
     }
     /* Position scroll buttons outside the carousel wrapper */
-    .arrow.left  { left: 0; }
-    .arrow.right { right: 0; } 
+    .arrow.left  { left: -22px; }
+    .arrow.right { right: -22px; } 
+
+    .property-card {
+        flex: 0 0 100%;   /* each card fills the full carousel width */
+    }
     /* =======================
       INQUIRY SECTION
     ======================== */
@@ -1244,6 +1268,14 @@ footer {
         height: 100%;
         padding: 25px 20px;
         box-shadow: none;
+    }
+
+    .form-title{
+        font-size: 22px;
+    }
+    .form-sub{
+        margin-top: -24px;
+        margin-bottom: 32px;
     }
     /* =======================
       FOOTER SECTION
