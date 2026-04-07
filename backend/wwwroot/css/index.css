@@ -1,6 +1,4 @@
-/* ===================
-   1. GLOBAL STYLES
-====================== */
+
 * {
     box-sizing: border-box;
 }
@@ -13,16 +11,9 @@ body, html
 	margin: 0; padding: 0; font-family: sans-serif; 
     overflow-x: hidden;
 }
-/*
-body{
-     background: url("../asset/img/img1.jpg");
-    
-}
-/* =====================
-   HAMBURGER – GLOBAL STYLES
-====================== */
+
 .hamburger {
-    display: none; /* hidden on desktop */
+    display: none; 
     flex-direction: column;
     justify-content: space-between;
     width: 30px;
@@ -41,7 +32,6 @@ body{
     transform-origin: center;
 }
 
-/* Hamburger -> X animation */
 .hamburger.open span:nth-child(1) {
     transform: rotate(58deg) translate(5px,5px);
 }
@@ -56,9 +46,7 @@ body{
  nav.header a ion-icon {
     display: none;
 }
-/* =========================
-   2. HERO WRAPPER
-========================= */
+
 .hero-wrapper{
     min-height: 100vh;
     width: 100%;
@@ -87,16 +75,13 @@ body{
     to{ transform: scale(1); }
 }
 
-/* =========================
-   3. HEADER & NAVIGATION
-========================= */
 .hero-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 50px;
-    position: relative; /* allow hamburger absolute positioning */
-    z-index: 1;         /* make sure logo/nav are below hamburger */
+    position: relative;
+    z-index: 1;         
 }
 
 .hero-text h1 {
@@ -113,7 +98,6 @@ body{
 .logo img {
     width: 50px;
     height: auto;
-    /*margin-left: 200px;*/
     position: relative;
     z-index: 1;
     transition: all 0.3s ease;
@@ -149,49 +133,42 @@ body{
 
 .logo a { text-decoration: none; color: white; font-weight: bold; }
 
-/* =====================
-   NAVIGATION LINKS CLEAN HOVER
-===================== */
+
 nav.header a {
-    position: relative;       /* needed for pseudo-element */
+    position: relative;      
     padding: 5px 12px;
     color: white;
     text-decoration: none;
     transition: color 0.3s ease;
-    background: none;         /* remove any background on hover */
+    background: none;         
 }
 
-/* Underline effect from center */
 nav.header a::after {
     content: "";
     position: absolute;
     bottom: 0;
-    left: 50%;                /* start at center */
+    left: 50%;                
     height: 2px;
     width: 100%;
     background-color: white;
-    transform: translateX(-50%) scaleX(0); /* hide at start */
+    transform: translateX(-50%) scaleX(0); 
     transform-origin: center;
     transition: transform 0.3s ease;
 }
 
-/* Hover: expand underline smoothly */
 nav.header a:hover::after {
     transform: translateX(-50%) scaleX(1); 
 }
 
-/* Active link: keep underline visible */
 nav.header a:active::after {
     transform: translateX(-50%) scaleX(1);
     background-color: #fff;
 }
 
-/* Optional: subtle color change on hover */
 nav.header a:hover {
-    color: #fff;  /* keeps text white, no background */
+    color: #fff;  
 }
 
-/* NAV ANIMATION */
 nav.header {
     display: flex;
     gap: 20px;
@@ -203,35 +180,29 @@ nav.header {
         transform: translateX(0);
     }
 }
-/* =========================
-   NAV LOGO ENTRANCE ANIMATION
-========================= */
+
 .logo {
     display: flex;
     align-items: center;
     gap: 10px;
     transition: margin 0.3s ease;
-    opacity: 0;                  /* start invisible */
-    transform: translateX(-50px) scale(0.9); /* start slightly left & smaller */
-    animation: logoEntrance 0.8s ease forwards 0.5s; /* delay matches nav */
+    opacity: 0;                
+    transform: translateX(-50px) scale(0.9); 
+    animation: logoEntrance 0.8s ease forwards 0.5s; 
 }
 
 @keyframes logoEntrance {
     to {
         opacity: 1;
-        transform: translateX(0) scale(1); /* slide to normal position & scale */
+        transform: translateX(0) scale(1); 
     }
 }
 
-/* Optional: subtle hover lift */
 .logo img:hover {
     transform: scale(1.05);
     transition: transform 0.3s ease;
 }
 
-/* =====================
-   HERO TEXT
-===================== */
 .hero-text {
     text-align: center;
     margin-top: 100px;
@@ -243,21 +214,17 @@ nav.header {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* =====================
-   HERO BUTTONS
-===================== */
 .btns {
     display: flex;
     justify-content: center;
     gap: 50px;
     margin-top: 30px;
-    flex-wrap: wrap; /* wrap on small screens */
+    flex-wrap: wrap; 
 }
 
-/* Base button style */
 .btns input {
-    width: 130px;        /* uniform width */
-    height: 46px;        /* uniform height */
+    width: 130px;      
+    height: 46px;       
     padding: 0;
     font-size: 18px;
     font-weight: 600;
@@ -271,9 +238,6 @@ nav.header {
     font-weight: 100;
 }
 
-/* ==============================
-   LOGIN BUTTON WITH GLASS SHINE
-================================= */
 .login {
     border: none;
     color: white;
@@ -323,9 +287,6 @@ nav.header {
         0 5px 10px rgba(0,0,0,0.3);
 }
 
-/* =====================
-   CONTACT BUTTON
-===================== */
 .contact {
     background: transparent;
     border: 2px solid rgba(255,140,40,0.85);
@@ -343,54 +304,10 @@ nav.header {
     transform: translateY(2px);
 }
 
-
-/* =====================
-   6. SEARCH BAR
-===================== */
-
-/*
-#search-form { width: 100%; display: flex; justify-content: center; opacity: 0; animation: entranceEffect 0.8s ease-out forwards; }
-@keyframes entranceEffect
-{ 
-	from
-	{
-		opacity:0; transform: translateY(20px);
-	}
-	to 
-	{
-		opacity:1; transform: translateY(0);
-	}       
-}
-.search-wrapper { position: relative; width: 800px; max-width: 90%; }
-
-.search-wrapper::before { content: ""; position: absolute; inset:0; border-radius: 0 0 30px 30px; background: linear-gradient(to bottom, rgba(0,0,0,0.2), transparent); opacity:0; transition: opacity 0.3s ease; pointer-events:none; }
-
-input[type="search"] { width:100%; padding:15px 55px 15px 25px; border-radius:0 0 30px 30px; border:none; font-size:16px; outline:none; background: rgba(255,255,255,0.95); transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; padding-right:80px; }
-
-input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
-
-.btns:hover + #search-form .search-wrapper::before { opacity:1; }
-
-.search-icon-btn { position:absolute; right:15px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#333; font-size:22px; padding:5px; }
-*/
-
-/* Agent/Location modes */
-/*
-.search-wrapper.login-mode input[type="search"] { background:black !important; color:white !important; }
-.search-wrapper.login-mode #search-input::placeholder { color: rgba(255,255,255,1); opacity:1; }
-.search-wrapper.contact-mode #search-input::placeholder { color: #666; opacity:1; }
-.search-wrapper.login-mode .search-icon-btn { color:white; }
-.search-wrapper.login-mode input[type="search"]:focus { box-shadow:0 0 15px rgba(255,255,255,0.25);}
-.search-wrapper.contact-mode input[type="search"]:focus { box-shadow:0 0 15px rgba(0,0,0,0.2); }
-*/
-/* ======================
-   7. DISCOVER SECTION 
-========================= */
-
 .discover {
     background: #f9f9f9;
     color: #111;
-    padding: 40px 0 30px 0; /* tightened so header + carousel fit on one screen */
+    padding: 40px 0 30px 0; 
     overflow: hidden;
     position: relative;
 }
@@ -400,7 +317,7 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-bottom: 24px; /* reduced from 40px */
+    margin-bottom: 24px; 
 }
 
 .discover h1 {
@@ -425,15 +342,11 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
     font-size: 15px;
 }
 
-/* ==========================================
-   CAROUSEL
-========================================== */
-
 .carousel {
     overflow: hidden;
     margin-top: 10px;
     margin-bottom: 10px;
-    touch-action: pan-y; /* ← ignore horizontal swipes */
+    touch-action: pan-y; 
 }
 
 .cards-container {
@@ -443,7 +356,7 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
     width: max-content;
     padding: 16px 0;
     animation: smoothScroll 35s linear infinite;
-    touch-action: pan-y; /* ← also on the child to be safe */
+    touch-action: pan-y; 
 }
 
 @keyframes smoothScroll {
@@ -455,17 +368,12 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
     animation-play-state: paused;
 }
 
-/* ==========================================
-   PROPERTY CARD
-========================================== */
-
 .property-card {
     flex: 0 0 270px;
     background: #fff;
     border-radius: 16px;
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.07);
-    /* shadow on right and bottom only */
     box-shadow: 6px 6px 18px rgba(0, 0, 0, 0.5);
     transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
@@ -474,10 +382,6 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
     transform: translateY(-8px);
     box-shadow: 10px 18px 36px rgba(0, 0, 0, 0.4);
 }
-
-/* ==========================================
-   IMAGE
-========================================== */
 
 .image-wrapper {
     position: relative;
@@ -505,7 +409,6 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
     pointer-events: none;
 }
 
-/* Price Tag */
 .price-tag {
     position: absolute;
     bottom: 14px;
@@ -519,10 +422,6 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
     letter-spacing: 0.2px;
     z-index: 1;
 }
-
-/* ==========================================
-   PROPERTY INFO
-========================================== */
 
 .property-info {
     background: #ff7400;
@@ -562,7 +461,6 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
     font-size: 13px;
     opacity: 0.9;
     padding-top: 10px;
-    /*border-top: 1px solid rgba(255, 255, 255, 0.25); */
 }
 
 .property-details span {
@@ -574,13 +472,10 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
 .property-details ion-icon {
     font-size: 14px;
 }
-/* =====================
-   8. EXPLORE SECTION
-===================== */
 
 .explore
 {
-	background-color: #28282B; /* matt black */
+	background-color: #28282B;
     color: white;
 }
 
@@ -598,7 +493,6 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
     gap: 100px;
 }
 
-/* input type */
 .prop-input{
     border-radius: 50%;
     width: 100px; height: 100px;
@@ -633,21 +527,12 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
     background-size: cover;
 }
 
-/* input type texts */
 .prop-item h6{
     font-size: 20px;
     text-align: center;
     margin-top: 20px;
 }
 
-/*
-.prop-item .land + h6{
-   margin-left: 20px;
-}
-
-/* =====================
-   9. SHORT-TERM SECTION
-===================== */
 .short {
     background-color: white;
     min-height: 100vh;
@@ -656,13 +541,13 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
 .short .short-header {
     display: flex;
     flex-direction: column;
-    gap: 0;        /* distance between h3 and line */
+    gap: 0;        
     padding-top: 70px;
-    padding-left: 200px; /* safer than margin-left */
+    padding-left: 200px; 
 }
 
 .short .short-header h3 {
-    margin: 0;        /* remove default heading margin */
+    margin: 0;        
 }
 
 .short .custom-line {
@@ -671,9 +556,6 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
     background-color: black;
     margin: -16px 0 70px -70px;
 }
-/* =====================
-   10. 	INQUIRY SECTION
-===================== */
 
 .inquiry {
     background-image: url("../asset/img/img27.jpg");
@@ -754,7 +636,6 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
     margin-top: -30px;
     margin-left: 50px;
 }
-/* Line style — Subject, First/Last Name, Email, Contact Number */
 .input-line {
     width: 100%;
     border: none;
@@ -766,7 +647,6 @@ input[type="search"]:focus { box-shadow: 0 0 0 4px rgba(0,0,0,0.15); }
 }
 .input-line:focus { border-bottom-color: #ff7400; }
 
-/* Box style — Address, Message */
 .input-box {
     width: 100%;
     border: 1.5px solid #ccc;
@@ -790,9 +670,7 @@ textarea.input-box { resize: vertical; min-height: 100px; }
     border-radius: 20px;
     cursor: pointer;
 }
-/* =====================
-   11. FOOTER SECTION
-===================== */
+
 footer {
   width: 100%;
   background-color: black;
@@ -803,9 +681,7 @@ footer {
   box-sizing: border-box;
   flex-direction: column;
 }
-/* =====================
-   CONTAINER FOR ALL FOOTER CONTENT
-===================== */
+
 .foot-container {
   display: flex;
   justify-content: space-between;
@@ -813,9 +689,7 @@ footer {
   gap: 60px;
   padding-top: 60px;
 }
-/* =====================
-   GROUPED BRANDING
-===================== */
+
 .brand-group {
   margin-left: -20px;
 }
@@ -834,9 +708,7 @@ footer {
   font-weight: 600;
   font-size: 24px;
 }
-/* =====================
-  SOCIALS
-===================== */
+
 .socials {
   margin-top: 110px;
   text-align: center;
@@ -853,9 +725,7 @@ footer {
   font-size: 16px;
   text-decoration: none;
 }
-/* =====================
-  FIND US
-===================== */
+
 .find-us {
   display: flex;
   flex-direction: column;
@@ -879,17 +749,13 @@ footer {
   text-decoration: none;
   color: white;
 }
-/* =====================
-   COMPANY LOCATION 
-===================== */
+
 .company-loc img {
   width: 250px;
   height: 200px;
   margin-top: 50px;
 }
-/* =====================
-   LEGAL
-===================== */
+
 .legal {
   display: flex;
   flex-direction: column;
@@ -913,9 +779,7 @@ footer {
     margin-top: -5px;
     text-align: center;
 }
-/* =====================
-   FOOTER BOTTOM
-===================== */
+
 .footer-bottom {
     display: flex;
     align-items: center;
@@ -937,11 +801,7 @@ footer {
     margin-top: 50px;
     height: 5px;
 }
-/* =====================
-   8. RESPONSIVE
-===================== */
 
-/* Desktop animation only */
 @media screen and (min-width: 761px) {
 
     nav.header {
@@ -952,9 +812,6 @@ footer {
 
 }
 
-/* =======================
- LAPTOPS
-======================== */
 @media screen and (min-width: 1025px) and (max-width: 1440px)
 { 
     nav.header {
@@ -967,9 +824,6 @@ footer {
 
 }
 
-/* =======================
-  LARGE DESKTOPS 
-======================== */
 @media screen and (min-width:1441px) 
 { 
     nav.header {
@@ -981,9 +835,7 @@ footer {
 	.logo img { margin-left:20px; } .search-wrapper{ width:70%; } 
 
 }
-/* =======================
-  TABLETS
-======================== */
+
 @media screen and (min-width: 768px) and (max-width: 1024px)
 {
     nav.header {
@@ -994,15 +846,9 @@ footer {
 
     .logo img { margin-left:20px; } .search-wrapper{ width:70%; }
 }
-/* =======================
-   MOBILE 
-======================== */
 
 @media screen and (max-width: 768px) {
 
-    /* =======================
-    HAMBURGER
-    ======================== */
     .hamburger {
         display: flex;
         position: fixed;
@@ -1061,9 +907,6 @@ footer {
         background-size: auto 100%; /* scale height to fit container */
         background-position: top center; /* adjust focus */
     }
-    /* =======================
-     PROPERTY TYPE SECTION
-    ======================== */
     .prop-types form {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -1071,9 +914,6 @@ footer {
         padding: 0 40px 40px;
         justify-items: center;
     }
-    /* =======================
-      SHORT TERM SECTION
-    ======================== */
 
     .short-header {
         margin-left: -150px;
@@ -1084,9 +924,6 @@ footer {
         width: 300px;
         margin: 1px 0 0 7px;
     }
-    /* =======================
-      INQUIRY SECTION
-    ======================== */
 
      .inquiry {
         background-image: none;
@@ -1114,9 +951,6 @@ footer {
         padding: 25px 20px;
         box-shadow: none;
     }
-    /* =======================
-      FOOTER SECTION
-    ======================== */
     .foot-container {
         flex-direction: column;
         align-items: center;
@@ -1126,12 +960,10 @@ footer {
         box-sizing: border-box;
     }
 
-    /* Hide logo image and HAVEN text */
     .brand {
         display: none;
     }
 
-    /* Socials stays but resets margin */
     .brand-group {
         margin-left: 0;
         text-align: center;
@@ -1141,7 +973,6 @@ footer {
         margin-top: 0;
     }
 
-    /* Find Us centered */
     .find-us {
         margin-left: 0;
         align-items: center;
@@ -1154,7 +985,6 @@ footer {
         align-self: center;
     }
 
-    /* Company location full width */
     .company-loc {
         width: 100%;
         display: flex;
@@ -1168,7 +998,6 @@ footer {
         height: auto;
     }
 
-    /* Legal centered */
     .legal {
         margin-left: 0;
         align-items: center;
@@ -1184,7 +1013,6 @@ footer {
         font-size: 18px;
         margin-bottom: 6px;
     }
-    /* Footer bottom */
     .footer-bottom {
         padding: 16px 20px;
         justify-content: center;

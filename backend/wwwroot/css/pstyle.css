@@ -1,12 +1,9 @@
-/* ============================= */
-/* GLOBAL DECLARATION (FIXED)   */
-/* ============================= */
 
 html, body {
     margin: 0;
     padding: 0;
     height: auto;
-    scroll-behavior: smooth; /* Smooth normal scrolling */
+    scroll-behavior: smooth;
 }
 
 body {
@@ -16,16 +13,11 @@ body {
     background-repeat: no-repeat;
 }
 
-/* Make sections create scroll naturally */
 section {
     min-height: 100vh;          /* Each section full screen */
     padding: 120px 20px;        /* Internal spacing instead of margin */
     box-sizing: border-box;
 }
-
-/* ============================= */
-/* MOBILE */
-/* ============================= */
 
 @media screen and (max-width: 600px) {
 
@@ -70,10 +62,6 @@ section {
     }
 }
 
-/* ============================= */
-/* TABLET */
-/* ============================= */
-
 @media screen and (min-width: 601px) and (max-width: 1024px) {
 
     header {
@@ -98,10 +86,6 @@ section {
     }
 }
 
-/* ============================= */
-/* ANIMATIONS */
-/* ============================= */
-
 @keyframes entranceEffect {
     from {
         opacity: 0;
@@ -113,10 +97,6 @@ section {
     }
 }
 
-/* ============================= */
-/* DESKTOP */
-/* ============================= */
-
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
 
     header {
@@ -126,7 +106,6 @@ section {
         justify-content: space-between;
     }
 
-    /* LOGO SECTION */
     .logo {
         display: flex;
         gap: 10px;
@@ -145,7 +124,6 @@ section {
         margin-right: 50px;
     }
 
-    /* NAVIGATION */
     nav.header {
         margin-left: auto;
         margin-right: 250px;
@@ -158,14 +136,12 @@ section {
         font-weight: 600;
     }
 
-    /* HERO SECTION */
     section {
         color: white;
         padding-left: 260px;
         padding-top: 150px;
     }
 
-    /* BUTTONS */
     .btns .agent,
     .btns .loc {
         padding: 12px 24px;
@@ -200,7 +176,6 @@ section {
         box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
 
-    /* SEARCH FORM */
     .search-wrapper {
         position: relative;
         display: inline-block;
