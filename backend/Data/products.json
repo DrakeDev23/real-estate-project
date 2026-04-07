@@ -29,7 +29,7 @@
     "bathrooms": 1,
     "mapLink": "https://www.google.com/maps/search/?api=1&query=45+Palm+Ave,+Pasig",
     "amenities": ["Parking", "Laundry Area", "Pet Friendly"],
-    "images": ["IMG_102_1.jpg"]
+    "images": ["no_image.png"]
   },
   {
     "productId": 103,

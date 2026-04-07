@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard - Real Estate</title>
+<title>Admin Dashboard - Haven</title>
 <link rel="stylesheet" href="css/admin.css">
 <link rel="icon" href="images/logo.png">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+
 <div class="container">
 <aside class="sidebar">
     <h2>Admin Panel</h2>
@@ -20,9 +21,11 @@
         <li id="logoutBtn">Logout</li>
     </ul>
 </aside>
+
 <main class="main">
-<header><h1>Admin Dashboard</h1></header>
-<section id="dashboard" class="section">
+    <header><h1 id="pageTitle">Admin Dashboard</h1></header>
+
+    <section id="dashboard" class="section">
     <h2>Dashboard Overview</h2>
     <div class="dashboard-cards">
         <div class="card">
@@ -33,49 +36,76 @@
             <h3 id="totalRequests">0</h3>
             <p>Agent Requests</p>
         </div>
+        <div class="card">
+            <h3 id="totalInquiries">0</h3>
+            <p>Inquiries</p>
+        </div>
     </div>
     <canvas id="dashboardChart"></canvas>
-</section>
-<section id="requests" class="section" style="display:none">
+    </section>
+
+    <section id="requests" class="section" style="display:none">
     <h2>Agent Requests</h2>
     <table>
         <thead>
-            <tr>
-                <th>Agent</th>
-                <th>Agency</th>
-                <th>User Name</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Date</th>
-                <th>Action</th>
-            </tr>
+        <tr>
+            <th>Agent</th>
+            <th>Agency</th>
+            <th>User Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
         </thead>
         <tbody id="requestsTable"></tbody>
     </table>
-</section>
-<section id="properties" class="section" style="display:none">
+    </section>
+
+    <section id="properties" class="section" style="display:none">
     <h2>Manage Properties</h2>
     <div class="form-group">
-        <input id="propName" placeholder="Property Name">
+        <input id="propName"  placeholder="Property Name">
         <input id="propAgent" placeholder="Agent Name">
         <input id="propPrice" type="number" placeholder="Price">
         <button id="addPropertyBtn" class="add">Add Property</button>
     </div>
     <table>
         <thead>
-            <tr>
-                <th>Name</th>
-                <th>Agent</th>
-                <th>Price</th>
-                <th>Action</th>
-            </tr>
+        <tr>
+            <th>Name</th>
+            <th>Agent</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
         </thead>
         <tbody id="propertiesTable"></tbody>
     </table>
-</section>
+    </section>
+
+    <section id="inquire" class="section" style="display:none">
+    <h2>Property Inquiry Submissions</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Subject</th>
+            <th>Address</th>
+            <th>Message</th>
+            <th>Date</th>
+            <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="inquireTable"></tbody>
+    </table>
+    </section>
+
 </main>
 </div>
+
 <div id="confirmModal" class="modal">
 <div class="modal-box">
     <p id="confirmText"></p>
@@ -85,18 +115,30 @@
     </div>
 </div>
 </div>
+
 <div id="editModal" class="modal">
 <div class="modal-box">
     <h3>Edit Property</h3>
-    <input id="editName">
-    <input id="editAgent">
-    <input id="editPrice" type="number">
+    <input id="editName"  placeholder="Property Name">
+    <input id="editAgent" placeholder="Agent Name">
+    <input id="editPrice" type="number" placeholder="Price">
     <div class="modal-actions">
         <button id="saveEdit">Save</button>
         <button onclick="closeModal('editModal')">Cancel</button>
     </div>
+</div> 
+</div>
+
+<div id="inquiryModal" class="modal">
+<div class="modal-box">
+    <h3>Inquiry Details</h3>
+    <div id="inquiryModalContent" style="margin: 1rem 0; line-height: 1.8; font-size: 14px;"></div>
+    <div class="modal-actions">
+        <button onclick="closeModal('inquiryModal')">Close</button>
+    </div>
 </div>
 </div>
+
 <script src="javascript/admin.js"></script>
 </body>
 </html>

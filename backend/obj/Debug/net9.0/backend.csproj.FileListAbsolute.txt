@@ -48,7 +48,6 @@ C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\rjimswa.dswa.cache.js
 C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
 C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\scopedcss\bundle\backend.styles.css
-C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\1fd8r68wur-dxwoiy0pjm.gz
 C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\ld3vahtwff-wxxrjkbmbo.gz
 C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\pl3wn2zf2g-qvyyabwxov.gz
 C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\buvk1ej4lz-ure95yny8d.gz
@@ -67,10 +66,8 @@ C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\kyy5y0qtdz
 C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\gmjxiv9505-yhm9yfvc7e.gz
 C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\oioy1zosjl-5ipweew5fc.gz
 C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\0yulyb0yu6-nmx9zb4vr5.gz
-C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\r4459hc9ld-2twofl3awu.gz
 C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\2hdykmnmpe-80q8cr9iuj.gz
 C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\227q8swh3s-tavb2t5c1v.gz
-C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\ycqoh6x0vr-o5n3uck91q.gz
 C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\2nzevbqkg5-3bm1gvc3hu.gz
 C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\39qbe2b3t7-il2fe14bl0.gz
 C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\52qxgnc70e-qpi6n5bhcj.gz
@@ -94,3 +91,6 @@ C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\backend.pdb
 C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\backend.genruntimeconfig.cache
 C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\ref\backend.dll
 C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\69cug90520-k5c8i7gcqn.gz
+C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\1fd8r68wur-xvs9jx0qd0.gz
+C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\r4459hc9ld-x324278ey1.gz
+C:\Users\SMEAG\Downloads\capstone\backend\obj\Debug\net9.0\compressed\ycqoh6x0vr-ul0za0mrjh.gz
