@@ -28,5 +28,11 @@
     "Email": "zachary@gmail.com",
     "Password": "zach123",
     "Redirect": "buy.html"
+  },
+  {
+    "Username": "akoni",
+    "Email": "akoni@gmail.com",
+    "Password": "123",
+    "Redirect": "buy.html"
   }
 ]

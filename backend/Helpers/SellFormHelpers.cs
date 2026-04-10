@@ -12,7 +12,6 @@ namespace capstones.Helpers
 {
     public static class SellFormHelpers
     {
-        // 👇 This is where your ParseProductRequestAsync method goes
         public static async Task<VladCreateProductRequest> ParseProductRequestAsync(
             HttpRequest request,
             IWebHostEnvironment env,
@@ -57,7 +56,6 @@ namespace capstones.Helpers
             };
         }
 
-        // 👇 Keep this private method for saving images
         private static async Task<List<string>> SaveOrderedImagesAsync(
             int productId,
             List<SellImageOrderItem> imageOrder,

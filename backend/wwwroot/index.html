@@ -32,7 +32,7 @@
 					<nav class="header">
 						<a href="index.html"><ion-icon name="home-outline"></ion-icon>Home</a>
 						<a href="buy.html"><ion-icon name="cart-outline"></ion-icon> Buy</a>
-						<a href="rent.html">Rent</a>
+						<a href="buy.html">Rent</a>
 						<a href="sell.html"><ion-icon name="cash-outline"></ion-icon> Sell</a>
 						<a href="agents.html"><ion-icon name="person-outline"></ion-icon> Find Agent</a>
 						<a href="chatbot.html"><ion-icon name="logo-reddit"></ion-icon>AI Agent</a>
@@ -371,12 +371,12 @@
 						</div>
 						
 						<div class="form-group">
-							<input class="input-line" type="text" name="address" placeholder="Address" required>
+							<input class="input-line" type="text" maxlength="100" name="address" placeholder="Address" required>
 						</div>
 
 						<div class="form-row">
 							<div class="form-group">
-							<input class="input-line" type="text" name="firstname" placeholder="First Name" required>
+							<input class="input-line" type="text" maxlength="100" name="firstname" placeholder="First Name" required>
 							</div>
 
 							<div class="form-group">
@@ -385,15 +385,15 @@
 						</div>
 
 						<div class="form-group">
-							<input class="input-line" type="email" name="email" placeholder="Email Address" required>
+							<input class="input-line" type="email" name="email" maxlength="255" placeholder="Email Address" required>
 						</div>
 
 						<div class="form-group">
-							<input class="input-line" type="tel" name="phone" placeholder="Contact Number" required>
+							<input class="input-line" type="tel" name="phone" maxlength="125" placeholder="Contact Number" required>
 						</div>
 						
 						<div class="form-group">
-							<textarea class="input-box" name="message" placeholder="Your Message" maxlength="1000"></textarea>
+							<textarea class="input-box" name="message" placeholder="Your Message" maxlength="500"></textarea>
 						</div>
 
 						<div class="form-group">

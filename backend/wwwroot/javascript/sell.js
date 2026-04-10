@@ -2,6 +2,7 @@ const sidebar = document.getElementById("sidebar");
 const listingGrid = document.getElementById("listingGrid");
 const ordersList = document.getElementById("ordersList");
 const addListingBtn = document.getElementById("addListingBtn");
+const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
 const sortToggleBtn = document.getElementById("sortToggleBtn");
 const sellFilterPanel = document.getElementById("sellFilterPanel");
