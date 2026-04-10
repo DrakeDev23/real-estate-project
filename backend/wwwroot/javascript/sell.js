@@ -2,16 +2,12 @@ const sidebar = document.getElementById("sidebar");
 const listingGrid = document.getElementById("listingGrid");
 const ordersList = document.getElementById("ordersList");
 const addListingBtn = document.getElementById("addListingBtn");
-const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-
 const sortToggleBtn = document.getElementById("sortToggleBtn");
 const sellFilterPanel = document.getElementById("sellFilterPanel");
 const sellCategoryFilter = document.getElementById("sellCategoryFilter");
 const sellSortOrder = document.getElementById("sellSortOrder");
-
 const listingPagination = document.getElementById("listingPagination");
 const ordersPagination = document.getElementById("ordersPagination");
-
 const sellModal = document.getElementById("sellModal");
 const sellModalTitleDisplay = document.getElementById("sellModalTitleDisplay");
 const sellForm = document.getElementById("sellForm");
@@ -49,17 +45,16 @@ const imageDropzone = document.getElementById("imageDropzone");
 const imageFileInput = document.getElementById("imageFileInput");
 const imagePreviews = document.getElementById("imagePreviews");
 
+let currentUser = null;
 let isEditMode = false;
 let currentEditId = null;
 let toastTimer = null;
 let imageItems = [];
 let amenitiesState = [];
 let tempImageCounter = 0;
-let dragSourceId = null;
-
+let draggedImageId = null;
 let allListings = [];
 let allOrders = [];
-
 let listingsPage = 1;
 let ordersPage = 1;
 
@@ -87,7 +82,17 @@ function getFallbackImage() {
   return "/images/products/no_image.png";
 }
 
+function escapeHtml(text) {
+  return String(text ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
 function updateCounter(input, output) {
+  if (!input || !output) return;
   output.textContent = String(input.value.length);
 }
 
@@ -107,9 +112,15 @@ function wireCounters() {
   ];
 
   pairs.forEach(([input, output]) => {
-    input.addEventListener("input", () => updateCounter(input, output));
+    if (!input || !output) return;
+    input.oninput = () => updateCounter(input, output);
     updateCounter(input, output);
   });
+
+  titleInput.oninput = () => {
+    updateCounter(titleInput, titleCounter);
+    updateModalTitleFromInput();
+  };
 }
 
 function updateAmenityCount() {
@@ -127,13 +138,20 @@ function renderAmenityChips() {
   amenityChipList.innerHTML = amenitiesState
     .map(
       (item, index) => `
-    <div class="amenity-chip-editor">
-      <span>${escapeHtml(item)}</span>
-      <button type="button" class="amenity-chip-remove" onclick="removeAmenity(${index})">×</button>
-    </div>
-  `,
+        <div class="amenity-chip-editor">
+          <span>${escapeHtml(item)}</span>
+          <button type="button" class="amenity-chip-remove" data-index="${index}">×</button>
+        </div>
+      `,
     )
     .join("");
+
+  amenityChipList.querySelectorAll(".amenity-chip-remove").forEach((button) => {
+    button.addEventListener("click", () => {
+      const index = Number(button.dataset.index);
+      removeAmenity(index);
+    });
+  });
 }
 
 function showAmenityInput() {
@@ -150,7 +168,6 @@ function hideAmenityInput() {
 
 function addAmenity() {
   const value = amenityInput.value.trim();
-
   if (!value) return;
   if (amenitiesState.length >= 10) return;
   if (amenitiesState.includes(value)) {
@@ -169,6 +186,12 @@ function removeAmenity(index) {
 }
 
 function resetImageItems() {
+  imageItems.forEach((item) => {
+    if (item.type === "new" && item.url) {
+      URL.revokeObjectURL(item.url);
+    }
+  });
+
   imageItems = [];
   tempImageCounter = 0;
   renderImagePreviews();
@@ -206,14 +229,14 @@ function removeImageItem(id) {
   renderImagePreviews();
 }
 
-function moveImageItem(fromId, toId) {
+function reorderImageItems(fromId, toId) {
   const fromIndex = imageItems.findIndex((x) => x.id === fromId);
   const toIndex = imageItems.findIndex((x) => x.id === toId);
 
   if (fromIndex === -1 || toIndex === -1 || fromIndex === toIndex) return;
 
-  const [moved] = imageItems.splice(fromIndex, 1);
-  imageItems.splice(toIndex, 0, moved);
+  const [movedItem] = imageItems.splice(fromIndex, 1);
+  imageItems.splice(toIndex, 0, movedItem);
   renderImagePreviews();
 }
 
@@ -226,41 +249,48 @@ function renderImagePreviews() {
   imagePreviews.innerHTML = imageItems
     .map(
       (item, index) => `
-    <div
-      class="image-item ${index === 0 ? "thumbnail" : ""}"
-      draggable="true"
-      data-id="${item.id}">
-      <button type="button" class="remove-image-btn" onclick="removeImageItem('${item.id}')">×</button>
-      <div class="image-thumb">
-        <img src="${item.url || getFallbackImage()}" alt="Preview" onerror="this.src='${getFallbackImage()}'">
+      <div class="image-item ${index === 0 ? "thumbnail" : ""}" data-id="${item.id}" draggable="true">
+        <button type="button" class="remove-image-btn" data-id="${item.id}">×</button>
+        <div class="image-thumb">
+          <img src="${escapeHtml(item.url)}" alt="Preview ${index + 1}">
+        </div>
+        <div class="thumbnail-label">${index === 0 ? "Thumbnail" : ""}</div>
+        <div class="image-meta">
+          <div>${escapeHtml(item.name || "Image")}</div>
+          <div>#${index + 1}</div>
+        </div>
       </div>
-      <div class="thumbnail-label">Thumbnail</div>
-      <div class="image-meta">${escapeHtml(item.name || "Image")}</div>
-    </div>
-  `,
+    `,
     )
     .join("");
 
-  document.querySelectorAll(".image-item").forEach((el) => {
-    el.addEventListener("dragstart", () => {
-      dragSourceId = el.dataset.id;
+  imagePreviews.querySelectorAll(".remove-image-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+      removeImageItem(button.dataset.id);
+    });
+  });
+
+  imagePreviews.querySelectorAll(".image-item").forEach((itemEl) => {
+    itemEl.addEventListener("dragstart", () => {
+      draggedImageId = itemEl.dataset.id;
+      itemEl.classList.add("dragging");
     });
 
-    el.addEventListener("dragover", (e) => {
-      e.preventDefault();
+    itemEl.addEventListener("dragend", () => {
+      draggedImageId = null;
+      itemEl.classList.remove("dragging");
     });
 
-    el.addEventListener("drop", (e) => {
-      e.preventDefault();
-      const targetId = el.dataset.id;
-      if (dragSourceId && targetId) {
-        moveImageItem(dragSourceId, targetId);
+    itemEl.addEventListener("dragover", (event) => {
+      event.preventDefault();
+    });
+
+    itemEl.addEventListener("drop", (event) => {
+      event.preventDefault();
+      const targetId = itemEl.dataset.id;
+      if (draggedImageId && targetId) {
+        reorderImageItems(draggedImageId, targetId);
       }
-      dragSourceId = null;
-    });
-
-    el.addEventListener("dragend", () => {
-      dragSourceId = null;
     });
   });
 }
@@ -275,6 +305,11 @@ function getFilteredListings() {
     filtered = filtered.filter(
       (item) => (item.category || "").toLowerCase() === categoryValue,
     );
+  }
+
+  if (currentUser && currentUser.role !== "admin") {
+    const ownedIds = currentUser.ownedProductIds || [];
+    filtered = filtered.filter((item) => ownedIds.includes(item.productId));
   }
 
   switch (sortValue) {
@@ -303,7 +338,7 @@ function renderPagination(container, currentPage, totalPages, onChange) {
   const safeTotalPages = Math.max(1, totalPages);
 
   let html = `
-    <button class="pagination-btn" ${currentPage <= 1 ? "disabled" : ""} data-page="${Math.max(1, currentPage - 1)}">←</button>
+    <button class="pagination-btn" ${currentPage === 1 ? "disabled" : ""} data-page="${Math.max(1, currentPage - 1)}">←</button>
   `;
 
   for (let i = 1; i <= safeTotalPages; i++) {
@@ -313,7 +348,7 @@ function renderPagination(container, currentPage, totalPages, onChange) {
   }
 
   html += `
-    <button class="pagination-btn" ${currentPage >= safeTotalPages ? "disabled" : ""} data-page="${Math.min(safeTotalPages, currentPage + 1)}">→</button>
+    <button class="pagination-btn" ${currentPage === safeTotalPages ? "disabled" : ""} data-page="${Math.min(safeTotalPages, currentPage + 1)}">→</button>
   `;
 
   container.innerHTML = html;
@@ -347,24 +382,36 @@ function renderListings() {
         const imageSrc =
           product.thumbnailUrl && product.thumbnailUrl.trim() !== ""
             ? product.thumbnailUrl
-            : getFallbackImage();
+            : product.images && product.images[0]
+              ? `/images/products/${product.images[0]}`
+              : getFallbackImage();
 
         return `
-        <div class="listing-card">
-          <div class="listing-image">
-            <span class="listing-badge ${isRent ? "rent" : "sale"}">${isRent ? "RENT" : "SALE"}</span>
-            <img src="${imageSrc}" alt="${escapeHtml(product.title)}" onerror="this.src='${getFallbackImage()}'">
+          <div class="listing-card">
+            <div class="listing-image">
+              <img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(product.title || "Property image")}">
+              <div class="listing-badge ${isRent ? "rent" : "sale"}">
+                ${isRent ? "RENT" : "SALE"}
+              </div>
+            </div>
+            <div class="listing-info">
+              <div class="listing-title">${escapeHtml(product.title)}</div>
+              <div class="listing-price">
+                ₱${Number(product.price).toLocaleString()}${product.frequency ? ` / ${escapeHtml(product.frequency)}` : ""}
+              </div>
+              <div class="listing-meta">${escapeHtml(product.address || "")}</div>
+              <button type="button" class="edit-btn" data-id="${product.productId}">Edit</button>
+            </div>
           </div>
-          <div class="listing-info">
-            <div class="listing-title">${escapeHtml(product.title)}</div>
-            <div class="listing-price">₱${Number(product.price).toLocaleString()}${product.frequency ? ` / ${escapeHtml(product.frequency)}` : ""}</div>
-            <div class="listing-meta">${escapeHtml(product.address || "")}</div>
-            <button class="edit-btn" onclick="editListing(${product.productId})">Edit</button>
-          </div>
-        </div>
-      `;
+        `;
       })
       .join("");
+
+    listingGrid.querySelectorAll(".edit-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        editListing(Number(btn.dataset.id));
+      });
+    });
   }
 
   renderPagination(listingPagination, listingsPage, totalPages, (page) => {
@@ -387,19 +434,23 @@ function renderOrders() {
     ordersList.innerHTML = visible
       .map(
         (order) => `
-      <div class="order-card">
-        <div class="order-title">${escapeHtml(order.productTitle)}</div>
-        <div class="order-meta"><strong>Seller:</strong> ${escapeHtml(order.sellerName || "")}</div>
-        <div class="order-meta"><strong>Agent:</strong> ${escapeHtml(order.agentName || "N/A")}</div>
-        <div class="order-meta"><strong>Requested:</strong> ${escapeHtml(order.requestedAt || "")}</div>
-        <span class="status-pill">${escapeHtml(order.status || "")}</span>
-        <div style="margin-top: 12px;">
-          <button class="edit-btn" onclick="removeContactRequest(${order.requestId})">Remove Request</button>
-        </div>
-      </div>
-    `,
+          <div class="order-card">
+            <div class="order-title">${escapeHtml(order.productTitle)}</div>
+            <div class="order-meta">Seller: ${escapeHtml(order.sellerName || "")}</div>
+            <div class="order-meta">Agent: ${escapeHtml(order.agentName || "N/A")}</div>
+            <div class="order-meta">Requested: ${escapeHtml(order.requestedAt || "")}</div>
+            <div class="status-pill">${escapeHtml(order.status || "")}</div>
+            <button type="button" class="edit-btn remove-order-btn" data-id="${order.requestId}">Remove Request</button>
+          </div>
+        `,
       )
       .join("");
+
+    ordersList.querySelectorAll(".remove-order-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        removeContactRequest(Number(btn.dataset.id));
+      });
+    });
   }
 
   renderPagination(ordersPagination, ordersPage, totalPages, (page) => {
@@ -414,7 +465,6 @@ async function loadListings() {
   try {
     const response = await fetch("/api/products");
     if (!response.ok) throw new Error("Failed to load listings.");
-
     allListings = await response.json();
     renderListings();
   } catch (error) {
@@ -424,33 +474,12 @@ async function loadListings() {
   }
 }
 
-async function removeContactRequest(requestId) {
-  if (!confirm("Remove this contact request?")) return;
-
-  try {
-    const response = await fetch(`/api/contact-requests/${requestId}`, {
-      method: "DELETE",
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to remove contact request.");
-    }
-
-    showToast("Contact request removed");
-    await loadOrders();
-  } catch (error) {
-    console.error(error);
-    alert("Could not remove contact request.");
-  }
-}
-
 async function loadOrders() {
   ordersList.innerHTML = `<div class="loading">Loading pending orders...</div>`;
 
   try {
     const response = await fetch("/api/contact-requests");
     if (!response.ok) throw new Error("Failed to load pending orders.");
-
     allOrders = await response.json();
     renderOrders();
   } catch (error) {
@@ -460,23 +489,41 @@ async function loadOrders() {
   }
 }
 
+async function fetchCurrentUser() {
+  const response = await fetch("/api/auth/me");
+  return await response.json();
+}
+
 function openSellModalForCreate() {
+  if (!currentUser || !currentUser.isLoggedIn) {
+    window.location.href = "login.html";
+    return;
+  }
+
   isEditMode = false;
   currentEditId = null;
+
   sellForm.reset();
   sellModalTitleDisplay.textContent = "New Listing";
-  productIdInput.disabled = false;
-  sellerNameDisplay.value = "User";
+  productIdInput.value = "";
+  sellerNameDisplay.value = currentUser.username || "user";
+
   resetImageItems();
   amenitiesState = [];
   renderAmenityChips();
   hideAmenityInput();
   wireCounters();
   updateModalTitleFromInput();
+
   sellModal.classList.remove("hidden");
 }
 
 async function editListing(productId) {
+  if (!currentUser || !currentUser.isLoggedIn) {
+    window.location.href = "login.html";
+    return;
+  }
+
   try {
     const response = await fetch(`/api/products/${productId}`);
     if (!response.ok) throw new Error("Failed to load listing.");
@@ -487,13 +534,12 @@ async function editListing(productId) {
     currentEditId = productId;
 
     productIdInput.value = product.productId ?? "";
-    productIdInput.disabled = true;
     titleInput.value = product.title ?? "";
     addressInput.value = product.address ?? "";
     priceInput.value = product.price ?? "";
     frequencyInput.value = product.frequency ?? "";
     categoryInput.value = product.category ?? "sale";
-    sellerNameDisplay.value = "User";
+    sellerNameDisplay.value = currentUser.username || "user";
     agentNameInput.value = product.agentName ?? "";
     bedroomsInput.value = product.bedrooms ?? "";
     bathroomsInput.value = product.bathrooms ?? "";
@@ -506,16 +552,26 @@ async function editListing(productId) {
     renderAmenityChips();
     hideAmenityInput();
 
+    imageItems.forEach((item) => {
+      if (item.type === "new" && item.url) {
+        URL.revokeObjectURL(item.url);
+      }
+    });
+
     imageItems = (Array.isArray(product.images) ? product.images : [])
-      .filter((img) => img && !img.endsWith("/no_image.png"))
+      .filter(
+        (img) =>
+          img && img !== "no_image.png" && !img.endsWith("/no_image.png"),
+      )
       .slice(0, 5)
       .map((img, idx) => {
-        const fileName = img.split("/").pop() || `existing_${idx + 1}`;
+        const fileName = img.includes("/") ? img.split("/").pop() : img;
+
         return {
           id: `existing_${idx}_${Date.now()}`,
           type: "existing",
           name: fileName,
-          url: img,
+          url: img.includes("/") ? img : `/images/products/${img}`,
           existingFileName: fileName,
         };
       });
@@ -536,7 +592,6 @@ function closeSellModal() {
 
 function buildMetadata() {
   return {
-    productId: Number(productIdInput.value),
     title: titleInput.value.trim(),
     address: addressInput.value.trim(),
     price: Number(priceInput.value || 0),
@@ -557,6 +612,11 @@ function buildMetadata() {
 
 sellForm.addEventListener("submit", async function (event) {
   event.preventDefault();
+
+  if (!currentUser || !currentUser.isLoggedIn) {
+    window.location.href = "login.html";
+    return;
+  }
 
   const metadata = buildMetadata();
   const formData = new FormData();
@@ -583,6 +643,11 @@ sellForm.addEventListener("submit", async function (event) {
       });
     }
 
+    if (response.status === 401) {
+      window.location.href = "login.html";
+      return;
+    }
+
     if (!response.ok) {
       const text = await response.text();
       throw new Error(text || "Failed to save listing.");
@@ -590,6 +655,7 @@ sellForm.addEventListener("submit", async function (event) {
 
     closeSellModal();
     showToast("Saved successfully");
+    currentUser = await fetchCurrentUser();
     await loadListings();
     await loadOrders();
   } catch (error) {
@@ -598,104 +664,139 @@ sellForm.addEventListener("submit", async function (event) {
   }
 });
 
-imageDropzone.addEventListener("click", () => {
-  imageFileInput.click();
-});
+async function removeContactRequest(requestId) {
+  if (!confirm("Remove this request?")) return;
 
-imageFileInput.addEventListener("change", (event) => {
-  addFilesToImageItems(event.target.files);
-  imageFileInput.value = "";
-});
+  try {
+    const response = await fetch(`/api/contact-requests/${requestId}`, {
+      method: "DELETE",
+    });
 
-imageDropzone.addEventListener("dragover", (event) => {
-  event.preventDefault();
-  imageDropzone.classList.add("dragover");
-});
-
-imageDropzone.addEventListener("dragleave", () => {
-  imageDropzone.classList.remove("dragover");
-});
-
-imageDropzone.addEventListener("drop", (event) => {
-  event.preventDefault();
-  imageDropzone.classList.remove("dragover");
-  addFilesToImageItems(event.dataTransfer.files);
-});
-
-showAmenityInputBtn.addEventListener("click", showAmenityInput);
-addAmenityBtn.addEventListener("click", addAmenity);
-cancelAmenityBtn.addEventListener("click", hideAmenityInput);
-
-amenityInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    addAmenity();
-  }
-});
-
-titleInput.addEventListener("input", updateModalTitleFromInput);
-
-addListingBtn.addEventListener("click", openSellModalForCreate);
-
-sortToggleBtn.addEventListener("click", () => {
-  sellFilterPanel.classList.toggle("hidden");
-});
-
-sellCategoryFilter.addEventListener("change", () => {
-  listingsPage = 1;
-  renderListings();
-});
-
-sellSortOrder.addEventListener("change", () => {
-  listingsPage = 1;
-  renderListings();
-});
-
-document.querySelectorAll(".tab-btn").forEach((btn) => {
-  btn.addEventListener("click", async () => {
-    document
-      .querySelectorAll(".tab-btn")
-      .forEach((x) => x.classList.remove("active"));
-    document
-      .querySelectorAll(".tab-panel")
-      .forEach((x) => x.classList.remove("active"));
-
-    btn.classList.add("active");
-    document.getElementById(btn.dataset.tab).classList.add("active");
-
-    if (btn.dataset.tab === "ordersTab") {
-      await loadOrders();
-    } else {
-      renderListings();
+    if (!response.ok) {
+      throw new Error("Failed to remove contact request.");
     }
-  });
-});
 
-sellModal.addEventListener("click", function (event) {
-  if (event.target === sellModal) {
-    closeSellModal();
+    showToast("Contact request removed");
+    await loadOrders();
+  } catch (error) {
+    console.error(error);
+    alert("Could not remove contact request.");
   }
-});
-
-document.addEventListener("keydown", function (event) {
-  if (event.key === "Escape" && !sellModal.classList.contains("hidden")) {
-    closeSellModal();
-  }
-});
-
-function escapeHtml(text) {
-  return String(text)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
 }
 
-wireCounters();
-updateModalTitleFromInput();
-loadListings();
-loadOrders();
+function setupImageControls() {
+  imageDropzone.addEventListener("click", () => {
+    imageFileInput.click();
+  });
+
+  imageFileInput.addEventListener("change", (event) => {
+    addFilesToImageItems(event.target.files);
+    imageFileInput.value = "";
+  });
+
+  imageDropzone.addEventListener("dragover", (event) => {
+    event.preventDefault();
+    imageDropzone.classList.add("dragover");
+  });
+
+  imageDropzone.addEventListener("dragleave", () => {
+    imageDropzone.classList.remove("dragover");
+  });
+
+  imageDropzone.addEventListener("drop", (event) => {
+    event.preventDefault();
+    imageDropzone.classList.remove("dragover");
+    addFilesToImageItems(event.dataTransfer.files);
+  });
+}
+
+function setupFormControls() {
+  showAmenityInputBtn.addEventListener("click", showAmenityInput);
+  addAmenityBtn.addEventListener("click", addAmenity);
+  cancelAmenityBtn.addEventListener("click", hideAmenityInput);
+
+  amenityInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      addAmenity();
+    }
+  });
+
+  addListingBtn.addEventListener("click", openSellModalForCreate);
+
+  sortToggleBtn.addEventListener("click", () => {
+    sellFilterPanel.classList.toggle("hidden");
+  });
+
+  sellCategoryFilter.addEventListener("change", () => {
+    listingsPage = 1;
+    renderListings();
+  });
+
+  sellSortOrder.addEventListener("change", () => {
+    listingsPage = 1;
+    renderListings();
+  });
+
+  document.querySelectorAll(".tab-btn").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      document
+        .querySelectorAll(".tab-btn")
+        .forEach((x) => x.classList.remove("active"));
+      document
+        .querySelectorAll(".tab-panel")
+        .forEach((x) => x.classList.remove("active"));
+
+      btn.classList.add("active");
+      document.getElementById(btn.dataset.tab).classList.add("active");
+
+      if (btn.dataset.tab === "ordersTab") {
+        await loadOrders();
+      } else {
+        renderListings();
+      }
+    });
+  });
+}
+
+function setupModalClosing() {
+  document
+    .getElementById("closeSellModalBtn")
+    ?.addEventListener("click", closeSellModal);
+
+  sellModal.addEventListener("click", function (event) {
+    if (event.target === sellModal) {
+      closeSellModal();
+    }
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && !sellModal.classList.contains("hidden")) {
+      closeSellModal();
+    }
+  });
+}
+
+async function initialize() {
+  wireCounters();
+  updateModalTitleFromInput();
+  setupImageControls();
+  setupFormControls();
+  setupModalClosing();
+
+  currentUser = await fetchCurrentUser();
+
+  if (currentUser?.isLoggedIn) {
+    sellerNameDisplay.value = currentUser.username || "user";
+  } else {
+    sellerNameDisplay.value = "Not logged in";
+  }
+
+  await loadListings();
+  await loadOrders();
+}
+
+document.addEventListener("DOMContentLoaded", initialize);
 
 window.editListing = editListing;
 window.toggleMenu = toggleMenu;

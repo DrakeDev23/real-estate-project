@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/buy.css?v=6" />
     <link rel="icon" href="images/logo.png" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
   </head>
   <body>
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
@@ -19,6 +22,7 @@
         <li><a href="sell.html">Sell</a></li>
         <li><a href="agents.html">Find Agent</a></li>
         <li><a href="chatbot.html">AI Agent</a></li>
+        <li><a href="#" id="logoutBtn">Logout</a></li>
       </ul>
     </nav>
 
@@ -38,7 +42,9 @@
               placeholder="Search for properties..."
               maxlength="355"
             />
-            <button class="search-btn" type="button" id="searchBtn">  <i class="fas fa-search"></i></button>
+            <button class="search-btn" type="button" id="searchBtn">
+              <i class="fas fa-search"></i>
+            </button>
           </div>
 
           <button class="agent-btn desktop-agent-btn" type="button">
@@ -241,5 +247,6 @@
     <div class="toast hidden" id="toastNotification">Contact request sent</div>
 
     <script src="javascript/buy.js?v=6"></script>
+    <script src="javascript/logout.js?v=1"></script>
   </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>Haven - Sell</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/sell.css?v=6" />
+    <link rel="stylesheet" href="css/sell.css?v=10" />
     <link rel="icon" href="images/logo.png" />
   </head>
   <body>
@@ -16,8 +16,9 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="buy.html">Buy</a></li>
         <li><a href="sell.html" class="active">Sell</a></li>
-        <li><a href="agents.html">Find Agents</a></li>
+        <li><a href="agents.html">Find Agent</a></li>
         <li><a href="chatbot.html">AI Agent</a></li>
+        <li><a href="#" id="logoutBtn">Logout</a></li>
       </ul>
     </nav>
 
@@ -76,7 +77,6 @@
         <div class="listing-grid" id="listingGrid">
           <div class="loading">Loading listings...</div>
         </div>
-
         <div class="pagination-bar" id="listingPagination"></div>
       </section>
 
@@ -84,14 +84,18 @@
         <div class="orders-list" id="ordersList">
           <div class="loading">Loading pending orders...</div>
         </div>
-
         <div class="pagination-bar" id="ordersPagination"></div>
       </section>
     </div>
 
     <div class="modal-overlay hidden" id="sellModal">
       <div class="sell-modal-box">
-        <button class="modal-close" type="button" onclick="closeSellModal()">
+        <button
+          class="modal-close close-modal"
+          id="closeSellModalBtn"
+          type="button"
+          aria-label="Close modal"
+        >
           &times;
         </button>
 
@@ -126,15 +130,10 @@
               </div>
 
               <form id="sellForm">
-                <div class="form-grid">
-                  <div class="form-group">
-                    <label for="productIdInput" class="required-label"
-                      >Product ID</label
-                    >
-                    <input type="number" id="productIdInput" required />
-                  </div>
+                <input type="hidden" id="productIdInput" />
 
-                  <div class="form-group">
+                <div class="form-grid">
+                  <div class="form-group full">
                     <label
                       for="titleInput"
                       class="required-label name-label-with-icon"
@@ -202,17 +201,9 @@
                     <input
                       type="text"
                       id="sellerNameDisplay"
-                      value="User"
+                      value="user"
                       readonly
                     />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="agentNameInput">Agent Name</label>
-                    <input type="text" id="agentNameInput" maxlength="80" />
-                    <div class="field-counter">
-                      <span id="agentCounter">0</span>/80
-                    </div>
                   </div>
 
                   <div class="form-group full">
@@ -224,6 +215,45 @@
                     ></textarea>
                     <div class="field-counter">
                       <span id="overviewCounter">0</span>/1200
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="sell-side-column">
+              <div class="side-panel-card">
+                <h3>Property Details</h3>
+
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="agentNameInput">Agent Name</label>
+                    <input type="text" id="agentNameInput" maxlength="80" />
+                    <div class="field-counter">
+                      <span id="agentCounter">0</span>/80
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="bedroomsInput">Bedrooms</label>
+                    <input type="number" id="bedroomsInput" min="0" />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="bathroomsInput">Toilets / Bathrooms</label>
+                    <input type="number" id="bathroomsInput" min="0" />
+                  </div>
+
+                  <div class="form-group full">
+                    <label for="mapLinkInput">Map Link</label>
+                    <input
+                      type="text"
+                      id="mapLinkInput"
+                      maxlength="300"
+                      placeholder="Optional direct map link"
+                    />
+                    <div class="field-counter">
+                      <span id="mapLinkCounter">0</span>/300
                     </div>
                   </div>
 
@@ -271,44 +301,12 @@
 
                     <div class="amenity-chip-list" id="amenityChipList"></div>
                   </div>
-
-                  <div class="form-group">
-                    <label for="bedroomsInput">Bedrooms</label>
-                    <input type="number" id="bedroomsInput" min="0" />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="bathroomsInput">Toilets / Bathrooms</label>
-                    <input type="number" id="bathroomsInput" min="0" />
-                  </div>
-
-                  <div class="form-group full">
-                    <label for="mapLinkInput">Map Link</label>
-                    <input
-                      type="text"
-                      id="mapLinkInput"
-                      maxlength="300"
-                      placeholder="Optional direct map link"
-                    />
-                    <div class="field-counter">
-                      <span id="mapLinkCounter">0</span>/300
-                    </div>
-                  </div>
                 </div>
 
                 <div class="save-row">
-                  <button type="submit" class="save-btn">Save Changes</button>
-                </div>
-              </form>
-            </div>
-
-            <div class="sell-side-column">
-              <div class="agent-placeholder-card">
-                <div class="placeholder-title">Agent Side Placeholder</div>
-                <div class="placeholder-box"></div>
-                <div class="placeholder-note">
-                  This side can later hold agent actions, profile, workflow, or
-                  approvals.
+                  <button type="submit" class="save-btn" form="sellForm">
+                    Save Changes
+                  </button>
                 </div>
               </div>
             </div>
@@ -319,6 +317,7 @@
 
     <div class="toast hidden" id="sellToast">Saved successfully</div>
 
-    <script src="javascript/sell.js?v=6"></script>
+    <script src="javascript/sell.js?v=10"></script>
+    <script src="javascript/logout.js?v=1"></script>
   </body>
 </html>

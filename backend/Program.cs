@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
-using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +8,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("FrontendOnly", policy =>
     {
         policy.AllowAnyOrigin()
-            .AllowAnyHeader()
-            .AllowAnyMethod();
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
@@ -29,35 +28,45 @@ builder.Services.AddRateLimiter(options =>
     });
 });
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = ".Haven.Session";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    options.IdleTimeout = TimeSpan.FromHours(2);
+});
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<CurrentUserService>();
+
 VladSetup.AddVladServices(builder);
 
 var app = builder.Build();
 
 app.UseCors("FrontendOnly");
 app.UseRateLimiter();
+app.UseSession();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
 AuthRoutes.MapRoutes(app);
 ChatRoutes.MapRoutes(app);
-RequestRoutes.MapRoutes(app);   
+RequestRoutes.MapRoutes(app);
 PropertyRoutes.MapRoutes(app);
-
 VladSetup.MapVladEndpoints(app);
 
-string usersFile = Path.Combine(builder.Environment.ContentRootPath, "users.json");
+string usersFile = Path.Combine(app.Environment.ContentRootPath, "users.json");
+
 app.MapGet("/api/users", () =>
 {
-    Console.WriteLine($"PATH: {usersFile}");
-
     if (!File.Exists(usersFile))
     {
-        Console.WriteLine("FILE NOT FOUND");
-        return Results.Json(new List<object>());
+        return Results.Json(new List<User>());
     }
 
-    var json = File.ReadAllText(usersFile);
-    return Results.Content(json, "application/json");
+    var users = UserStorage.LoadUsers();
+    return Results.Json(users);
 });
 
 app.Run();

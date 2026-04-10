@@ -1,6 +1,6 @@
 [
   {
-    "productId": 101,
+    "productId": 1,
     "title": "Modern House in Downtown",
     "price": 350000,
     "frequency": null,
@@ -13,10 +13,10 @@
     "bathrooms": 2,
     "mapLink": "https://www.google.com/maps/search/?api=1&query=123+Main+St,+Quezon+City",
     "amenities": ["Garage", "Balcony", "Garden", "Gated Entry"],
-    "images": ["IMG_101_1.jpg", "IMG_101_2.jpg"]
+    "images": ["IMG_1_1.jpg", "IMG_1_2.jpg"]
   },
   {
-    "productId": 102,
+    "productId": 2,
     "title": "Cozy Suburban Home",
     "price": 25000,
     "frequency": "bi-weekly",
@@ -32,7 +32,7 @@
     "images": ["no_image.png"]
   },
   {
-    "productId": 103,
+    "productId": 3,
     "title": "Luxury Beachfront Villa",
     "price": 1200000,
     "frequency": "quarterly",

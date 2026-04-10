@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "/home/archlinux/Downloads/Project/real-estate-project/backend/backend.csproj": {}
+    "C:\\Users\\VladCodes\\Desktop\\real-estate-project\\backend\\backend.csproj": {}
   },
   "projects": {
-    "/home/archlinux/Downloads/Project/real-estate-project/backend/backend.csproj": {
+    "C:\\Users\\VladCodes\\Desktop\\real-estate-project\\backend\\backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/archlinux/Downloads/Project/real-estate-project/backend/backend.csproj",
+        "projectUniqueName": "C:\\Users\\VladCodes\\Desktop\\real-estate-project\\backend\\backend.csproj",
         "projectName": "backend",
-        "projectPath": "/home/archlinux/Downloads/Project/real-estate-project/backend/backend.csproj",
-        "packagesPath": "/home/archlinux/.nuget/packages/",
-        "outputPath": "/home/archlinux/Downloads/Project/real-estate-project/backend/obj/",
+        "projectPath": "C:\\Users\\VladCodes\\Desktop\\real-estate-project\\backend\\backend.csproj",
+        "packagesPath": "C:\\Users\\VladCodes\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\VladCodes\\Desktop\\real-estate-project\\backend\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "D:\\Programs\\Visual Studios\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/archlinux/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\VladCodes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -64,6 +70,18 @@
             {
               "name": "Microsoft.AspNetCore.App.Ref",
               "version": "[9.0.14, 9.0.14]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[9.0.14, 9.0.14]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[9.0.14, 9.0.14]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[9.0.14, 9.0.14]"
             }
           ],
           "frameworkReferences": {
@@ -74,7 +92,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.115/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

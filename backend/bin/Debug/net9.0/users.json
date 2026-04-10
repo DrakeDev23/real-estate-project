@@ -1,38 +1,66 @@
 [
   {
+    "Username": "admin",
+    "Email": "admin@haven.com",
+    "Password": "admin123",
+    "Redirect": "sell.html",
+    "Role": "admin",
+    "OwnedProductIds": []
+  },
+  {
     "Username": "dwyn",
     "Email": "dwyn@gmail.com",
     "Password": "dwyn123",
-    "Redirect": "buy.html"
+    "Redirect": "buy.html",
+    "Role": "user",
+    "OwnedProductIds": []
   },
   {
     "Username": "santi",
     "Email": "santi@gmail.com",
     "Password": "santi123",
-    "Redirect": "buy.html"
+    "Redirect": "buy.html",
+    "Role": "user",
+    "OwnedProductIds": []
   },
   {
     "Username": "SDwyn",
-    "Email": "dwyn@gmail.com",
+    "Email": "dwyn-alt@gmail.com",
     "Password": "dwyn123",
-    "Redirect": "buy.html"
+    "Redirect": "buy.html",
+    "Role": "user",
+    "OwnedProductIds": []
   },
   {
     "Username": "hi",
     "Email": "maccogoth@gmail.com",
     "Password": "hi",
-    "Redirect": "buy.html"
+    "Redirect": "buy.html",
+    "Role": "user",
+    "OwnedProductIds": []
   },
   {
     "Username": "zach",
     "Email": "zachary@gmail.com",
     "Password": "zach123",
-    "Redirect": "buy.html"
+    "Redirect": "buy.html",
+    "Role": "user",
+    "OwnedProductIds": [10]
   },
   {
     "Username": "akoni",
     "Email": "akoni@gmail.com",
     "Password": "123",
-    "Redirect": "buy.html"
+    "Redirect": "buy.html",
+    "Role": "user",
+    "OwnedProductIds": []
+  },
+  {
+    "Username": "VladTest",
+    "Email": "notmyemail@gmail.com",
+    "Password": "1234",
+    "Redirect": "buy.html",
+    "Role": "user",
+    "OwnedProductIds": [1, 2, 3]
   }
 ]
