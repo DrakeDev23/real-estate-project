@@ -1,3 +1,3 @@
 ﻿# Haven---Buy-and-Sell
-Image system need testing from other machine
- - try editing/adding products to see if it works
+
+(hopefully) Final Product
