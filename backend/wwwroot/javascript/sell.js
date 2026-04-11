@@ -25,6 +25,7 @@ const bedroomsInput = document.getElementById("bedroomsInput");
 const bathroomsInput = document.getElementById("bathroomsInput");
 const overviewInput = document.getElementById("overviewInput");
 const mapLinkInput = document.getElementById("mapLinkInput");
+const deleteListingBtn = document.getElementById("deleteListingBtn");
 
 const titleCounter = document.getElementById("titleCounter");
 const addressCounter = document.getElementById("addressCounter");
@@ -125,6 +126,28 @@ function wireCounters() {
 
 function updateAmenityCount() {
   amenityCount.textContent = String(amenitiesState.length);
+}
+
+async function deleteCurrentListing() {
+  if (!isEditMode || currentEditId === null) return;
+
+  try {
+    const response = await fetch(`/api/products/${currentEditId}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to delete listing.");
+    }
+
+    closeSellModal();
+    showToast("Listing deleted");
+    await loadListings();
+    await loadOrders();
+  } catch (error) {
+    console.error(error);
+    alert("Could not delete listing.");
+  }
 }
 
 function renderAmenityChips() {
@@ -508,6 +531,10 @@ function openSellModalForCreate() {
   productIdInput.value = "";
   sellerNameDisplay.value = currentUser.username || "user";
 
+  if (deleteListingBtn) {
+    deleteListingBtn.style.display = "none";
+  }
+
   resetImageItems();
   amenitiesState = [];
   renderAmenityChips();
@@ -532,6 +559,10 @@ async function editListing(productId) {
 
     isEditMode = true;
     currentEditId = productId;
+
+    if (deleteListingBtn) {
+      deleteListingBtn.style.display = "inline-block";
+    } //I am going to perish
 
     productIdInput.value = product.productId ?? "";
     titleInput.value = product.title ?? "";
@@ -665,8 +696,6 @@ sellForm.addEventListener("submit", async function (event) {
 });
 
 async function removeContactRequest(requestId) {
-  if (!confirm("Remove this request?")) return;
-
   try {
     const response = await fetch(`/api/contact-requests/${requestId}`, {
       method: "DELETE",
@@ -714,6 +743,10 @@ function setupFormControls() {
   showAmenityInputBtn.addEventListener("click", showAmenityInput);
   addAmenityBtn.addEventListener("click", addAmenity);
   cancelAmenityBtn.addEventListener("click", hideAmenityInput);
+
+  if (deleteListingBtn) {
+    deleteListingBtn.addEventListener("click", deleteCurrentListing);
+  }
 
   amenityInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {

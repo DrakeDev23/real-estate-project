@@ -349,7 +349,7 @@ async function openPropertyModal(productId) {
     }
 
     popupSeller.textContent = product.sellerName || "No seller name";
-    popupAgent.textContent = `Agent: ${product.agentName || "No agent name"}`;
+    popupAgent.textContent = `Agent: ${product.agentName || "None"}`;
     popupOverview.textContent = product.overview || "No overview available.";
     popupAddress.textContent = address || "-";
     popupCategoryText.textContent = product.category || "-";
@@ -386,19 +386,30 @@ async function openPropertyModal(productId) {
       }
     };
 
-    const mapUrl =
-      product.mapLink && String(product.mapLink).trim() !== ""
-        ? product.mapLink
-        : buildGoogleMapsUrl(address);
+    const hasMapLink = product.mapLink && String(product.mapLink).trim() !== "";
+    const mapSection =
+      popupMapFrame.closest(".popup-section") || popupMapFrame.parentElement;
 
-    if (address.trim() || mapUrl.trim()) {
-      popupMapLink.href = mapUrl;
-      popupMapFrame.src = buildGoogleEmbedUrl(
-        address || product.title || "Property",
-      );
+    if (hasMapLink) {
+      popupMapLink.href = product.mapLink;
+      popupMapLink.classList.remove("hidden");
+
+      popupMapFrame.src = product.mapLink;
+      popupMapFrame.classList.remove("hidden");
+
+      if (mapSection) {
+        mapSection.classList.remove("hidden");
+      }
     } else {
-      popupMapLink.href = "#";
+      popupMapLink.removeAttribute("href");
+      popupMapLink.classList.add("hidden");
+
       popupMapFrame.src = "";
+      popupMapFrame.classList.add("hidden");
+
+      if (mapSection) {
+        mapSection.classList.add("hidden");
+      }
     }
 
     setMainModalImage(images[0]);

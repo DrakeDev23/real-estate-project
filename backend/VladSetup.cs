@@ -36,7 +36,7 @@ public static class VladSetup
 
         app.MapGet("/", context =>
         {
-            context.Response.Redirect("/buy.html");
+            context.Response.Redirect("/index.html");
             return Task.CompletedTask;
         });
 
@@ -64,20 +64,14 @@ public static class VladSetup
             IWebHostEnvironment env,
             CurrentUserService currentUserService) =>
         {
-            var currentUser = currentUserService.GetCurrentUser();
-
-            if (currentUser == null)
-            {
-                return Results.Unauthorized();
-            }
-
             if (!request.HasFormContentType)
             {
                 return Results.BadRequest(new { message = "Expected multipart form data." });
             }
 
             int nextProductId = GetNextAvailableProductId(db);
-            string sellerName = currentUser.Username;
+            var currentUser = currentUserService.GetCurrentUser();
+            string sellerName = currentUser?.Username ?? "User";
 
             var productRequest = await SellFormHelpers.ParseProductRequestAsync(
                 request,
@@ -87,16 +81,6 @@ public static class VladSetup
             );
 
             db.AddProduct(productRequest);
-
-            var users = UserStorage.LoadUsers();
-            var userToUpdate = users.FirstOrDefault(u =>
-                u.Username.Equals(currentUser.Username, StringComparison.OrdinalIgnoreCase));
-
-            if (userToUpdate != null && !userToUpdate.OwnedProductIds.Contains(productRequest.ProductId))
-            {
-                userToUpdate.OwnedProductIds.Add(productRequest.ProductId);
-                UserStorage.SaveUsers(users);
-            }
 
             return Results.Created($"/api/products/{productRequest.ProductId}", new
             {
@@ -112,13 +96,6 @@ public static class VladSetup
             IWebHostEnvironment env,
             CurrentUserService currentUserService) =>
         {
-            var currentUser = currentUserService.GetCurrentUser();
-
-            if (currentUser == null)
-            {
-                return Results.Unauthorized();
-            }
-
             if (!request.HasFormContentType)
             {
                 return Results.BadRequest(new { message = "Expected multipart form data." });
@@ -131,15 +108,8 @@ public static class VladSetup
                 return Results.NotFound(new { message = "Product not found." });
             }
 
-            bool isOwner = currentUser.OwnedProductIds.Contains(id);
-            bool isAdmin = currentUserService.IsAdmin();
-
-            if (!isAdmin && !isOwner)
-            {
-                return Results.StatusCode(StatusCodes.Status403Forbidden);
-            }
-
-            string sellerName = currentUser.Username;
+            var currentUser = currentUserService.GetCurrentUser();
+            string sellerName = currentUser?.Username ?? existing.SellerName ?? "User";
 
             var productRequest = await SellFormHelpers.ParseProductRequestAsync(
                 request,
@@ -153,6 +123,49 @@ public static class VladSetup
             return updated
                 ? Results.Ok(new { message = "Product updated successfully." })
                 : Results.NotFound(new { message = "Product not found." });
+        });
+
+        app.MapDelete("/api/products/{id:int}", (
+            int id,
+            MarketplaceDb db,
+            IWebHostEnvironment env) =>
+        {
+            bool deleted = db.DeleteProduct(id, out var imageFileNames);
+
+            if (!deleted)
+            {
+                return Results.NotFound(new { message = "Product not found." });
+            }
+
+            var uploadsDir = Path.Combine(env.WebRootPath, "images", "products");
+
+            foreach (var fileName in imageFileNames)
+            {
+                if (string.IsNullOrWhiteSpace(fileName))
+                {
+                    continue;
+                }
+
+                if (string.Equals(fileName, "no_image.png", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                var fullPath = Path.Combine(uploadsDir, Path.GetFileName(fileName));
+
+                try
+                {
+                    if (File.Exists(fullPath))
+                    {
+                        File.Delete(fullPath);
+                    }
+                }
+                catch
+                {
+                }
+            }
+
+            return Results.Ok(new { message = "Product deleted successfully." });
         });
 
         app.MapGet("/api/contact-requests", (MarketplaceDb db) =>
@@ -204,6 +217,7 @@ public static class VladSetup
 
 internal sealed class SellFormMetadata
 {
+    public int ProductId { get; set; }
     public string Title { get; set; } = "";
     public decimal Price { get; set; }
     public string? Frequency { get; set; }
@@ -230,7 +244,7 @@ internal static class SellFormHelpers
         HttpRequest request,
         IWebHostEnvironment env,
         string sellerNameOverride,
-        int forcedProductId)
+        int? forcedProductId = null)
     {
         var form = await request.ReadFormAsync();
         string metadataJson = form["metadata"].ToString();
@@ -247,7 +261,7 @@ internal static class SellFormHelpers
                 PropertyNameCaseInsensitive = true
             }) ?? throw new InvalidOperationException("Invalid metadata.");
 
-        int productId = forcedProductId;
+        int productId = forcedProductId ?? metadata.ProductId;
 
         var savedImageFileNames = await SaveOrderedImagesAsync(
             productId,

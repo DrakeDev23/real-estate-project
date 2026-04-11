@@ -13,10 +13,20 @@ namespace capstones.Data
             _connectionString = connectionString;
         }
 
+        private SqliteConnection OpenConnection()
+        {
+            var connection = new SqliteConnection(_connectionString);
+            connection.Open();
+
+            using var pragma = new SqliteCommand("PRAGMA foreign_keys = ON;", connection);
+            pragma.ExecuteNonQuery();
+
+            return connection;
+        }
+
         public void Initialize()
         {
-            using var connection = new SqliteConnection(_connectionString);
-            connection.Open();
+            using var connection = OpenConnection();
 
             string createProductsSql = @"
                 CREATE TABLE IF NOT EXISTS Products (
@@ -117,8 +127,7 @@ namespace capstones.Data
 
         public void EnsureSeededFromJsonIfEmpty(string jsonPath)
         {
-            using var connection = new SqliteConnection(_connectionString);
-            connection.Open();
+            using var connection = OpenConnection();
 
             string countSql = "SELECT COUNT(*) FROM Products;";
             using var command = new SqliteCommand(countSql, connection);
@@ -145,10 +154,13 @@ namespace capstones.Data
             if (products == null)
                 return;
 
-            using var connection = new SqliteConnection(_connectionString);
-            connection.Open();
-
+            using var connection = OpenConnection();
             using var transaction = connection.BeginTransaction();
+
+            using (var deleteContactRequestsCommand = new SqliteCommand("DELETE FROM ContactRequests;", connection, transaction))
+            {
+                deleteContactRequestsCommand.ExecuteNonQuery();
+            }
 
             using (var deleteImagesCommand = new SqliteCommand("DELETE FROM ProductImages;", connection, transaction))
             {
@@ -218,8 +230,7 @@ namespace capstones.Data
         {
             var products = new List<ProductListItemDto>();
 
-            using var connection = new SqliteConnection(_connectionString);
-            connection.Open();
+            using var connection = OpenConnection();
 
             string sql = @"
                 SELECT
@@ -267,8 +278,7 @@ namespace capstones.Data
 
         public Product? GetProductById(int id)
         {
-            using var connection = new SqliteConnection(_connectionString);
-            connection.Open();
+            using var connection = OpenConnection();
 
             Product? product = null;
 
@@ -336,9 +346,7 @@ namespace capstones.Data
 
         public void AddProduct(CreateProductRequest request)
         {
-            using var connection = new SqliteConnection(_connectionString);
-            connection.Open();
-
+            using var connection = OpenConnection();
             using var transaction = connection.BeginTransaction();
             InsertProductInternal(connection, transaction, request);
             transaction.Commit();
@@ -346,9 +354,7 @@ namespace capstones.Data
 
         public bool UpdateProduct(int id, CreateProductRequest request)
         {
-            using var connection = new SqliteConnection(_connectionString);
-            connection.Open();
-
+            using var connection = OpenConnection();
             using var transaction = connection.BeginTransaction();
 
             string updateSql = @"
@@ -417,12 +423,65 @@ namespace capstones.Data
             return true;
         }
 
+        public bool DeleteProduct(int id, out List<string> imageFileNames)
+        {
+            imageFileNames = new List<string>();
+
+            using var connection = OpenConnection();
+            using var transaction = connection.BeginTransaction();
+
+            string getImagesSql = @"
+                SELECT FileName
+                FROM ProductImages
+                WHERE ProductId = @ProductId
+                ORDER BY ImageNumber;
+            ";
+
+            using (var getImagesCommand = new SqliteCommand(getImagesSql, connection, transaction))
+            {
+                getImagesCommand.Parameters.AddWithValue("@ProductId", id);
+
+                using var reader = getImagesCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    var fileName = reader.GetString(0);
+                    if (!string.IsNullOrWhiteSpace(fileName))
+                    {
+                        imageFileNames.Add(fileName);
+                    }
+                }
+            }
+
+            string deleteContactRequestsSql = "DELETE FROM ContactRequests WHERE ProductId = @ProductId;";
+            using (var deleteContactRequestsCommand = new SqliteCommand(deleteContactRequestsSql, connection, transaction))
+            {
+                deleteContactRequestsCommand.Parameters.AddWithValue("@ProductId", id);
+                deleteContactRequestsCommand.ExecuteNonQuery();
+            }
+
+            string deleteProductSql = "DELETE FROM Products WHERE ProductId = @ProductId;";
+            using (var deleteProductCommand = new SqliteCommand(deleteProductSql, connection, transaction))
+            {
+                deleteProductCommand.Parameters.AddWithValue("@ProductId", id);
+                int rows = deleteProductCommand.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    transaction.Rollback();
+                    imageFileNames.Clear();
+                    return false;
+                }
+            }
+
+            transaction.Commit();
+            return true;
+        }
+
         public List<ContactRequestItem> GetContactRequests()
         {
             var requests = new List<ContactRequestItem>();
 
-            using var connection = new SqliteConnection(_connectionString);
-            connection.Open();
+            using var connection = OpenConnection();
 
             string sql = @"
                 SELECT RequestId, ProductId, ProductTitle, SellerName, AgentName, Status, RequestedAt
@@ -452,8 +511,7 @@ namespace capstones.Data
 
         public ContactRequestItem? GetPendingContactRequestForProduct(int productId)
         {
-            using var connection = new SqliteConnection(_connectionString);
-            connection.Open();
+            using var connection = OpenConnection();
 
             string sql = @"
                 SELECT RequestId, ProductId, ProductTitle, SellerName, AgentName, Status, RequestedAt
@@ -489,8 +547,7 @@ namespace capstones.Data
             if (existing != null)
                 return existing;
 
-            using var connection = new SqliteConnection(_connectionString);
-            connection.Open();
+            using var connection = OpenConnection();
 
             string productSql = @"
                 SELECT Title, SellerName, AgentName
@@ -557,8 +614,7 @@ namespace capstones.Data
 
         public bool DeleteContactRequest(int requestId)
         {
-            using var connection = new SqliteConnection(_connectionString);
-            connection.Open();
+            using var connection = OpenConnection();
 
             string sql = "DELETE FROM ContactRequests WHERE RequestId = @RequestId;";
             using var command = new SqliteCommand(sql, connection);

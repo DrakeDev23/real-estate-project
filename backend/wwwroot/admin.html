@@ -1,143 +1,406 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard - Haven</title>
-<link rel="stylesheet" href="css/admin.css">
-<link rel="icon" href="images/logo.png">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-<div class="container">
-<aside class="sidebar">
-    <h2>Admin Panel</h2>
-    <ul>
-        <li class="active" data-section="dashboard">Dashboard</li>
-        <li data-section="requests">Requests</li>
-        <li data-section="properties">Properties</li>
-        <li data-section="inquire">Inquire</li>
-        <li id="logoutBtn">Logout</li>
-    </ul>
-</aside>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Haven</title>
+    <link rel="stylesheet" href="css/admin.css" />
+    <link rel="icon" href="images/logo.png" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <aside class="sidebar">
+        <h2>Admin Panel</h2>
+        <ul>
+          <li class="active" data-section="dashboard">Dashboard</li>
+          <li data-section="requests">Requests</li>
+          <li data-section="properties">Properties</li>
+          <li data-section="inquire">Inquire</li>
+          <li id="logoutBtn">Logout</li>
+        </ul>
+      </aside>
 
-<main class="main">
-    <header><h1 id="pageTitle">Admin Dashboard</h1></header>
+      <main class="main">
+        <header><h1 id="pageTitle">Admin Dashboard</h1></header>
 
-    <section id="dashboard" class="section">
-    <h2>Dashboard Overview</h2>
-    <div class="dashboard-cards">
-        <div class="card">
-            <h3 id="totalUsers">0</h3>
-            <p>Registered Users</p>
+        <section id="dashboard" class="section">
+          <h2>Dashboard Overview</h2>
+          <div class="dashboard-cards">
+            <div class="card">
+              <h3 id="totalUsers">0</h3>
+              <p>Registered Users</p>
+            </div>
+            <div class="card">
+              <h3 id="totalRequests">0</h3>
+              <p>Agent Requests</p>
+            </div>
+            <div class="card">
+              <h3 id="totalInquiries">0</h3>
+              <p>Inquiries</p>
+            </div>
+          </div>
+          <canvas id="dashboardChart"></canvas>
+        </section>
+
+        <section id="requests" class="section" style="display: none">
+          <h2>Agent Requests</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Agent</th>
+                <th>Agency</th>
+                <th>User Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="requestsTable"></tbody>
+          </table>
+        </section>
+
+        <section id="properties" class="section" style="display: none">
+          <div class="admin-properties-header">
+            <button type="button" class="add-btn" id="adminAddListingBtn">
+              + Add Property
+            </button>
+          </div>
+
+          <div class="toolbar">
+            <button
+              class="toolbar-icon-btn"
+              id="adminSortToggleBtn"
+              title="Sort / Filter"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="5" y="7" width="14" height="2" rx="1"></rect>
+                <rect x="5" y="11" width="10" height="2" rx="1"></rect>
+                <rect x="5" y="15" width="6" height="2" rx="1"></rect>
+              </svg>
+            </button>
+          </div>
+
+          <div class="filter-panel hidden" id="adminFilterPanel">
+            <div class="filter-grid">
+              <div class="filter-group">
+                <label for="adminCategoryFilter">Category</label>
+                <select id="adminCategoryFilter">
+                  <option value="">All</option>
+                  <option value="sale">Sale</option>
+                  <option value="rent">Rent</option>
+                </select>
+              </div>
+
+              <div class="filter-group">
+                <label for="adminSortOrder">Sort By</label>
+                <select id="adminSortOrder">
+                  <option value="latest">Latest</option>
+                  <option value="priceAsc">Price: Low to High</option>
+                  <option value="priceDesc">Price: High to Low</option>
+                  <option value="titleAsc">Title: A to Z</option>
+                  <option value="titleDesc">Title: Z to A</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="listing-grid" id="adminPropertyGrid">
+            <div class="loading">Loading listings...</div>
+          </div>
+
+          <div class="pagination-bar" id="adminListingPagination"></div>
+        </section>
+
+        <section id="inquire" class="section" style="display: none">
+          <h2>Property Inquiry Submissions</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Subject</th>
+                <th>Address</th>
+                <th>Message</th>
+                <th>Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="inquireTable"></tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+
+    <div id="confirmModal" class="modal">
+      <div class="modal-box">
+        <p id="confirmText"></p>
+        <div class="modal-actions">
+          <button id="confirmYes">Yes</button>
+          <button id="confirmNo">Cancel</button>
         </div>
-        <div class="card">
-            <h3 id="totalRequests">0</h3>
-            <p>Agent Requests</p>
+      </div>
+    </div>
+
+    <div id="inquiryModal" class="modal">
+      <div class="modal-box">
+        <h3>Inquiry Details</h3>
+        <div
+          id="inquiryModalContent"
+          style="margin: 1rem 0; line-height: 1.8; font-size: 14px"
+        ></div>
+        <div class="modal-actions">
+          <button onclick="closeModal('inquiryModal')">Close</button>
         </div>
-        <div class="card">
-            <h3 id="totalInquiries">0</h3>
-            <p>Inquiries</p>
+      </div>
+    </div>
+
+    <div class="property-modal-overlay hidden" id="adminPropertyModal">
+      <div class="property-modal-box">
+        <button
+          class="modal-close large-close"
+          type="button"
+          id="closeAdminPropertyModalBtn"
+        >
+          &times;
+        </button>
+
+        <div class="property-modal-scroll">
+          <div class="property-modal-header">
+            <h2 id="adminPropertyModalTitleDisplay">New Listing</h2>
+          </div>
+
+          <div class="property-modal-content">
+            <div class="property-form-column">
+              <div class="image-placeholder-block">
+                <input
+                  type="file"
+                  id="adminImageFileInput"
+                  accept="image/*"
+                  multiple
+                  hidden
+                />
+
+                <div class="image-upload-placeholder" id="adminImageDropzone">
+                  <div class="upload-title">
+                    Drop images here or click to upload
+                  </div>
+                  <div class="upload-subtitle">
+                    Up to 5 images. Drag thumbnails to rearrange.
+                  </div>
+                </div>
+
+                <div class="image-previews" id="adminImagePreviews"></div>
+              </div>
+
+              <form id="adminSellForm">
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label
+                      for="adminTitleInput"
+                      class="required-label name-label-with-icon"
+                    >
+                      <span>Name</span>
+                      <span class="name-edit-icon" aria-hidden="true">✎</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="adminTitleInput"
+                      maxlength="120"
+                      required
+                    />
+                    <div class="field-counter">
+                      <span id="adminTitleCounter">0</span>/120
+                    </div>
+                  </div>
+
+                  <div class="form-group full">
+                    <label for="adminAddressInput" class="required-label"
+                      >Address</label
+                    >
+                    <input
+                      type="text"
+                      id="adminAddressInput"
+                      maxlength="180"
+                      required
+                    />
+                    <div class="field-counter">
+                      <span id="adminAddressCounter">0</span>/180
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="adminPriceInput" class="required-label"
+                      >Price</label
+                    >
+                    <input
+                      type="number"
+                      id="adminPriceInput"
+                      min="0"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="adminFrequencyInput">Per</label>
+                    <select id="adminFrequencyInput">
+                      <option value="">None</option>
+                      <option value="day">Day</option>
+                      <option value="week">Week</option>
+                      <option value="bi-weekly">Bi-Weekly</option>
+                      <option value="month">Month</option>
+                      <option value="bi-monthly">Bi-Monthly</option>
+                      <option value="quarterly">Quarterly</option>
+                      <option value="year">Year</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="adminCategoryInput" class="required-label"
+                      >Category</label
+                    >
+                    <select id="adminCategoryInput" required>
+                      <option value="sale">Sale</option>
+                      <option value="rent">Rent</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="adminSellerNameDisplay">Seller Name</label>
+                    <input type="text" id="adminSellerNameDisplay" readonly />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="adminOverviewInput">Overview</label>
+                    <textarea
+                      id="adminOverviewInput"
+                      rows="7"
+                      maxlength="1200"
+                    ></textarea>
+                    <div class="field-counter">
+                      <span id="adminOverviewCounter">0</span>/1200
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="property-side-column">
+              <div class="side-panel-card">
+                <h3>Property Details</h3>
+
+                <div class="side-grid">
+                  <div class="form-group">
+                    <label for="adminAgentNameInput">Agent Name</label>
+                    <input
+                      type="text"
+                      id="adminAgentNameInput"
+                      maxlength="80"
+                    />
+                    <div class="field-counter">
+                      <span id="adminAgentCounter">0</span>/80
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="adminBedroomsInput">Bedrooms</label>
+                    <input type="number" id="adminBedroomsInput" min="0" />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="adminBathroomsInput">Toilets / Bathrooms</label>
+                    <input type="number" id="adminBathroomsInput" min="0" />
+                  </div>
+
+                  <div class="form-group full">
+                    <label for="adminMapLinkInput">Map Link</label>
+                    <input
+                      type="text"
+                      id="adminMapLinkInput"
+                      maxlength="300"
+                      placeholder="Optional direct map link"
+                    />
+                    <div class="field-counter">
+                      <span id="adminMapLinkCounter">0</span>/300
+                    </div>
+                  </div>
+
+                  <div class="form-group full">
+                    <label>Amenities</label>
+
+                    <div class="amenities-toolbar">
+                      <button
+                        type="button"
+                        class="small-action-btn"
+                        id="adminShowAmenityInputBtn"
+                      >
+                        Add Amenity
+                      </button>
+                      <div class="field-counter">
+                        <span id="adminAmenityCount">0</span>/10 amenities
+                      </div>
+                    </div>
+
+                    <div
+                      class="amenity-input-row hidden"
+                      id="adminAmenityInputRow"
+                    >
+                      <input
+                        type="text"
+                        id="adminAmenityInput"
+                        maxlength="30"
+                        placeholder="Enter amenity"
+                      />
+                      <div class="field-counter amenity-inline-counter">
+                        <span id="adminAmenityInputCounter">0</span>/30
+                      </div>
+                      <button
+                        type="button"
+                        class="small-action-btn"
+                        id="adminAddAmenityBtn"
+                      >
+                        Add
+                      </button>
+                      <button
+                        type="button"
+                        class="small-secondary-btn"
+                        id="adminCancelAmenityBtn"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+
+                    <div
+                      class="amenity-chip-list"
+                      id="adminAmenityChipList"
+                    ></div>
+                  </div>
+                </div>
+
+                <div class="save-row">
+                  <button
+                    type="button"
+                    class="delete-btn"
+                    id="adminDeleteListingBtn"
+                  >
+                    Delete
+                  </button>
+                  <button type="submit" class="save-btn" form="adminSellForm">
+                    Save Changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div class="toast hidden" id="adminSellToast">Saved successfully</div>
     </div>
-    <canvas id="dashboardChart"></canvas>
-    </section>
 
-    <section id="requests" class="section" style="display:none">
-    <h2>Agent Requests</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Agent</th>
-            <th>Agency</th>
-            <th>User Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Address</th>
-            <th>Date</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody id="requestsTable"></tbody>
-    </table>
-    </section>
-
-    <section id="properties" class="section" style="display:none">
-    <h2>Manage Properties</h2>
-    <div class="form-group">
-        <input id="propName"  placeholder="Property Name">
-        <input id="propAgent" placeholder="Agent Name">
-        <input id="propPrice" type="number" placeholder="Price">
-        <button id="addPropertyBtn" class="add">Add Property</button>
-    </div>
-    <table>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Agent</th>
-            <th>Price</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody id="propertiesTable"></tbody>
-    </table>
-    </section>
-
-    <section id="inquire" class="section" style="display:none">
-    <h2>Property Inquiry Submissions</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Subject</th>
-            <th>Address</th>
-            <th>Message</th>
-            <th>Date</th>
-            <th>Action</th>
-            </tr>
-        </thead>
-        <tbody id="inquireTable"></tbody>
-    </table>
-    </section>
-
-</main>
-</div>
-
-<div id="confirmModal" class="modal">
-<div class="modal-box">
-    <p id="confirmText"></p>
-    <div class="modal-actions">
-        <button id="confirmYes">Yes</button>
-        <button id="confirmNo">Cancel</button>
-    </div>
-</div>
-</div>
-
-<div id="editModal" class="modal">
-<div class="modal-box">
-    <h3>Edit Property</h3>
-    <input id="editName"  placeholder="Property Name">
-    <input id="editAgent" placeholder="Agent Name">
-    <input id="editPrice" type="number" placeholder="Price">
-    <div class="modal-actions">
-        <button id="saveEdit">Save</button>
-        <button onclick="closeModal('editModal')">Cancel</button>
-    </div>
-</div> 
-</div>
-
-<div id="inquiryModal" class="modal">
-<div class="modal-box">
-    <h3>Inquiry Details</h3>
-    <div id="inquiryModalContent" style="margin: 1rem 0; line-height: 1.8; font-size: 14px;"></div>
-    <div class="modal-actions">
-        <button onclick="closeModal('inquiryModal')">Close</button>
-    </div>
-</div>
-</div>
-
-<script src="javascript/admin.js"></script>
-</body>
+    <script src="javascript/admin.js"></script>
+  </body>
 </html>

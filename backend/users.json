@@ -3,7 +3,7 @@
     "Username": "admin",
     "Email": "admin@haven.com",
     "Password": "admin123",
-    "Redirect": "sell.html",
+    "Redirect": "admin.html",
     "Role": "admin",
     "OwnedProductIds": []
   },
@@ -45,7 +45,7 @@
     "Password": "zach123",
     "Redirect": "buy.html",
     "Role": "user",
-    "OwnedProductIds": [10]
+    "OwnedProductIds": []
   },
   {
     "Username": "akoni",
