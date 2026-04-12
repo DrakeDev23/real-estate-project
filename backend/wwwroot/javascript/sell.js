@@ -461,6 +461,8 @@ function renderOrders() {
             <div class="order-title">${escapeHtml(order.productTitle)}</div>
             <div class="order-meta">Seller: ${escapeHtml(order.sellerName || "")}</div>
             <div class="order-meta">Agent: ${escapeHtml(order.agentName || "N/A")}</div>
+            <div class="order-meta">Buyer Username: ${escapeHtml(order.buyerName || "N/A")}</div>
+            <div class="order-meta">Buyer Email: ${escapeHtml(order.buyerEmail || "N/A")}</div>
             <div class="order-meta">Requested: ${escapeHtml(order.requestedAt || "")}</div>
             <div class="status-pill">${escapeHtml(order.status || "")}</div>
             <button type="button" class="edit-btn remove-order-btn" data-id="${order.requestId}">Remove Request</button>
@@ -501,8 +503,28 @@ async function loadOrders() {
   ordersList.innerHTML = `<div class="loading">Loading pending orders...</div>`;
 
   try {
+    currentUser = await fetchCurrentUser();
+
+    if (!currentUser || !currentUser.isLoggedIn) {
+      window.location.href = "login.html";
+      return;
+    }
+
     const response = await fetch("/api/contact-requests");
+
+    if (response.status === 401) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    if (response.status === 403) {
+      ordersList.innerHTML = `<div class="error-state">You are not allowed to view these requests.</div>`;
+      renderPagination(ordersPagination, 1, 1, () => {});
+      return;
+    }
+
     if (!response.ok) throw new Error("Failed to load pending orders.");
+
     allOrders = await response.json();
     renderOrders();
   } catch (error) {

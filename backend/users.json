@@ -5,7 +5,8 @@
     "Password": "admin123",
     "Redirect": "admin.html",
     "Role": "admin",
-    "OwnedProductIds": []
+    "OwnedProductIds": [],
+    "ContactRequestSend": []
   },
   {
     "Username": "dwyn",
@@ -13,7 +14,8 @@
     "Password": "dwyn123",
     "Redirect": "buy.html",
     "Role": "user",
-    "OwnedProductIds": []
+    "OwnedProductIds": [],
+    "ContactRequestSend": []
   },
   {
     "Username": "santi",
@@ -21,7 +23,8 @@
     "Password": "santi123",
     "Redirect": "buy.html",
     "Role": "user",
-    "OwnedProductIds": []
+    "OwnedProductIds": [],
+    "ContactRequestSend": []
   },
   {
     "Username": "SDwyn",
@@ -29,7 +32,8 @@
     "Password": "dwyn123",
     "Redirect": "buy.html",
     "Role": "user",
-    "OwnedProductIds": []
+    "OwnedProductIds": [],
+    "ContactRequestSend": []
   },
   {
     "Username": "hi",
@@ -37,7 +41,8 @@
     "Password": "hi",
     "Redirect": "buy.html",
     "Role": "user",
-    "OwnedProductIds": []
+    "OwnedProductIds": [],
+    "ContactRequestSend": []
   },
   {
     "Username": "zach",
@@ -45,7 +50,8 @@
     "Password": "zach123",
     "Redirect": "buy.html",
     "Role": "user",
-    "OwnedProductIds": []
+    "OwnedProductIds": [],
+    "ContactRequestSend": []
   },
   {
     "Username": "akoni",
@@ -53,7 +59,8 @@
     "Password": "123",
     "Redirect": "buy.html",
     "Role": "user",
-    "OwnedProductIds": []
+    "OwnedProductIds": [],
+    "ContactRequestSend": []
   },
   {
     "Username": "VladTest",
@@ -61,6 +68,23 @@
     "Password": "1234",
     "Redirect": "buy.html",
     "Role": "user",
-    "OwnedProductIds": [1, 2, 3]
+    "OwnedProductIds": [
+      1,
+      2,
+      3
+    ],
+    "ContactRequestSend": [
+      1,
+      2
+    ]
+  },
+  {
+    "Username": "VladAlt",
+    "Email": "vladmagal24@gmail.com",
+    "Password": "1234",
+    "Redirect": "buy.html",
+    "Role": "user",
+    "OwnedProductIds": [],
+    "ContactRequestSend": []
   }
 ]

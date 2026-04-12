@@ -168,27 +168,86 @@ public static class VladSetup
             return Results.Ok(new { message = "Product deleted successfully." });
         });
 
-        app.MapGet("/api/contact-requests", (MarketplaceDb db) =>
-            Results.Ok(db.GetContactRequests()));
-
-        app.MapGet("/api/contact-requests/by-product/{productId:int}", (int productId, MarketplaceDb db) =>
+                app.MapGet("/api/contact-requests", (
+            MarketplaceDb db,
+            CurrentUserService currentUserService) =>
         {
-            var existing = db.GetPendingContactRequestForProduct(productId);
+            var currentUser = currentUserService.GetCurrentUser();
+
+            if (currentUser == null)
+            {
+                return Results.Unauthorized();
+            }
+
+            if (string.Equals(currentUser.Role, "admin", StringComparison.OrdinalIgnoreCase))
+            {
+                return Results.Ok(db.GetContactRequestsForSeller(currentUser.Username));
+            }
+
+            return Results.Ok(db.GetContactRequestsForSeller(currentUser.Username));
+        });
+
+        app.MapGet("/api/contact-requests/by-product/{productId:int}", (
+            int productId,
+            MarketplaceDb db,
+            CurrentUserService currentUserService) =>
+        {
+            var currentUser = currentUserService.GetCurrentUser();
+
+            if (currentUser == null || string.IsNullOrWhiteSpace(currentUser.Email))
+            {
+                return Results.Unauthorized();
+            }
+
+            var existing = db.GetPendingContactRequestForBuyerProduct(productId, currentUser.Email);
+
             return existing is null
                 ? Results.NotFound(new { message = "No pending request found." })
                 : Results.Ok(existing);
         });
 
-        app.MapPost("/api/contact-requests", (CreateContactRequestRequest request, MarketplaceDb db) =>
+        app.MapPost("/api/contact-requests", (
+            CreateContactRequestRequest request,
+            MarketplaceDb db,
+            CurrentUserService currentUserService) =>
         {
+            var currentUser = currentUserService.GetCurrentUser();
+
+            if (currentUser == null)
+            {
+                return Results.Unauthorized();
+            }
+
+            request.BuyerName = currentUser.Username;
+            request.BuyerEmail = currentUser.Email;
+
             var created = db.CreateContactRequest(request);
-            return created is null
-                ? Results.NotFound(new { message = "Product not found." })
-                : Results.Ok(created);
+
+            if (created is null)
+            {
+                return Results.NotFound(new { message = "Product not found." });
+            }
+
+            return Results.Ok(created);
         });
 
-        app.MapDelete("/api/contact-requests/{requestId:int}", (int requestId, MarketplaceDb db) =>
+        app.MapDelete("/api/contact-requests/{requestId:int}", (
+            int requestId,
+            MarketplaceDb db,
+            CurrentUserService currentUserService) =>
         {
+            var currentUser = currentUserService.GetCurrentUser();
+
+            if (currentUser == null)
+            {
+                return Results.Unauthorized();
+            }
+
+            if (!db.SellerOwnsRequest(requestId, currentUser.Username))
+            {
+                return Results.StatusCode(StatusCodes.Status403Forbidden);
+            }
+
             bool deleted = db.DeleteContactRequest(requestId);
 
             return deleted

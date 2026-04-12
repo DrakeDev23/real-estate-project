@@ -42,6 +42,22 @@ let toastTimer = null;
 let currentPage = 1;
 const ITEMS_PER_PAGE = 8;
 
+let currentUser = null;
+
+async function fetchCurrentUser() {
+  try {
+    const response = await fetch("/api/auth/me");
+    if (!response.ok) {
+      return { isLoggedIn: false };
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return { isLoggedIn: false };
+  }
+}
+
 function toggleMenu() {
   sidebar.classList.toggle("open");
 }
@@ -287,10 +303,26 @@ function renderAmenities(amenities) {
 }
 
 async function updateContactButtonState(productId) {
+  currentUser = await fetchCurrentUser();
+
+  if (!currentUser || !currentUser.isLoggedIn) {
+    contactAgentBtn.classList.remove("sent");
+    contactAgentBtn.textContent = "Contact Agent";
+    contactAgentBtn.disabled = false;
+    return;
+  }
+
   try {
     const response = await fetch(
       `/api/contact-requests/by-product/${productId}`,
     );
+
+    if (response.status === 401) {
+      contactAgentBtn.classList.remove("sent");
+      contactAgentBtn.textContent = "Contact Agent";
+      contactAgentBtn.disabled = false;
+      return;
+    }
 
     if (!response.ok) {
       contactAgentBtn.classList.remove("sent");
@@ -363,6 +395,16 @@ async function openPropertyModal(productId) {
     contactAgentBtn.onclick = async () => {
       if (contactAgentBtn.disabled) return;
 
+          contactAgentBtn.onclick = async () => {
+      if (contactAgentBtn.disabled) return;
+
+      currentUser = await fetchCurrentUser();
+
+      if (!currentUser || !currentUser.isLoggedIn) {
+        window.location.href = "login.html";
+        return;
+      }
+
       try {
         const res = await fetch("/api/contact-requests", {
           method: "POST",
@@ -371,6 +413,11 @@ async function openPropertyModal(productId) {
             productId: product.productId,
           }),
         });
+
+        if (res.status === 401) {
+          window.location.href = "login.html";
+          return;
+        }
 
         if (!res.ok) {
           throw new Error("Failed to create contact request.");
@@ -384,6 +431,7 @@ async function openPropertyModal(productId) {
         console.error(err);
         alert("Could not send contact request.");
       }
+    }
     };
 
     const hasMapLink = product.mapLink && String(product.mapLink).trim() !== "";

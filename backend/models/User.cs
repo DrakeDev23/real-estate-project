@@ -19,4 +19,7 @@ public class User
 
     [JsonPropertyName("OwnedProductIds")]
     public List<int> OwnedProductIds { get; set; } = new();
+
+    [JsonPropertyName("ContactRequestSend")]
+    public List<int> ContactRequestSend { get; set; } = new();
 }
