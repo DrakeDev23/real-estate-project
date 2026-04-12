@@ -68,7 +68,23 @@
     "Password": "1234",
     "Redirect": "buy.html",
     "Role": "user",
-    "OwnedProductIds": [1, 2, 3],
-    "ContactRequestSend": [1, 2]
+    "OwnedProductIds": [
+      1,
+      2,
+      3
+    ],
+    "ContactRequestSend": [
+      1,
+      2
+    ]
+  },
+  {
+    "Username": "VladAlt",
+    "Email": "vladmagal24@gmail.com",
+    "Password": "1234",
+    "Redirect": "buy.html",
+    "Role": "user",
+    "OwnedProductIds": [],
+    "ContactRequestSend": []
   }
 ]

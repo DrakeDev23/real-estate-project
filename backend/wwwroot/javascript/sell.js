@@ -1,4 +1,8 @@
 const sidebar = document.getElementById("sidebar");
+const homeBtnItem = document.getElementById("homeBtnItem");
+const logoutBtnItem = document.getElementById("logoutBtnItem");
+const homeBtn = document.getElementById("homeBtn");
+const logoutBtn = document.getElementById("logoutBtn");
 const listingGrid = document.getElementById("listingGrid");
 const ordersList = document.getElementById("ordersList");
 const addListingBtn = document.getElementById("addListingBtn");
@@ -61,6 +65,18 @@ let ordersPage = 1;
 
 const LISTINGS_PER_PAGE = 8;
 const ORDERS_PER_PAGE = 5;
+
+function updateSidebarAuthUi(user) {
+  const isLoggedIn = !!(user && user.isLoggedIn);
+
+  if (homeBtnItem) {
+    homeBtnItem.style.display = isLoggedIn ? "none" : "";
+  }
+
+  if (logoutBtnItem) {
+    logoutBtnItem.style.display = isLoggedIn ? "" : "none";
+  }
+}
 
 function toggleMenu() {
   sidebar.classList.toggle("open");
@@ -485,9 +501,12 @@ function renderOrders() {
 }
 
 async function loadListings() {
-  listingGrid.innerHTML = `<div class="loading">Loading listings...</div>`;
+  listingGrid.innerHTML = `<div class="loading">Loading listings.</div>`;
 
   try {
+    currentUser = await fetchCurrentUser();
+    updateSidebarAuthUi(currentUser);
+
     const response = await fetch("/api/products");
     if (!response.ok) throw new Error("Failed to load listings.");
     allListings = await response.json();
@@ -535,9 +554,21 @@ async function loadOrders() {
 }
 
 async function fetchCurrentUser() {
-  const response = await fetch("/api/auth/me");
-  return await response.json();
+  try {
+    const response = await fetch("/api/auth/me");
+
+    if (!response.ok) {
+      return { isLoggedIn: false };
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return { isLoggedIn: false };
+  }
 }
+
+updateSidebarAuthUi({ isLoggedIn: false });
 
 function openSellModalForCreate() {
   if (!currentUser || !currentUser.isLoggedIn) {

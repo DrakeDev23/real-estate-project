@@ -2,6 +2,10 @@ const propertyContainer = document.getElementById("propertyContainer");
 const searchInput = document.getElementById("search");
 const searchBtn = document.getElementById("searchBtn");
 const sidebar = document.getElementById("sidebar");
+const homeBtnItem = document.getElementById("homeBtnItem");
+const logoutBtnItem = document.getElementById("logoutBtnItem");
+const homeBtn = document.getElementById("homeBtn");
+const logoutBtn = document.getElementById("logoutBtn");
 const pageContent = document.getElementById("pageContent");
 
 const sortToggleBtn = document.getElementById("sortToggleBtn");
@@ -55,6 +59,32 @@ async function fetchCurrentUser() {
   } catch (error) {
     console.error(error);
     return { isLoggedIn: false };
+  }
+}
+
+updateSidebarAuthUi({ isLoggedIn: false });
+
+function updateSidebarAuthUi(user) {
+  const isLoggedIn = !!(user && user.isLoggedIn);
+
+  if (homeBtnItem) {
+    homeBtnItem.style.display = isLoggedIn ? "none" : "";
+  }
+
+  if (logoutBtnItem) {
+    logoutBtnItem.style.display = isLoggedIn ? "" : "none";
+  }
+}
+
+function updateSidebarAuthUi(user) {
+  const isLoggedIn = !!(user && user.isLoggedIn);
+
+  if (homeBtnItem) {
+    homeBtnItem.style.display = isLoggedIn ? "none" : "";
+  }
+
+  if (logoutBtnItem) {
+    logoutBtnItem.style.display = isLoggedIn ? "" : "none";
   }
 }
 
@@ -120,6 +150,8 @@ async function loadProducts() {
   propertyContainer.innerHTML = `<div class="loading">Loading properties...</div>`;
 
   try {
+    currentUser = await fetchCurrentUser();
+    updateSidebarAuthUi(currentUser);
     const response = await fetch("/api/products");
     if (!response.ok) {
       throw new Error("Failed to load products.");
@@ -395,43 +427,43 @@ async function openPropertyModal(productId) {
     contactAgentBtn.onclick = async () => {
       if (contactAgentBtn.disabled) return;
 
-          contactAgentBtn.onclick = async () => {
-      if (contactAgentBtn.disabled) return;
+      contactAgentBtn.onclick = async () => {
+        if (contactAgentBtn.disabled) return;
 
-      currentUser = await fetchCurrentUser();
+        currentUser = await fetchCurrentUser();
 
-      if (!currentUser || !currentUser.isLoggedIn) {
-        window.location.href = "login.html";
-        return;
-      }
-
-      try {
-        const res = await fetch("/api/contact-requests", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            productId: product.productId,
-          }),
-        });
-
-        if (res.status === 401) {
+        if (!currentUser || !currentUser.isLoggedIn) {
           window.location.href = "login.html";
           return;
         }
 
-        if (!res.ok) {
-          throw new Error("Failed to create contact request.");
-        }
+        try {
+          const res = await fetch("/api/contact-requests", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              productId: product.productId,
+            }),
+          });
 
-        contactAgentBtn.classList.add("sent");
-        contactAgentBtn.textContent = "Contact request sent";
-        contactAgentBtn.disabled = true;
-        showToast("Contact request sent");
-      } catch (err) {
-        console.error(err);
-        alert("Could not send contact request.");
-      }
-    }
+          if (res.status === 401) {
+            window.location.href = "login.html";
+            return;
+          }
+
+          if (!res.ok) {
+            throw new Error("Failed to create contact request.");
+          }
+
+          contactAgentBtn.classList.add("sent");
+          contactAgentBtn.textContent = "Contact request sent";
+          contactAgentBtn.disabled = true;
+          showToast("Contact request sent");
+        } catch (err) {
+          console.error(err);
+          alert("Could not send contact request.");
+        }
+      };
     };
 
     const hasMapLink = product.mapLink && String(product.mapLink).trim() !== "";

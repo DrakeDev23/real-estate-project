@@ -343,7 +343,6 @@ C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\D
 C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\scopedcss\bundle\backend.styles.css
 C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\670basrd1i-{0}-d10hgok58t-d10hgok58t.gz
 C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\f4r9thiom3-{0}-vptxtuublf-vptxtuublf.gz
-C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\cxg6rd8boo-{0}-itm5x3p3g9-itm5x3p3g9.gz
 C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\z93mtvhbhx-{0}-58ed212pgz-58ed212pgz.gz
 C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\2bb1e84jke-{0}-ure95yny8d-ure95yny8d.gz
 C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\0cg6qwsljp-{0}-14up1b348y-14up1b348y.gz
@@ -371,7 +370,6 @@ C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\D
 C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\ws1qzll5ia-{0}-qpi6n5bhcj-qpi6n5bhcj.gz
 C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\yz4tfoluxc-{0}-rx284kqyil-rx284kqyil.gz
 C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\xyv7r7aooi-{0}-orsfesv2kf-orsfesv2kf.gz
-C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\lde3988yhw-{0}-631qbisyok-631qbisyok.gz
 C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\m7fb6kkzi7-{0}-lq6xlsnr7t-lq6xlsnr7t.gz
 C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\jarjtfe5xn-{0}-uuhot40iwq-uuhot40iwq.gz
 C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\87sz3labjt-{0}-609g9und7k-609g9und7k.gz
@@ -388,5 +386,7 @@ C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\D
 C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\backend.pdb
 C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\backend.genruntimeconfig.cache
 C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\ref\backend.dll
-C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\24qbkf4ur3-{0}-dmp3ly0ub5-dmp3ly0ub5.gz
-C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\ru7ixr8rpp-{0}-pbx5hfqxhk-pbx5hfqxhk.gz
+C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\cxg6rd8boo-{0}-qfwz06492o-qfwz06492o.gz
+C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\24qbkf4ur3-{0}-1rf9nl500l-1rf9nl500l.gz
+C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\lde3988yhw-{0}-sp7gs77vku-sp7gs77vku.gz
+C:\Users\VladCodes\Desktop\real-estate-project\real-estate-project\backend\obj\Debug\net9.0\compressed\ru7ixr8rpp-{0}-s42g3bps9u-s42g3bps9u.gz
