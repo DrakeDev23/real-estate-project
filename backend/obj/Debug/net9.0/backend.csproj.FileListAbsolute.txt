@@ -440,7 +440,6 @@ C:/Users/VladCodes/Desktop/real-estate-project/real-estate-project/backend/obj/D
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/rjsmrazor.dswa.cache.json
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/rjsmcshtml.dswa.cache.json
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/scopedcss/bundle/backend.styles.css
-/home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/670basrd1i-{0}-l7tun7127z-l7tun7127z.gz
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/f4r9thiom3-{0}-ul36lbe38a-ul36lbe38a.gz
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/cxg6rd8boo-{0}-sx974yt7dd-sx974yt7dd.gz
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/z93mtvhbhx-{0}-1f3hwl59ga-1f3hwl59ga.gz
@@ -489,3 +488,4 @@ C:/Users/VladCodes/Desktop/real-estate-project/real-estate-project/backend/obj/D
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/backend.pdb
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/backend.genruntimeconfig.cache
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/ref/backend.dll
+/home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/670basrd1i-{0}-xl1x1coga4-xl1x1coga4.gz
