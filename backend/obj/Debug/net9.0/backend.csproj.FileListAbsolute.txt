@@ -448,7 +448,6 @@ C:/Users/VladCodes/Desktop/real-estate-project/backend/obj/Debug/net9.0/compress
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/0u7ynsp5jt-{0}-9tpwner77v-9tpwner77v.gz
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/tzcudbtbbu-{0}-lhydhqq00u-lhydhqq00u.gz
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/ti3pqd9k9c-{0}-5ipweew5fc-5ipweew5fc.gz
-/home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/wbz0ro4vm4-{0}-zi3insg4pt-zi3insg4pt.gz
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/koratydhhv-{0}-yeuqr1tdsf-yeuqr1tdsf.gz
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/zu814n09zi-{0}-vw3pqj6z5m-vw3pqj6z5m.gz
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/6u6bjna2r5-{0}-0880bv9opd-0880bv9opd.gz
@@ -461,9 +460,6 @@ C:/Users/VladCodes/Desktop/real-estate-project/backend/obj/Debug/net9.0/compress
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/3ffzayrcad-{0}-h3txipnyux-h3txipnyux.gz
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/sihhd2ifgt-{0}-w1ew4ezn64-w1ew4ezn64.gz
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/8s08jvstqw-{0}-wn3jqki42m-wn3jqki42m.gz
-/home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/24qbkf4ur3-{0}-1vrbrpuo84-1vrbrpuo84.gz
-/home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/5ehjs6ns4v-{0}-70ipeef0k9-70ipeef0k9.gz
-/home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/mh1mb4oqy7-{0}-k8uk7xgrix-k8uk7xgrix.gz
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/0tylfvvuo2-{0}-380szct8k8-380szct8k8.gz
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/d0fdj5736r-{0}-ueeof519kw-ueeof519kw.gz
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/imm1t1hy59-{0}-4lzcrzjvw3-4lzcrzjvw3.gz
@@ -487,6 +483,10 @@ C:/Users/VladCodes/Desktop/real-estate-project/backend/obj/Debug/net9.0/compress
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/backend.pdb
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/backend.genruntimeconfig.cache
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/ref/backend.dll
-/home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/cxg6rd8boo-{0}-hd0httxjwr-hd0httxjwr.gz
-/home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/pcllgev4l3-{0}-q3b74x1fmc-q3b74x1fmc.gz
 /home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/ws1qzll5ia-{0}-26obxa88it-26obxa88it.gz
+/home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/cxg6rd8boo-{0}-5vnvynb01y-5vnvynb01y.gz
+/home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/wbz0ro4vm4-{0}-k1k3vwcj6a-k1k3vwcj6a.gz
+/home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/pcllgev4l3-{0}-bt9lllqz2w-bt9lllqz2w.gz
+/home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/24qbkf4ur3-{0}-us9rc3kzj4-us9rc3kzj4.gz
+/home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/5ehjs6ns4v-{0}-cucmakpzdy-cucmakpzdy.gz
+/home/archlinux/Downloads/real-estate-project/backend/obj/Debug/net9.0/compressed/mh1mb4oqy7-{0}-5pdu9q1zfu-5pdu9q1zfu.gz
