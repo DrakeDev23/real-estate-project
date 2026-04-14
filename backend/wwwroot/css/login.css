@@ -46,14 +46,14 @@ header {
     animation: slideDown 0.8s ease;
 }
 
-@keyframes slideDown{
-    from{
-        transform:translateY(-40px);
-        opacity:0;
+@keyframes slideDown {
+    from {
+        transform: translateY(-40px);
+        opacity: 0;
     }
-    to{
-        transform:translateY(0);
-        opacity:1;
+    to {
+        transform: translateY(0);
+        opacity: 1;
     }
 }
 
@@ -64,45 +64,104 @@ header {
     animation: fadeLeft 1s ease;
 }
 
-@keyframes fadeLeft{
-    from{
-        transform:translateX(-40px);
-        opacity:0;
+@keyframes fadeLeft {
+    from {
+        transform: translateX(-40px);
+        opacity: 0;
     }
-    to{
-        transform:translateX(0);
-        opacity:1;
+    to {
+        transform: translateX(0);
+        opacity: 1;
     }
 }
 
 .logo img {
     width: 50px;
     height: auto;
+    margin-left: 250px;
+    animation: strongGlow 2s ease-in-out infinite alternate;
 }
 
-nav.header a {
-    margin-left: 20px;
+@keyframes strongGlow {
+    0%   { filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
+    50%  { filter: drop-shadow(0 0 15px rgba(255,255,255,0.7)) drop-shadow(0 0 25px rgba(255,255,255,0.4)); }
+    100% { filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
+}
+
+.logo img::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-25deg);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.logo img:hover::after {
+    animation: shine 1.2s forwards;
+}
+
+@keyframes shine {
+    from { left: -100%; }
+    to   { left: 100%; }
+}
+
+.logo a {
     text-decoration: none;
     color: white;
-    padding: 5px 12px;
-    border-radius: 6px;
-    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+nav.header {
+    display: flex;
+    gap: 20px;
     animation: fadeRight 1s ease;
 }
 
-@keyframes fadeRight{
-    from{
-        transform:translateX(40px);
-        opacity:0;
+@keyframes fadeRight {
+    from {
+        transform: translateX(40px);
+        opacity: 0;
     }
-    to{
-        transform:translateX(0);
-        opacity:1;
+    to {
+        transform: translateX(0);
+        opacity: 1;
     }
 }
 
+nav.header a {
+    position: relative;
+    padding: 5px 12px;
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+    background: none;
+}
+
+nav.header a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    height: 2px;
+    width: 100%;
+    background-color: white;
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+}
+
+nav.header a:hover::after {
+    transform: translateX(-50%) scaleX(1);
+}
+
 nav.header a:hover {
-    background-color: #000;
+    color: white;
+    background-color: transparent;
 }
 
 .container-wrapper {
@@ -125,14 +184,14 @@ nav.header a:hover {
     animation-delay: 0.8s;
 }
 
-@keyframes cardAppear{
-    0%{
+@keyframes cardAppear {
+    0% {
         transform: translateY(60px) scale(0.95);
-        opacity:0;
+        opacity: 0;
     }
-    100%{
+    100% {
         transform: translateY(0) scale(1);
-        opacity:1;
+        opacity: 1;
     }
 }
 
@@ -166,14 +225,14 @@ nav.header a:hover {
     animation: fadeUp 0.8s ease;
 }
 
-@keyframes fadeUp{
-    from{
-        transform:translateY(20px);
-        opacity:0;
+@keyframes fadeUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
     }
-    to{
-        transform:translateY(0);
-        opacity:1;
+    to {
+        transform: translateY(0);
+        opacity: 1;
     }
 }
 
@@ -231,8 +290,8 @@ nav.header a:hover {
 }
 
 .register-link a {
-    display: inline-block; 
-    margin: 0;             
+    display: inline-block;
+    margin: 0;
     text-decoration: none;
     color: blue;
     font-size: 14px;
@@ -244,201 +303,86 @@ nav.header a:hover {
     text-decoration: underline;
 }
 
-.logo img {
-    width: 50px;
-    height: auto;
-    margin-left: 250px;
-    animation: strongGlow 2s ease-in-out infinite alternate;
-}
-
-@keyframes strongGlow {
-    0%   { filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
-    50%  { filter: drop-shadow(0 0 15px rgba(255,255,255,0.7)) drop-shadow(0 0 25px rgba(255,255,255,0.4)); }
-    100% { filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
-}
-
-.logo img::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
-    transform: skewX(-25deg);
-    transition: all 0.3s ease;
-    pointer-events: none;
-}
-
-.logo img:hover::after {
-    animation: shine 1.2s forwards;
-}
-
-@keyframes shine {
-    from { left: -100%; }
-    to   { left: 100%; }
-}
-
-.logo a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-}
-
 #message {
     text-align: center;
 }
 
-.show-password{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-top:5px;
-}
-
-.show-password label{
-    margin:0;
-}
-
-.show-text{
-    color:black;
-    font-size:14px;
-}
-
-.switch{
-    position:relative;
-    display:inline-block;
-    width:40px;
-    height:20px;
-}
-
-.switch input{
-    opacity:0;
-    width:0;
-    height:0;
-}
-
-.slider{
-    position:absolute;
-    cursor:pointer;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    background:#ccc;
-    transition:.3s;
-    border-radius:20px;
-}
-
-.slider:before{
-    position:absolute;
-    content:"";
-    height:14px;
-    width:14px;
-    left:3px;
-    bottom:3px;
-    background:white;
-    transition:.3s;
-    border-radius:50%;
-}
-
-.switch input:checked + .slider{
-    background:black;
-}
-
-.switch input:checked + .slider:before{
-    transform:translateX(20px);
-}
-
-.hamburger{
-    display:none;
-    flex-direction:column;
-    cursor:pointer;
-    gap:5px;
-}
-
-.hamburger span{
-    width:25px;
-    height:3px;
-    background:white;
-    display:block;
-    border-radius:3px;
-}
-
-@media (max-width: 768px){
-
-.hero-wrapper{
-    background-size: cover;
-    background-position: center center;
-    min-height: 100vh;
-}
-
-}
-
-@media (max-width: 768px){
-
-header{
-    padding:20px;
-}
-
-.logo img{
-    margin-left:0;
-}
-
-.hamburger{
-    display:flex;
-}
-
-nav.header{
-    position:absolute;
-    top:80px;
-    right:0;
-    background:rgba(0,0,0,0.95);
-    width:200px;
-    flex-direction:column;
-    display:none;
-    padding:20px;
-    border-radius:8px;
-    z-index: 999;
-}
-
-nav.header a{
-    margin:10px 0;
-    text-align: center;
-}
-
-nav.header.active{
-    display:flex;
-}
-
-.container{
-    width:90%;
-    padding:30px;
-}
-
-.hero-wrapper{
-    background-size:cover;
-    background-position:center;
-}
-
-}
-
-.password-group{
+.password-group {
     position: relative;
 }
 
-.toggle-password{
-    display:flex;
-    align-items:center;
-    cursor:pointer;
-    font-size:20px;
-    color:#555;
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #555;
+    display: flex;
+    align-items: center;
 }
 
-.toggle-password{
-    position:absolute;
-    right:10px;
-    cursor:pointer;
-    font-size:20px;
-    color:#555;
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    display: block;
+    border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+    .hero-wrapper {
+        background-size: cover;
+        background-position: center center;
+        min-height: 100vh;
+    }
+
+    header {
+        padding: 20px;
+    }
+
+    .logo img {
+        margin-left: 0;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    nav.header {
+        position: absolute;
+        top: 80px;
+        right: 0;
+        background: rgba(0,0,0,0.95);
+        width: 200px;
+        flex-direction: column;
+        display: none;
+        padding: 20px;
+        border-radius: 8px;
+        z-index: 999;
+    }
+
+    nav.header a {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    nav.header a::after {
+        display: none;
+    }
+
+    nav.header.active {
+        display: flex;
+    }
+
+    .container {
+        width: 90%;
+        padding: 30px;
+    }
 }

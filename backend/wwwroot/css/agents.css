@@ -113,6 +113,8 @@ nav.header {
     opacity: 0;
     transform: translateX(50px);
     animation: slideInNav 0.8s ease forwards 0.5s;
+    display: flex;
+    gap: 20px;
 }
 
 @keyframes slideInNav {
@@ -123,22 +125,40 @@ nav.header {
 }
 
 nav.header a {
-    margin-left: 20px;
+    position: relative;
+    margin-left: 0;
+    padding: 5px 12px;
     text-decoration: none;
     color: white;
-    transition: all 0.3s ease;
-    padding: 5px 12px;
-    border-radius: 6px;
+    transition: color 0.3s ease;
+    background: none;
+}
+
+nav.header a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    height: 2px;
+    width: 100%;
+    background-color: white;
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+}
+
+nav.header a:hover::after {
+    transform: translateX(-50%) scaleX(1);
 }
 
 nav.header a:hover {
-    background-color: #000;
     color: white;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    background-color: transparent;
+    box-shadow: none;
 }
 
 nav.header a:active {
-    background-color: #222;
+    background-color: transparent;
     transform: translateY(1px);
 }
 
@@ -157,9 +177,9 @@ nav.header a:active {
     margin: 100px auto;
     text-align: center;
     padding: 0 20px;
-    opacity: 0; 
-    transform: translateY(30px); 
-    animation: fadeSlideIn 1s ease forwards 0.5s; 
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeSlideIn 1s ease forwards 0.5s;
 }
 
 .container h1,
@@ -176,11 +196,11 @@ nav.header a:active {
 .container p {
     font-size: 20px;
     margin-bottom: 30px;
-    background-color: rgba(0, 0, 0, 0.4); 
-    backdrop-filter: blur(8px); 
-    -webkit-backdrop-filter: blur(8px); 
-    padding: 10px 20px; 
-    border-radius: 10px; 
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 10px 20px;
+    border-radius: 10px;
     color: white;
 }
 
@@ -261,10 +281,10 @@ nav.header a:active {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center; 
-    align-items: center;     
-    gap: 5px;                
-    text-align: center;      
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    text-align: center;
 }
 
 .agent-contact p {
@@ -287,7 +307,7 @@ nav.header a:active {
     padding: 5px 10px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    margin-top: 0; 
+    margin-top: 0;
 }
 
 .send-message:hover {
@@ -328,13 +348,13 @@ nav.header a:active {
 
 .search-bar .clear-icon {
     position: absolute;
-    right: 45px;  
+    right: 45px;
     top: 50%;
     transform: translateY(-50%);
     font-size: 20px;
     color: #999;
     cursor: pointer;
-    display: none; 
+    display: none;
 }
 
 .search-bar .search-button {
@@ -383,7 +403,7 @@ nav.header a:active {
 .cta-button {
     display: inline-block;
     padding: 12px 25px;
-    background:#0056b3;
+    background: #0056b3;
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -448,6 +468,7 @@ nav.header a:active {
     padding: 20px;
     text-align: center;
 }
+
 .modal-left img {
     width: 120px;
     height: 120px;
@@ -455,6 +476,7 @@ nav.header a:active {
     object-fit: cover;
     margin-bottom: 10px;
 }
+
 .modal-left h2, .modal-left p {
     margin: 5px 0;
 }
@@ -466,6 +488,7 @@ nav.header a:active {
     flex-direction: column;
     justify-content: center;
 }
+
 .modal-right input {
     margin-bottom: 10px;
     padding: 8px 12px;
@@ -473,6 +496,7 @@ nav.header a:active {
     border: 1px solid #ccc;
     width: 100%;
 }
+
 .modal-right button {
     padding: 10px;
     border: none;
@@ -482,6 +506,7 @@ nav.header a:active {
     font-weight: bold;
     cursor: pointer;
 }
+
 .modal-right button:hover {
     background-color: #0056b3;
 }
@@ -507,102 +532,6 @@ nav.header a:active {
     height: 3px;
     background-color: white;
     border-radius: 3px;
-}
-
-@media screen and (max-width: 768px) {
-    nav.header {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        height: 100vh;
-        width: 200px;
-        background-color: rgba(0, 0, 0, 0.95);
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
-        transition: right 0.3s ease;
-        z-index: 1000;
-        font-size: 18px;
-    }
-
-    nav.header.active {
-        right: 0;
-    }
-
-    .hamburger {
-        display: flex;
-    }
-
-    header {
-        justify-content: space-between;
-        padding: 20px 20px;
-    }
-}
-
-@media screen and (max-width: 600px) {
-    header { flex-direction: row; justify-content: space-between; align-items: center; }
-    .logo img { margin-left: 0; width: 40px; }
-    .container { margin: 50px 20px; }
-    .container h1 { font-size: 32px; }
-    .container p { font-size: 16px; padding: 8px 15px; }
-    .agents { margin: 50px 20px; }
-    .agent-card { flex-direction: column; text-align: center; }
-    .agent-photo { margin: 0 auto 10px; }
-    .agent-contact { flex-direction: row; justify-content: center; gap: 10px; }
-    .agent-contact a { margin-top: 10px; }
-    .modal-right { padding: 15px; }
-    .modal-left { padding: 15px; }
-}
-
-@media screen and (max-width: 1150px) {
-    .hero-wrapper {
-        background-size: cover;       
-        background-position: center;  
-        background-repeat: no-repeat; 
-        background-attachment: scroll;
-        height: 100vh;                
-        min-height: auto;             
-        overflow: hidden;             
-    }
-}
-
-@media screen and (max-width: 600px) {
-    .hero-wrapper {
-        height: 100vh;                
-        background-size: cover;     
-        background-position: center;  
-        overflow: hidden;             
-    }
-}
-
-@media screen and (max-width: 600px) {
-    .agent-card {
-        flex-direction: column;     
-        text-align: center;           
-        gap: 15px;                   
-    }
-
-    .agent-photo {
-        margin: 0 auto;              
-    }
-
-    .agent-info {
-        text-align: center;
-    }
-
-    .agent-contact {
-        flex-direction: column;       
-        justify-content: center;
-        align-items: center;
-        gap: 10px;                  
-        width: 100%;                
-    }
-
-    .agent-contact a.send-message {
-        margin-top: 0;
-        width: fit-content;           
-    }
 }
 
 .hamburger, .nav-menu {
@@ -634,7 +563,7 @@ nav.header a:active {
         flex-direction: column;
         position: fixed;
         top: 0;
-        right: -100%; 
+        right: -100%;
         width: 220px;
         height: 100%;
         background-color: rgba(0,0,0,0.95);
@@ -669,12 +598,69 @@ nav.header a:active {
     .nav-menu.active {
         right: 0;
     }
+
+    header {
+        justify-content: space-between;
+        padding: 20px 20px;
+    }
+
+    .pagination {
+        margin-top: 20px;
+        margin-bottom: 40px;
+    }
 }
 
-@media screen and (max-width: 768px) {
-    .pagination {
-        margin-top: 20px; 
-        margin-bottom: 40px; 
+@media screen and (max-width: 600px) {
+    header { flex-direction: row; justify-content: space-between; align-items: center; }
+    .logo img { margin-left: 0; width: 40px; }
+    .container { margin: 50px 20px; }
+    .container h1 { font-size: 32px; }
+    .container p { font-size: 16px; padding: 8px 15px; }
+    .agents { margin: 50px 20px; }
+    .agent-card { flex-direction: column; text-align: center; }
+    .agent-photo { margin: 0 auto 10px; }
+    .agent-contact { flex-direction: row; justify-content: center; gap: 10px; }
+    .agent-contact a { margin-top: 10px; }
+    .modal-right { padding: 15px; }
+    .modal-left { padding: 15px; }
+
+    .agent-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .agent-photo {
+        margin: 0 auto;
+    }
+
+    .agent-info {
+        text-align: center;
+    }
+
+    .agent-contact {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .agent-contact a.send-message {
+        margin-top: 0;
+        width: fit-content;
+    }
+}
+
+@media screen and (max-width: 1150px) {
+    .hero-wrapper {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        height: 100vh;
+        min-height: auto;
+        overflow: hidden;
     }
 }
 
@@ -704,5 +690,5 @@ nav.header a:active {
 }
 
 .center-toast.success { background: #16a34a; }
-.center-toast.error { background: #dc2626; }
+.center-toast.error   { background: #dc2626; }
 .center-toast.warning { background: #f59e0b; }
