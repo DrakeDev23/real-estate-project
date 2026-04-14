@@ -65,27 +65,10 @@ async function fetchCurrentUser() {
 updateSidebarAuthUi({ isLoggedIn: false });
 
 function updateSidebarAuthUi(user) {
-  const isLoggedIn = !!(user && user.isLoggedIn);
+  const isLoggedIn = user?.isLoggedIn === true;
 
-  if (homeBtnItem) {
-    homeBtnItem.style.display = isLoggedIn ? "none" : "";
-  }
-
-  if (logoutBtnItem) {
-    logoutBtnItem.style.display = isLoggedIn ? "" : "none";
-  }
-}
-
-function updateSidebarAuthUi(user) {
-  const isLoggedIn = !!(user && user.isLoggedIn);
-
-  if (homeBtnItem) {
-    homeBtnItem.style.display = isLoggedIn ? "none" : "";
-  }
-
-  if (logoutBtnItem) {
-    logoutBtnItem.style.display = isLoggedIn ? "" : "none";
-  }
+  homeBtnItem?.classList.toggle("hidden", isLoggedIn);
+  logoutBtnItem?.classList.toggle("hidden", !isLoggedIn);
 }
 
 function toggleMenu() {
