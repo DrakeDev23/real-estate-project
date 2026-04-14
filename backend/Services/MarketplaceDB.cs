@@ -80,6 +80,7 @@ namespace capstones.Data
                     SellerName     TEXT NOT NULL,
                     AgentName      TEXT,
                     BuyerName      TEXT,
+                    BuyerEmail     TEXT,
                     Status         TEXT NOT NULL,
                     RequestedAt    TEXT NOT NULL
                 );
@@ -94,6 +95,8 @@ namespace capstones.Data
             EnsureColumnExists(connection, "Products", "Bathrooms", "INTEGER NULL");
             EnsureColumnExists(connection, "Products", "AmenitiesJson", "TEXT NULL");
             EnsureColumnExists(connection, "Products", "MapLink", "TEXT NULL");
+            EnsureColumnExists(connection, "ContactRequests", "BuyerName", "TEXT NULL");
+            EnsureColumnExists(connection, "ContactRequests", "BuyerEmail", "TEXT NULL");
         }
 
         private void EnsureColumnExists(SqliteConnection connection, string tableName, string columnName, string columnDefinition)
@@ -477,19 +480,22 @@ namespace capstones.Data
             return true;
         }
 
-        public List<ContactRequestItem> GetContactRequests()
+        public List<ContactRequestItem> GetContactRequestsForSeller(string sellerName)
         {
             var requests = new List<ContactRequestItem>();
 
             using var connection = OpenConnection();
 
             string sql = @"
-                SELECT RequestId, ProductId, ProductTitle, SellerName, AgentName, Status, RequestedAt
+                SELECT RequestId, ProductId, ProductTitle, SellerName, AgentName, BuyerName, BuyerEmail, Status, RequestedAt
                 FROM ContactRequests
+                WHERE SellerName = @SellerName
                 ORDER BY RequestId DESC;
             ";
 
             using var command = new SqliteCommand(sql, connection);
+            command.Parameters.AddWithValue("@SellerName", sellerName);
+
             using var reader = command.ExecuteReader();
 
             while (reader.Read())
@@ -501,28 +507,33 @@ namespace capstones.Data
                     ProductTitle = reader.GetString(2),
                     SellerName = reader.GetString(3),
                     AgentName = reader.IsDBNull(4) ? null : reader.GetString(4),
-                    Status = reader.GetString(5),
-                    RequestedAt = reader.GetString(6)
+                    BuyerName = reader.IsDBNull(5) ? "" : reader.GetString(5),
+                    BuyerEmail = reader.IsDBNull(6) ? "" : reader.GetString(6),
+                    Status = reader.GetString(7),
+                    RequestedAt = reader.GetString(8)
                 });
             }
 
             return requests;
         }
 
-        public ContactRequestItem? GetPendingContactRequestForProduct(int productId)
+        public ContactRequestItem? GetPendingContactRequestForBuyerProduct(int productId, string buyerEmail)
         {
             using var connection = OpenConnection();
 
             string sql = @"
-                SELECT RequestId, ProductId, ProductTitle, SellerName, AgentName, Status, RequestedAt
+                SELECT RequestId, ProductId, ProductTitle, SellerName, AgentName, BuyerName, BuyerEmail, Status, RequestedAt
                 FROM ContactRequests
-                WHERE ProductId = @ProductId AND Status = 'confirmation pending'
+                WHERE ProductId = @ProductId
+                  AND BuyerEmail = @BuyerEmail
+                  AND Status = 'confirmation pending'
                 ORDER BY RequestId DESC
                 LIMIT 1;
             ";
 
             using var command = new SqliteCommand(sql, connection);
             command.Parameters.AddWithValue("@ProductId", productId);
+            command.Parameters.AddWithValue("@BuyerEmail", buyerEmail);
 
             using var reader = command.ExecuteReader();
 
@@ -536,14 +547,20 @@ namespace capstones.Data
                 ProductTitle = reader.GetString(2),
                 SellerName = reader.GetString(3),
                 AgentName = reader.IsDBNull(4) ? null : reader.GetString(4),
-                Status = reader.GetString(5),
-                RequestedAt = reader.GetString(6)
+                BuyerName = reader.IsDBNull(5) ? "" : reader.GetString(5),
+                BuyerEmail = reader.IsDBNull(6) ? "" : reader.GetString(6),
+                Status = reader.GetString(7),
+                RequestedAt = reader.GetString(8)
             };
         }
 
         public ContactRequestItem? CreateContactRequest(CreateContactRequestRequest request)
         {
-            var existing = GetPendingContactRequestForProduct(request.ProductId);
+            var existing = GetPendingContactRequestForBuyerProduct(
+                request.ProductId,
+                request.BuyerEmail ?? ""
+            );
+
             if (existing != null)
                 return existing;
 
@@ -580,9 +597,9 @@ namespace capstones.Data
 
             string insertSql = @"
                 INSERT INTO ContactRequests
-                (ProductId, ProductTitle, SellerName, AgentName, BuyerName, Status, RequestedAt)
+                (ProductId, ProductTitle, SellerName, AgentName, BuyerName, BuyerEmail, Status, RequestedAt)
                 VALUES
-                (@ProductId, @ProductTitle, @SellerName, @AgentName, @BuyerName, @Status, @RequestedAt);
+                (@ProductId, @ProductTitle, @SellerName, @AgentName, @BuyerName, @BuyerEmail, @Status, @RequestedAt);
                 SELECT last_insert_rowid();
             ";
 
@@ -594,6 +611,7 @@ namespace capstones.Data
                 insertCommand.Parameters.AddWithValue("@SellerName", sellerName ?? "");
                 insertCommand.Parameters.AddWithValue("@AgentName", (object?)agentName ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BuyerName", (object?)request.BuyerName ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BuyerEmail", (object?)request.BuyerEmail ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Status", status);
                 insertCommand.Parameters.AddWithValue("@RequestedAt", requestedAt);
 
@@ -607,9 +625,29 @@ namespace capstones.Data
                 ProductTitle = title,
                 SellerName = sellerName ?? "",
                 AgentName = agentName,
+                BuyerName = request.BuyerName ?? "",
+                BuyerEmail = request.BuyerEmail ?? "",
                 Status = status,
                 RequestedAt = requestedAt
             };
+        }
+
+        public bool SellerOwnsRequest(int requestId, string sellerName)
+        {
+            using var connection = OpenConnection();
+
+            string sql = @"
+                SELECT COUNT(*)
+                FROM ContactRequests
+                WHERE RequestId = @RequestId AND SellerName = @SellerName;
+            ";
+
+            using var command = new SqliteCommand(sql, connection);
+            command.Parameters.AddWithValue("@RequestId", requestId);
+            command.Parameters.AddWithValue("@SellerName", sellerName);
+
+            long count = (long)(command.ExecuteScalar() ?? 0L);
+            return count > 0;
         }
 
         public bool DeleteContactRequest(int requestId)

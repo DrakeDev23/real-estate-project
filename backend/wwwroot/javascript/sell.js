@@ -1,4 +1,8 @@
 const sidebar = document.getElementById("sidebar");
+const homeBtnItem = document.getElementById("homeBtnItem");
+const logoutBtnItem = document.getElementById("logoutBtnItem");
+const homeBtn = document.getElementById("homeBtn");
+const logoutBtn = document.getElementById("logoutBtn");
 const listingGrid = document.getElementById("listingGrid");
 const ordersList = document.getElementById("ordersList");
 const addListingBtn = document.getElementById("addListingBtn");
@@ -61,6 +65,18 @@ let ordersPage = 1;
 
 const LISTINGS_PER_PAGE = 8;
 const ORDERS_PER_PAGE = 5;
+
+function updateSidebarAuthUi(user) {
+  const isLoggedIn = !!user?.username;
+
+  if (homeBtnItem) {
+    homeBtnItem.style.display = isLoggedIn ? "none" : "";
+  }
+
+  if (logoutBtnItem) {
+    logoutBtnItem.style.display = isLoggedIn ? "" : "none";
+  }
+}
 
 function toggleMenu() {
   sidebar.classList.toggle("open");
@@ -461,6 +477,8 @@ function renderOrders() {
             <div class="order-title">${escapeHtml(order.productTitle)}</div>
             <div class="order-meta">Seller: ${escapeHtml(order.sellerName || "")}</div>
             <div class="order-meta">Agent: ${escapeHtml(order.agentName || "N/A")}</div>
+            <div class="order-meta">Buyer Username: ${escapeHtml(order.buyerName || "N/A")}</div>
+            <div class="order-meta">Buyer Email: ${escapeHtml(order.buyerEmail || "N/A")}</div>
             <div class="order-meta">Requested: ${escapeHtml(order.requestedAt || "")}</div>
             <div class="status-pill">${escapeHtml(order.status || "")}</div>
             <button type="button" class="edit-btn remove-order-btn" data-id="${order.requestId}">Remove Request</button>
@@ -483,9 +501,12 @@ function renderOrders() {
 }
 
 async function loadListings() {
-  listingGrid.innerHTML = `<div class="loading">Loading listings...</div>`;
+  listingGrid.innerHTML = `<div class="loading">Loading listings.</div>`;
 
   try {
+    currentUser = await fetchCurrentUser();
+    updateSidebarAuthUi(currentUser);
+
     const response = await fetch("/api/products");
     if (!response.ok) throw new Error("Failed to load listings.");
     allListings = await response.json();
@@ -501,8 +522,28 @@ async function loadOrders() {
   ordersList.innerHTML = `<div class="loading">Loading pending orders...</div>`;
 
   try {
+    currentUser = await fetchCurrentUser();
+
+    if (!currentUser || !currentUser.isLoggedIn) {
+      window.location.href = "login.html";
+      return;
+    }
+
     const response = await fetch("/api/contact-requests");
+
+    if (response.status === 401) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    if (response.status === 403) {
+      ordersList.innerHTML = `<div class="error-state">You are not allowed to view these requests.</div>`;
+      renderPagination(ordersPagination, 1, 1, () => {});
+      return;
+    }
+
     if (!response.ok) throw new Error("Failed to load pending orders.");
+
     allOrders = await response.json();
     renderOrders();
   } catch (error) {
@@ -513,9 +554,21 @@ async function loadOrders() {
 }
 
 async function fetchCurrentUser() {
-  const response = await fetch("/api/auth/me");
-  return await response.json();
+  try {
+    const response = await fetch("/api/auth/me");
+
+    if (!response.ok) {
+      return { isLoggedIn: false };
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return { isLoggedIn: false };
+  }
 }
+
+updateSidebarAuthUi({ isLoggedIn: false });
 
 function openSellModalForCreate() {
   if (!currentUser || !currentUser.isLoggedIn) {

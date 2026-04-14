@@ -12,32 +12,33 @@ public sealed class CurrentUserService
         _httpContextAccessor = httpContextAccessor;
     }
 
+    private ISession? Session => _httpContextAccessor.HttpContext?.Session;
+
     public void SignIn(User user)
     {
-        var context = _httpContextAccessor.HttpContext;
-        if (context == null)
+        if (Session == null || user == null)
         {
             return;
         }
+        Session.Clear();
 
-        context.Session.SetString(UsernameSessionKey, user.Username);
-        context.Session.SetString(RoleSessionKey, user.Role);
+        Session.SetString(UsernameSessionKey, user.Username);
+        Session.SetString(RoleSessionKey, user.Role);
     }
 
     public void SignOut()
     {
-        var context = _httpContextAccessor.HttpContext;
-        context?.Session.Clear();
+        Session?.Clear();
     }
 
     public string? GetUsername()
     {
-        return _httpContextAccessor.HttpContext?.Session.GetString(UsernameSessionKey);
+        return Session?.GetString(UsernameSessionKey);
     }
 
     public string? GetRole()
     {
-        return _httpContextAccessor.HttpContext?.Session.GetString(RoleSessionKey);
+        return Session?.GetString(RoleSessionKey);
     }
 
     public bool IsLoggedIn()
@@ -47,7 +48,7 @@ public sealed class CurrentUserService
 
     public User? GetCurrentUser()
     {
-        string? username = GetUsername();
+        var username = GetUsername();
 
         if (string.IsNullOrWhiteSpace(username))
         {
@@ -59,6 +60,8 @@ public sealed class CurrentUserService
 
     public bool IsAdmin()
     {
-        return string.Equals(GetRole(), "admin", StringComparison.OrdinalIgnoreCase);
+        var role = GetRole();
+        return !string.IsNullOrWhiteSpace(role) &&
+               role.Equals("admin", StringComparison.OrdinalIgnoreCase);
     }
 }

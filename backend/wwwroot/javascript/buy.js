@@ -2,6 +2,10 @@ const propertyContainer = document.getElementById("propertyContainer");
 const searchInput = document.getElementById("search");
 const searchBtn = document.getElementById("searchBtn");
 const sidebar = document.getElementById("sidebar");
+const homeBtnItem = document.getElementById("homeBtnItem");
+const logoutBtnItem = document.getElementById("logoutBtnItem");
+const homeBtn = document.getElementById("homeBtn");
+const logoutBtn = document.getElementById("logoutBtn");
 const pageContent = document.getElementById("pageContent");
 
 const sortToggleBtn = document.getElementById("sortToggleBtn");
@@ -41,6 +45,31 @@ let allProducts = [];
 let toastTimer = null;
 let currentPage = 1;
 const ITEMS_PER_PAGE = 8;
+
+let currentUser = null;
+
+async function fetchCurrentUser() {
+  try {
+    const response = await fetch("/api/auth/me");
+    if (!response.ok) {
+      return { isLoggedIn: false };
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return { isLoggedIn: false };
+  }
+}
+
+updateSidebarAuthUi({ isLoggedIn: false });
+
+function updateSidebarAuthUi(user) {
+  const isLoggedIn = user?.isLoggedIn === true;
+
+  homeBtnItem?.classList.toggle("hidden", isLoggedIn);
+  logoutBtnItem?.classList.toggle("hidden", !isLoggedIn);
+}
 
 function toggleMenu() {
   sidebar.classList.toggle("open");
@@ -104,6 +133,8 @@ async function loadProducts() {
   propertyContainer.innerHTML = `<div class="loading">Loading properties...</div>`;
 
   try {
+    currentUser = await fetchCurrentUser();
+    updateSidebarAuthUi(currentUser);
     const response = await fetch("/api/products");
     if (!response.ok) {
       throw new Error("Failed to load products.");
@@ -287,10 +318,26 @@ function renderAmenities(amenities) {
 }
 
 async function updateContactButtonState(productId) {
+  currentUser = await fetchCurrentUser();
+
+  if (!currentUser || !currentUser.isLoggedIn) {
+    contactAgentBtn.classList.remove("sent");
+    contactAgentBtn.textContent = "Contact Agent";
+    contactAgentBtn.disabled = false;
+    return;
+  }
+
   try {
     const response = await fetch(
       `/api/contact-requests/by-product/${productId}`,
     );
+
+    if (response.status === 401) {
+      contactAgentBtn.classList.remove("sent");
+      contactAgentBtn.textContent = "Contact Agent";
+      contactAgentBtn.disabled = false;
+      return;
+    }
 
     if (!response.ok) {
       contactAgentBtn.classList.remove("sent");
@@ -363,27 +410,43 @@ async function openPropertyModal(productId) {
     contactAgentBtn.onclick = async () => {
       if (contactAgentBtn.disabled) return;
 
-      try {
-        const res = await fetch("/api/contact-requests", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            productId: product.productId,
-          }),
-        });
+      contactAgentBtn.onclick = async () => {
+        if (contactAgentBtn.disabled) return;
 
-        if (!res.ok) {
-          throw new Error("Failed to create contact request.");
+        currentUser = await fetchCurrentUser();
+
+        if (!currentUser || !currentUser.isLoggedIn) {
+          window.location.href = "login.html";
+          return;
         }
 
-        contactAgentBtn.classList.add("sent");
-        contactAgentBtn.textContent = "Contact request sent";
-        contactAgentBtn.disabled = true;
-        showToast("Contact request sent");
-      } catch (err) {
-        console.error(err);
-        alert("Could not send contact request.");
-      }
+        try {
+          const res = await fetch("/api/contact-requests", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              productId: product.productId,
+            }),
+          });
+
+          if (res.status === 401) {
+            window.location.href = "login.html";
+            return;
+          }
+
+          if (!res.ok) {
+            throw new Error("Failed to create contact request.");
+          }
+
+          contactAgentBtn.classList.add("sent");
+          contactAgentBtn.textContent = "Contact request sent";
+          contactAgentBtn.disabled = true;
+          showToast("Contact request sent");
+        } catch (err) {
+          console.error(err);
+          alert("Could not send contact request.");
+        }
+      };
     };
 
     const hasMapLink = product.mapLink && String(product.mapLink).trim() !== "";

@@ -7,6 +7,8 @@ namespace capstones.Models
         public string ProductTitle { get; set; } = "";
         public string SellerName { get; set; } = "";
         public string? AgentName { get; set; }
+        public string BuyerName { get; set; } = "";
+        public string BuyerEmail { get; set; } = "";
         public string Status { get; set; } = "";
         public string RequestedAt { get; set; } = "";
     }
@@ -15,5 +17,6 @@ namespace capstones.Models
     {
         public int ProductId { get; set; }
         public string? BuyerName { get; set; }
+        public string? BuyerEmail { get; set; }
     }
 }
