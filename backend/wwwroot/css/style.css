@@ -1,277 +1,283 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    height: 100vh;
-    background-color: #f5f5f5;
-    overflow-x: hidden;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  background-color: #f5f5f5;
+  overflow-x: hidden;
 }
 
 .app-container {
-    display: flex;
-    height: 100vh;
+  display: flex;
+  height: 100vh;
+}
+
+.hidden {
+  display: none;
 }
 
 .sidebar {
-    width: 220px;
-    background-color: #202123;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    flex-shrink: 0;
+  width: 220px;
+  background-color: #202123;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  flex-shrink: 0;
 }
 
 .sidebar h1 {
-    font-size: 22px;
-    margin-bottom: 30px;
+  font-size: 22px;
+  margin-bottom: 30px;
 }
 
 .sidebar nav ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .sidebar nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
-    padding: 10px 12px;
-    border-radius: 5px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 10px 12px;
+  border-radius: 5px;
 }
 
 .sidebar nav ul li a:hover {
-    background-color: #333;
+  background-color: #333;
 }
 
 .chat-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
 }
 
 #chat {
-    flex: 1;
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    overflow-y: auto;
+  flex: 1;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
 }
 
 .message {
-    display: flex;
-    align-items: flex-end;
+  display: flex;
+  align-items: flex-end;
 }
 
 .user {
-    justify-content: flex-end;
+  justify-content: flex-end;
 }
 
 .bot {
-    justify-content: flex-start;
-    gap: 10px;
-    align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  align-items: flex-start;
 }
 
 .message .bubble {
-    max-width: 70%;
-    padding: 10px 15px;
-    border-radius: 20px;
-    font-size: 14px;
-    line-height: 1.4;
+  max-width: 70%;
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  line-height: 1.4;
 
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    word-break: break-word;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .user .bubble {
-    background-color: #007bff;
-    color: #fff;
-    border-bottom-right-radius: 0;
+  background-color: #007bff;
+  color: #fff;
+  border-bottom-right-radius: 0;
 }
 
 .bot .bubble {
-    background-color: #e5e5ea;
-    color: #333;
-    border-bottom-left-radius: 0;
+  background-color: #e5e5ea;
+  color: #333;
+  border-bottom-left-radius: 0;
 }
 
 .bot .avatar {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    flex-shrink: 0;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 #input-area {
-    display: flex;
+  display: flex;
 }
 
 #input-area input {
-    flex: 1;
-    padding: 14px;
-    border-radius: 20px;
-    border: 1px solid #ccc;
-    outline: none;
-    margin-right: 10px;
+  flex: 1;
+  padding: 14px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+  margin-right: 10px;
 }
 
 #input-area button {
-    padding: 14px 20px;
-    border-radius: 20px;
-    border: none;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
+  padding: 14px 20px;
+  border-radius: 20px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
 }
 
 #input-area button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 .typing::after {
-    content: " .";
-    animation: dots 1s steps(3, end) infinite;
+  content: " .";
+  animation: dots 1s steps(3, end) infinite;
 }
 
 @keyframes dots {
-    0% { content: " ."; }
-    33% { content: " .."; }
-    66% { content: " ..."; }
+  0% {
+    content: " .";
+  }
+  33% {
+    content: " ..";
+  }
+  66% {
+    content: " ...";
+  }
 }
 
 .hamburger {
-    position: fixed; 
-    top: 20px;
-    left: 20px;
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    z-index: 900;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 900;
 }
 
 .hamburger span {
-    width: 28px;
-    height: 3px;
-    background: black;
-    border-radius: 3px;
+  width: 28px;
+  height: 3px;
+  background: black;
+  border-radius: 3px;
 }
 
 @media screen and (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
 
-    .hamburger {
-        display: flex; 
-    }
+  .sidebar {
+    position: fixed;
+    left: -220px;
+    top: 0;
+    height: 100%;
+    width: 220px;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
 
-    .sidebar {
-        position: fixed;
-        left: -220px; 
-        top: 0;
-        height: 100%;
-        width: 220px;
-        transition: left 0.3s ease;
-        z-index: 1000;
-    }
+  .sidebar.active {
+    left: 0;
+  }
 
-    .sidebar.active {
-        left: 0; 
-    }
-
-    .chat-container {
-        padding-top: 60px; 
-    }
+  .chat-container {
+    padding-top: 60px;
+  }
 }
 
 .sidebar {
-    position: relative;
+  position: relative;
 }
 
 .close-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 22px;
-    color: white;
-    cursor: pointer;
-    display: none; 
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  display: none;
 }
 
 @media screen and (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
 
-    .hamburger {
-        display: flex;
-    }
+  .sidebar.active ~ .hamburger {
+    display: none;
+  }
 
-    .sidebar.active ~ .hamburger {
-        display: none;
-    }
+  .sidebar {
+    position: fixed;
+    left: -220px;
+    top: 0;
+    height: 100%;
+    width: 220px;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
 
-    .sidebar {
-        position: fixed;
-        left: -220px; 
-        top: 0;
-        height: 100%;
-        width: 220px;
-        transition: left 0.3s ease;
-        z-index: 1000;
-    }
+  .sidebar.active {
+    left: 0;
+  }
 
-    .sidebar.active {
-        left: 0; 
-    }
+  .sidebar.active .close-btn {
+    display: block;
+  }
 
-    .sidebar.active .close-btn {
-        display: block; 
-    }
-
-    .chat-container {
-        padding-top: 60px; 
-    }
+  .chat-container {
+    padding-top: 60px;
+  }
 }
-@media screen and (max-width:768px){
-
-.message .bubble{
+@media screen and (max-width: 768px) {
+  .message .bubble {
     max-width: 85%;
+  }
 }
 
-}
-
-#chat{
-scroll-behavior:smooth;
+#chat {
+  scroll-behavior: smooth;
 }
 
 .quick-choices {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center; 
-    width: 100%;
-    padding: 10px; 
-    margin: 15px 0 15px 0; 
-    background-color: transparent; 
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0 15px 0;
+  background-color: transparent;
 }
 
 .choice-btn {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 20px;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-    font-size: 14px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 20px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .choice-btn:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }

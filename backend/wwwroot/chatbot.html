@@ -1,55 +1,60 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Haven AI Agent</title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="icon" href="images/logo.png">
-</head>
-<body>
-<div class="app-container">
-
-    <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    <aside class="sidebar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Haven AI Agent</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" href="images/logo.png" />
+  </head>
+  <body>
+    <div class="app-container">
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <aside class="sidebar">
         <div class="close-btn" id="closeBtn">✕</div>
-    <div class="sidebar-header">
-        <h1>Haven</h1>
-    </div>
+        <div class="sidebar-header">
+          <h1>Haven</h1>
+        </div>
         <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="buy.html">Buy</a></li>
-                <li><a href="sell.html">Sell</a></li>
-                <li><a href="buy.html">Rent</a></li>
-                <li><a href="agents.html">Find Agent</a></li>
-                <li><a href="login.html">Login</a></li>
-            </ul>
+          <ul>
+            <li id="homeBtnItem"><a href="index.html">Home</a></li>
+            <li><a href="buy.html">Buy</a></li>
+            <li><a href="sell.html">Sell</a></li>
+            <li><a href="buy.html">Rent</a></li>
+            <li><a href="agents.html">Find Agent</a></li>
+            <li id="loginBtnItem"><a href="login.html">Login</a></li>
+            <li id="logoutBtnItem"><a id="logoutBtn" href="#">Logout</a></li>
+          </ul>
         </nav>
-    </aside>
-    <main class="chat-container">
+      </aside>
+      <main class="chat-container">
         <div id="chat">
-        <div class="message bot">
-            <img src="images/logo.png" alt="AI" class="avatar">
+          <div class="message bot">
+            <img src="images/logo.png" alt="AI" class="avatar" />
             <div class="bubble">Hello! How can I help you today?</div>
+          </div>
         </div>
+        <div id="quick-choices" class="quick-choices">
+          <button class="choice-btn">Where can I buy properties?</button>
+          <button class="choice-btn">How to sell my property?</button>
+          <button class="choice-btn">Rental options</button>
+          <button class="choice-btn">Contact Haven</button>
         </div>
-    <div id="quick-choices" class="quick-choices">
-        <button class="choice-btn">Where can I buy properties?</button>
-        <button class="choice-btn">How to sell my property?</button>
-        <button class="choice-btn">Rental options</button>
-        <button class="choice-btn">Contact Haven</button>
+        <div id="input-area">
+          <input
+            type="text"
+            id="message"
+            placeholder="Type your message..."
+            maxlength="1000"
+          />
+          <button id="send-btn">Send</button>
+        </div>
+      </main>
     </div>
-    <div id="input-area">
-        <input type="text" id="message" placeholder="Type your message..." maxlength="1000">
-        <button id="send-btn">Send</button>
-    </div>
-    </main>
-</div>
-<script src="javascript/script.js"></script>
-</body>
+    <script src="javascript/script.js"></script>
+  </body>
 </html>

@@ -118,7 +118,7 @@ public static class AuthRoutes
 
             return Results.Json(new
             {
-                isLoggedIn = true,
+                isLoggedIn = currentUserService.IsLoggedIn(),
                 username = currentUser.Username,
                 role = currentUser.Role,
                 redirect = currentUser.Redirect,

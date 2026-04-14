@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lpEXmdTprbY=",
+  "dgSpecHash": "W2jgki+SxPU=",
   "success": true,
-  "projectFilePath": "C:\\Users\\VladCodes\\Desktop\\New folder\\real-estate-project\\backend\\backend.csproj",
+  "projectFilePath": "C:\\Users\\VladCodes\\Desktop\\FinalPull\\real-estate-project\\backend\\backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\VladCodes\\.nuget\\packages\\microsoft.data.sqlite\\10.0.5\\microsoft.data.sqlite.10.0.5.nupkg.sha512",
     "C:\\Users\\VladCodes\\.nuget\\packages\\microsoft.data.sqlite.core\\10.0.5\\microsoft.data.sqlite.core.10.0.5.nupkg.sha512",

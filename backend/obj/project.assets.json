@@ -346,11 +346,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\VladCodes\\Desktop\\New folder\\real-estate-project\\backend\\backend.csproj",
+      "projectUniqueName": "C:\\Users\\VladCodes\\Desktop\\FinalPull\\real-estate-project\\backend\\backend.csproj",
       "projectName": "backend",
-      "projectPath": "C:\\Users\\VladCodes\\Desktop\\New folder\\real-estate-project\\backend\\backend.csproj",
+      "projectPath": "C:\\Users\\VladCodes\\Desktop\\FinalPull\\real-estate-project\\backend\\backend.csproj",
       "packagesPath": "C:\\Users\\VladCodes\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\VladCodes\\Desktop\\New folder\\real-estate-project\\backend\\obj\\",
+      "outputPath": "C:\\Users\\VladCodes\\Desktop\\FinalPull\\real-estate-project\\backend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "D:\\Programs\\Visual Studios\\Shared\\NuGetPackages"
