@@ -53,6 +53,7 @@ public static class VladSetup
         app.MapGet("/api/products/{id:int}", (int id, MarketplaceDb db) =>
         {
             var product = db.GetProductById(id);
+
             return product is null
                 ? Results.NotFound(new { message = "Product not found." })
                 : Results.Ok(product);
@@ -82,9 +83,29 @@ public static class VladSetup
 
             db.AddProduct(productRequest);
 
-            return Results.Created($"/api/products/{productRequest.ProductId}", new
+            if (currentUser != null)
             {
-                message = "Product created successfully.",
+                var users = UserStorage.LoadUsers();
+
+                var user = users.FirstOrDefault(u =>
+                    u.Username == currentUser.Username);
+
+                if (user != null)
+                {
+                    user.OwnedProductIds ??= new List<int>();
+
+                    if (!user.OwnedProductIds.Contains(productRequest.ProductId))
+                    {
+                        user.OwnedProductIds.Add(productRequest.ProductId);
+                    }
+
+                    UserStorage.SaveUsers(users);
+                }
+            }
+
+            return Results.Ok(new
+            {
+                message = "Product created successfully",
                 productId = productRequest.ProductId
             });
         });
@@ -142,14 +163,10 @@ public static class VladSetup
             foreach (var fileName in imageFileNames)
             {
                 if (string.IsNullOrWhiteSpace(fileName))
-                {
                     continue;
-                }
 
                 if (string.Equals(fileName, "no_image.png", StringComparison.OrdinalIgnoreCase))
-                {
                     continue;
-                }
 
                 var fullPath = Path.Combine(uploadsDir, Path.GetFileName(fileName));
 
@@ -160,15 +177,13 @@ public static class VladSetup
                         File.Delete(fullPath);
                     }
                 }
-                catch
-                {
-                }
+                catch { }
             }
 
             return Results.Ok(new { message = "Product deleted successfully." });
         });
 
-                app.MapGet("/api/contact-requests", (
+        app.MapGet("/api/contact-requests", (
             MarketplaceDb db,
             CurrentUserService currentUserService) =>
         {
@@ -177,11 +192,6 @@ public static class VladSetup
             if (currentUser == null)
             {
                 return Results.Unauthorized();
-            }
-
-            if (string.Equals(currentUser.Role, "admin", StringComparison.OrdinalIgnoreCase))
-            {
-                return Results.Ok(db.GetContactRequestsForSeller(currentUser.Username));
             }
 
             return Results.Ok(db.GetContactRequestsForSeller(currentUser.Username));
@@ -223,12 +233,9 @@ public static class VladSetup
 
             var created = db.CreateContactRequest(request);
 
-            if (created is null)
-            {
-                return Results.NotFound(new { message = "Product not found." });
-            }
-
-            return Results.Ok(created);
+            return created is null
+                ? Results.NotFound(new { message = "Product not found." })
+                : Results.Ok(created);
         });
 
         app.MapDelete("/api/contact-requests/{requestId:int}", (
@@ -265,6 +272,7 @@ public static class VladSetup
             .ToHashSet();
 
         int candidate = 1;
+
         while (usedIds.Contains(candidate))
         {
             candidate++;
@@ -365,23 +373,17 @@ internal static class SellFormHelpers
             {
                 var fileName = Path.GetFileName(item.Value ?? "");
                 if (string.IsNullOrWhiteSpace(fileName))
-                {
                     continue;
-                }
 
                 var existingPath = Path.Combine(uploadsDir, fileName);
                 if (!File.Exists(existingPath))
-                {
                     continue;
-                }
 
                 byte[] bytes = await File.ReadAllBytesAsync(existingPath);
                 string ext = Path.GetExtension(fileName);
 
                 if (string.IsNullOrWhiteSpace(ext))
-                {
                     ext = ".jpg";
-                }
 
                 orderedImages.Add((bytes, ext));
             }
@@ -391,18 +393,14 @@ internal static class SellFormHelpers
                 var file = files.GetFile(key);
 
                 if (file == null || file.Length == 0)
-                {
                     continue;
-                }
 
                 using var ms = new MemoryStream();
                 await file.CopyToAsync(ms);
 
                 string ext = Path.GetExtension(file.FileName);
                 if (string.IsNullOrWhiteSpace(ext))
-                {
                     ext = ".jpg";
-                }
 
                 orderedImages.Add((ms.ToArray(), ext));
             }
@@ -410,13 +408,8 @@ internal static class SellFormHelpers
 
         foreach (var path in Directory.GetFiles(uploadsDir, $"IMG_{productId}_*.*"))
         {
-            try
-            {
-                File.Delete(path);
-            }
-            catch
-            {
-            }
+            try { File.Delete(path); }
+            catch { }
         }
 
         var finalNames = new List<string>();

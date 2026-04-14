@@ -67,7 +67,7 @@ const LISTINGS_PER_PAGE = 8;
 const ORDERS_PER_PAGE = 5;
 
 function updateSidebarAuthUi(user) {
-  const isLoggedIn = !!(user && user.isLoggedIn);
+  const isLoggedIn = !!user?.username;
 
   if (homeBtnItem) {
     homeBtnItem.style.display = isLoggedIn ? "none" : "";

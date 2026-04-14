@@ -50,7 +50,9 @@
     "Password": "zach123",
     "Redirect": "buy.html",
     "Role": "user",
-    "OwnedProductIds": [],
+    "OwnedProductIds": [
+      3
+    ],
     "ContactRequestSend": []
   },
   {
