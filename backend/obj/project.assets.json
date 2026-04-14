@@ -345,11 +345,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/archlinux/Downloads/testing/real-estate-project/backend/backend.csproj",
+      "projectUniqueName": "/home/archlinux/Downloads/real-estate-project/backend/backend.csproj",
       "projectName": "backend",
-      "projectPath": "/home/archlinux/Downloads/testing/real-estate-project/backend/backend.csproj",
+      "projectPath": "/home/archlinux/Downloads/real-estate-project/backend/backend.csproj",
       "packagesPath": "/home/archlinux/.nuget/packages/",
-      "outputPath": "/home/archlinux/Downloads/testing/real-estate-project/backend/obj/",
+      "outputPath": "/home/archlinux/Downloads/real-estate-project/backend/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/archlinux/.nuget/NuGet/NuGet.Config"

@@ -20,7 +20,7 @@ function updateHeaderAuthUi(user) {
 
 async function logout() {
   try {
-    const res = await fetch("/api/auth/logout", {
+    const res = await fetch("/api/logout", {
       method: "POST",
       credentials: "include",
     });
