@@ -50,7 +50,9 @@
     "Password": "zach123",
     "Redirect": "buy.html",
     "Role": "user",
-    "OwnedProductIds": [],
+    "OwnedProductIds": [
+      3
+    ],
     "ContactRequestSend": []
   },
   {
@@ -68,8 +70,15 @@
     "Password": "1234",
     "Redirect": "buy.html",
     "Role": "user",
-    "OwnedProductIds": [1, 2, 3],
-    "ContactRequestSend": [1, 2]
+    "OwnedProductIds": [
+      1,
+      2,
+      3
+    ],
+    "ContactRequestSend": [
+      1,
+      2
+    ]
   },
   {
     "Username": "VladAlt",
