@@ -577,6 +577,7 @@ document.addEventListener("keydown", function (event) {
 loadProducts();
 
 const fndbtn = document.getElementById("fndbtn");
-fndbtn = addEventListener("click", () => {
-  window.location.href = "agents.html"
-})
+
+fndbtn.addEventListener("click", () => {
+  window.location.href = "agents.html";
+});
